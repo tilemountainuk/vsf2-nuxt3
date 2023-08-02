@@ -14,17 +14,19 @@
         @on-scroll="onScroll"
       >
         <div
-          v-for="({ url, alt }, index) in images"
-          :key="`${alt}-${index}-thumbnail`"
+          v-for="({ url, altText }, index) in mainImages"
+          :key="`${altText}-${index}-thumbnail`"
           class="w-full h-full relative snap-center snap-always basis-full shrink-0 grow"
         >
           <NuxtImg
-            :alt="alt ?? ''"
+            v-if="url"
+            provider="cloudinary"
+            :alt="altText ?? ''"
             :aria-hidden="activeIndex !== index"
             fit="fill"
             class="object-contain h-full w-full"
             :quality="80"
-            :src="url"
+            :src="cloudinaryLoader(url)"
             sizes="2xs:100vw, md:700px"
             draggable="false"
             :loading="index !== 0 ? 'lazy' : undefined"
@@ -64,8 +66,8 @@
         </template>
 
         <button
-          v-for="({ url, alt }, index) in images"
-          :key="`${alt}-${index}-thumbnail`"
+          v-for="({ url, altText }, index) in thumbnails"
+          :key="`${altText}-${index}-thumbnail`"
           :ref="(el) => assignReference(el, index)"
           type="button"
           :aria-current="activeIndex === index"
@@ -119,16 +121,16 @@
 </template>
 
 <script setup lang="ts">
-import { type ComponentPublicInstance } from 'vue';
 import { clamp, type SfScrollableOnScrollData } from '@storefront-ui/shared';
 import { SfScrollable, SfButton, SfIconChevronLeft, SfIconChevronRight } from '@storefront-ui/vue';
-import { SfImage } from '@vue-storefront/unified-data-model';
+import { Image } from '@vsf-enterprise/sapcc-types';
 import { unrefElement, useIntersectionObserver, useTimeoutFn } from '@vueuse/core';
+import { cloudinaryLoader } from '~/utils/cloudinaryLoader';
 
 const { isPending, start, stop } = useTimeoutFn(() => {}, 50);
 
 const props = defineProps<{
-  images: SfImage[];
+  images: Image[];
 }>();
 
 const thumbsReference = ref<HTMLElement>();
@@ -186,4 +188,7 @@ const assignReference = (element: Element | ComponentPublicInstance | null, inde
     firstThumbReference.value = element as HTMLButtonElement;
   }
 };
+
+const thumbnails = ref(props.images.filter((image) => image.format === 'thumbnail'));
+const mainImages = ref(props.images.filter((image) => image.format === 'product'));
 </script>

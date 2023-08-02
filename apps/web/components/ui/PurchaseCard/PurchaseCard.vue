@@ -10,21 +10,18 @@
     <h1 class="mb-1 font-bold typography-headline-4" data-testid="product-name">{{ product.name }}</h1>
     <div class="my-1">
       <span class="mr-2 text-secondary-700 font-bold font-headings text-2xl" data-testid="price">
-        ${{ product.price?.value.amount }}
-      </span>
-      <span class="text-base font-normal text-neutral-500 line-through">
-        ${{ product.price?.regularPrice.amount }}
+        {{ product.price?.formattedValue }}
       </span>
     </div>
     <div class="inline-flex items-center mt-4 mb-2">
-      <SfRating size="xs" :value="product.rating?.average" :max="5" />
-      <SfCounter class="ml-1" size="xs">{{ product.rating?.count }}</SfCounter>
+      <SfRating size="xs" :value="product.averageRating" :max="5" />
+      <SfCounter class="ml-1" size="xs">{{ product.averageRating || 0 }}</SfCounter>
       <SfLink href="#" variant="secondary" class="ml-2 text-xs text-neutral-500">
-        {{ $t('reviewsCount', { count: product.rating?.count }) }}
+        {{ $t('reviewsCount', { count: product.numberOfReviews }) }}
       </SfLink>
     </div>
     <p class="mb-4 font-normal typography-text-sm" data-testid="product-description">
-      {{ product.description }}
+      {{ product.summary }}
     </p>
     <div class="py-4 mb-4 border-gray-200 border-y">
       <UiTag class="w-full mb-4">
