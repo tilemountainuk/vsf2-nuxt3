@@ -1,12 +1,14 @@
 import type { Ref } from 'vue';
-import type { SfProduct, Maybe } from '@vue-storefront/unified-data-model';
+import type { MethodOptions } from '@vsf-enterprise/sapcc-sdk';
+import type { ProductGetProps } from '@vsf-enterprise/sapcc-types';
+import type { Product } from '@vsf-enterprise/sapcc-types';
 
 export interface UseProductState {
-  data: Maybe<SfProduct>;
+  data: Product | null;
   loading: boolean;
 }
 
-export type FetchProduct = (slug: string) => Promise<Ref<Maybe<SfProduct>>>;
+export type FetchProduct = (params: ProductGetProps, options?: MethodOptions) => Promise<Ref<Product | null>>;
 
 export interface UseProduct {
   data: Readonly<Ref<UseProductState['data']>>;
@@ -14,4 +16,4 @@ export interface UseProduct {
   fetchProduct: FetchProduct;
 }
 
-export type UseProductReturn = (slug: string) => UseProduct;
+export type UseProductReturn = (code: string) => UseProduct;

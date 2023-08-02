@@ -10,12 +10,17 @@
     "lint:fix": "eslint . --ext .ts --fix"
   },
   "dependencies": {
-    "@vue-storefront/middleware": "3.3.1",
+    "@vsf-enterprise/contentful-api": "^1.0.0",
+    "@vsf-enterprise/sapcc-api": "^3.0.1",
+    "@vue-storefront/middleware": "3.0.0-rc.2",
     "consola": "^2.15.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
     "nodemon": "^2.0.19",
     "ts-node-dev": "^2.0.0"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.13",
     "@types/express": "^4.17.13"
   }
 }

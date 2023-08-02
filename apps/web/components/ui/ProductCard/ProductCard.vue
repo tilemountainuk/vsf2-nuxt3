@@ -1,7 +1,7 @@
 <template>
   <div class="border border-neutral-200 rounded-md hover:shadow-lg flex-auto flex-shrink-0" data-testid="product-card">
     <div class="relative">
-      <SfLink :tag="NuxtLink" :to="`${paths.product}${slug}`">
+      <SfLink :tag="NuxtLink" to="/product/T-Shirt-Men-Playboard-Raster-SS/300046038">
         <NuxtImg
           :src="imageUrl"
           :alt="imageAlt"

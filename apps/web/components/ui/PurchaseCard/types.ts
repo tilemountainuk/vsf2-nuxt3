@@ -1,5 +1,5 @@
-import { SfProduct } from '@vue-storefront/unified-data-model';
+import { Product } from '@vsf-enterprise/sapcc-types';
 
 export type PurchaseCardProps = {
-  product: SfProduct;
+  product: Product;
 };

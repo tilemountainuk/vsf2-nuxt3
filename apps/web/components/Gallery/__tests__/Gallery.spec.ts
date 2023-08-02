@@ -5,7 +5,7 @@ describe('<Gallery />', () => {
   it('should render component', () => {
     const { getByTestId } = mount(Gallery, {
       props: {
-        images: [{ alt: 'Test', url: '/images/test.webp' }],
+        images: [{ altText: 'Test', url: '/images/test.webp' }],
       },
     });
 

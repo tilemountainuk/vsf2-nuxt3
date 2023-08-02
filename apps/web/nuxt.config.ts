@@ -4,6 +4,9 @@ export default defineNuxtConfig({
   typescript: {
     typeCheck: true,
   },
+  runtimeConfig: {
+    someKey: process.env.NUXT_SOME_KEY || 'fallback',
+  },
   app: {
     head: {
       viewport: 'minimum-scale=1, initial-scale=1, width=device-width',
@@ -38,6 +41,9 @@ export default defineNuxtConfig({
       sm: 640,
       xs: 376,
       '2xs': 360,
+    },
+    cloudinary: {
+      baseURL: 'https://res.cloudinary.com/vsf-sap/image/upload/',
     },
   },
   modules: [
