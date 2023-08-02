@@ -1,5 +1,5 @@
 import { toRefs } from '@vueuse/shared';
-import { sdk } from '~/sdk';
+import { useSdk } from '~/sdk';
 import type { UseProductReturn, UseProductState, FetchProduct } from './types';
 
 /**
@@ -23,7 +23,7 @@ export const useProduct: UseProductReturn = (code) => {
    */
   const fetchProduct: FetchProduct = async (params, options) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => sdk.sapcc.getProduct(params, options));
+    const { data, error } = await useAsyncData(() => useSdk().sapcc.getProduct(params, options));
     useHandleError(error.value);
     state.value.data = data.value;
     state.value.loading = false;
