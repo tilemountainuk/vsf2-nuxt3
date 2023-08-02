@@ -9,10 +9,6 @@
           <UiPurchaseCard v-if="product" :product="product" />
         </section>
       </div>
-      <pre>
-          {{ JSON.stringify(product, undefined, 2) }}
-            </pre
-      >
     </NarrowContainer>
   </NuxtLayout>
 </template>
@@ -34,7 +30,7 @@ const breadcrumbs: Breadcrumb[] = [
   { name: t('category'), link: '/category' },
   { name: product.value?.name as string, link: `#` },
 ];
-console.log('product', product);
+
 const title = computed(() => product.value?.name ?? '');
 
 useHead({

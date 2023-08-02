@@ -32,7 +32,6 @@
             :loading="index !== 0 ? 'lazy' : undefined"
             :fetchpriority="index === 0 ? 'high' : undefined"
             :preload="index === 0"
-            format="webp"
             width="600"
             height="600"
           />
@@ -78,14 +77,15 @@
           @focus="onChangeIndex(index)"
         >
           <NuxtImg
+            v-if="url"
+            provider="cloudinary"
             alt=""
             class="object-contain"
             width="80"
             height="80"
-            :src="url"
+            :src="cloudinaryLoader(url)"
             :quality="80"
             loading="lazy"
-            format="webp"
           />
         </button>
 
