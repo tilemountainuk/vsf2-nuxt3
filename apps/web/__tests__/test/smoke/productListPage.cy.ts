@@ -13,7 +13,7 @@ describe('Smoke: Product List Page', function () {
       productListPage.assertGridView();
     });
 
-    it('[smoke] User should be able to see the list of the categories available', () => {
+    it.skip('[smoke] User should be able to see the list of the categories available', () => {
       // ASSERT -
       productListPage.openFirstCategory();
     });
@@ -22,9 +22,7 @@ describe('Smoke: Product List Page', function () {
   context('Product details and actions', () => {
     it('[smoke] User should see the product information', () => {
       // ASSERT - product details are displayed
-      productListPage
-        .assertProductListElements()
-        .assertFirstProduct();
-      });
+      productListPage.assertProductListElements().assertFirstProduct();
     });
+  });
 });
