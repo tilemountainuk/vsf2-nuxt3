@@ -24,6 +24,8 @@
     "lhci:mobile": "lhci autorun"
   },
   "dependencies": {
+    "@vue-storefront/magento-api": "^2.1.0",
+    "@vue-storefront/magento-sdk": "^1.1.0",
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.3"
   },
