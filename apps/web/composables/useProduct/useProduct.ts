@@ -1,4 +1,5 @@
 import { toRefs } from '@vueuse/shared';
+import { productDetailsCustomQuery } from '~/composables/useProduct/customQueries/productDetailsCustomQuery';
 import { useSdk } from '~/sdk';
 import type { UseProductReturn, UseProductState, FetchProduct } from './types';
 
@@ -22,11 +23,25 @@ export const useProduct: UseProductReturn = (slug) => {
    */
   const fetchProduct: FetchProduct = async (slug) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => useSdk().commerce.getProduct({ slug }));
+    const { data, error } = await useAsyncData(() =>
+      useSdk().magento.productDetails(
+        {
+          pageSize: 20,
+          currentPage: 1,
+          filter: {
+            url_key: {
+              eq: slug,
+            },
+          },
+        },
+        { customQuery: productDetailsCustomQuery },
+      ),
+    );
     useHandleError(error.value);
-    state.value.data = data.value;
+    state.value.data = data.value?.data;
     state.value.loading = false;
-    return data;
+
+    return data.value?.data;
   };
 
   return {

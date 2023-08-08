@@ -15,6 +15,23 @@ const config = {
     /* VSF integration config */
     magento: {
       location: '@vue-storefront/magento-api/server',
+      customQueries: {
+        'product-details-custom-query': ({ variables, metadata }: {variables:string, metadata: any}) => ({
+          variables,
+          query: `
+          query productDetails(
+            $search: String = "",
+            $filter: ProductAttributeFilterInput,
+            $pageSize: Int = 10,
+            $currentPage: Int = 1,
+            $sort: ProductAttributeSortInput
+          ) {
+            products(search: $search, filter: $filter, sort: $sort, pageSize: $pageSize, currentPage: $currentPage) {
+              ${metadata.fields}
+            }
+          }`
+        }),
+      },
       configuration: {
         api: process.env.VSF_MAGENTO_GRAPHQL_URL,
         cookies: {

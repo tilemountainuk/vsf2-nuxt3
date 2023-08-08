@@ -14,17 +14,18 @@
         @on-scroll="onScroll"
       >
         <div
-          v-for="({ url, alt }, index) in images"
-          :key="`${alt}-${index}-thumbnail`"
+          v-for="({ url }, index) in images"
+          :key="`${index}-thumbnail`"
           class="w-full h-full relative snap-center snap-always basis-full shrink-0 grow"
         >
           <NuxtImg
-            :alt="alt ?? ''"
+            provider="ipx"
+            :alt="''"
             :aria-hidden="activeIndex !== index"
             fit="fill"
             class="object-contain h-full w-full"
             :quality="80"
-            :src="url"
+            :src="url ?? ''"
             sizes="2xs:100vw, md:700px"
             draggable="false"
             :loading="index !== 0 ? 'lazy' : undefined"
@@ -64,8 +65,8 @@
         </template>
 
         <button
-          v-for="({ url, alt }, index) in images"
-          :key="`${alt}-${index}-thumbnail`"
+          v-for="({ url }, index) in images"
+          :key="`${index}-thumbnail`"
           :ref="(el) => assignReference(el, index)"
           type="button"
           :aria-current="activeIndex === index"
@@ -76,11 +77,12 @@
           @focus="onChangeIndex(index)"
         >
           <NuxtImg
+            provider="ipx"
             alt=""
             class="object-contain"
             width="80"
             height="80"
-            :src="url"
+            :src="url ?? ''"
             :quality="80"
             loading="lazy"
             format="webp"
@@ -105,7 +107,7 @@
       <div class="flex md:hidden gap-0.5" role="group">
         <button
           v-for="({ url }, index) in images"
-          :key="url"
+          :key="url ?? ''"
           type="button"
           :aria-current="activeIndex === index"
           :aria-label="$t('gallery.thumb', index + 1)"
@@ -122,13 +124,13 @@
 import { type ComponentPublicInstance } from 'vue';
 import { clamp, type SfScrollableOnScrollData } from '@storefront-ui/shared';
 import { SfScrollable, SfButton, SfIconChevronLeft, SfIconChevronRight } from '@storefront-ui/vue';
-import { SfImage } from '@vue-storefront/unified-data-model';
+import { MediaGalleryInterface } from '@vue-storefront/magento-types';
 import { unrefElement, useIntersectionObserver, useTimeoutFn } from '@vueuse/core';
 
 const { isPending, start, stop } = useTimeoutFn(() => {}, 50);
 
 const props = defineProps<{
-  images: SfImage[];
+  images: MediaGalleryInterface[];
 }>();
 
 const thumbsReference = ref<HTMLElement>();

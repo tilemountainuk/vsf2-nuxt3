@@ -5,32 +5,32 @@
   >
     <UiTag variant="secondary" strong class="mb-4">
       <SfIconSell size="sm" class="mr-1" />
-      <span class="mr-1">{{ $t(`sale`) }}</span>
+      <span class="mr-1">{{ product?.products?.items?.[0]?.sku }}</span>
     </UiTag>
-    <h1 class="mb-1 font-bold typography-headline-4" data-testid="product-name">{{ product.name }}</h1>
+    <h1 class="mb-1 font-bold typography-headline-4" data-testid="product-name">
+      {{ product?.products?.items?.[0]?.name }}
+    </h1>
     <div class="my-1">
       <span class="mr-2 text-secondary-700 font-bold font-headings text-2xl" data-testid="price">
-        ${{ product.price?.value.amount }}
+        ${{ product?.products?.items?.[0]?.price_range.minimum_price.final_price.value }}
       </span>
       <span class="text-base font-normal text-neutral-500 line-through">
-        ${{ product.price?.regularPrice.amount }}
+        ${{ product?.products?.items?.[0]?.price_range?.maximum_price?.final_price.value }}
       </span>
     </div>
     <div class="inline-flex items-center mt-4 mb-2">
-      <SfRating size="xs" :value="product.rating?.average" :max="5" />
-      <SfCounter class="ml-1" size="xs">{{ product.rating?.count }}</SfCounter>
+      <SfRating size="xs" :value="0" :max="5" />
+      <SfCounter class="ml-1" size="xs">0</SfCounter>
       <SfLink href="#" variant="secondary" class="ml-2 text-xs text-neutral-500">
-        {{ $t('reviewsCount', { count: product.rating?.count }) }}
+        {{ $t('reviewsCount', { count: 0 }) }}
       </SfLink>
     </div>
-    <p class="mb-4 font-normal typography-text-sm" data-testid="product-description">
-      {{ product.description }}
-    </p>
+    <p
+      class="mb-4 font-normal typography-text-sm"
+      data-testid="product-description"
+      v-html="product?.products?.items?.[0]?.description?.html"
+    />
     <div class="py-4 mb-4 border-gray-200 border-y">
-      <UiTag class="w-full mb-4">
-        <SfIconShoppingCartCheckout />
-        {{ $t('numberInCart', { count: 1 }) }}
-      </UiTag>
       <div class="flex flex-col md:flex-row flex-wrap gap-4">
         <UiQuantitySelector :value="quantitySelectorValue" class="min-w-[145px] flex-grow flex-shrink-0 basis-0" />
         <SfButton type="button" size="lg" class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap">
@@ -98,7 +98,6 @@ import {
   SfIconPackage,
   SfIconFavorite,
   SfIconSell,
-  SfIconShoppingCartCheckout,
   SfIconShoppingCart,
 } from '@storefront-ui/vue';
 import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';

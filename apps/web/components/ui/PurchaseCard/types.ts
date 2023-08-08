@@ -1,5 +1,5 @@
-import { SfProduct } from '@vue-storefront/unified-data-model';
+import { ProductDetailsQuery } from '@vue-storefront/magento-types';
 
 export type PurchaseCardProps = {
-  product: SfProduct;
+  product: ProductDetailsQuery | undefined | null;
 };

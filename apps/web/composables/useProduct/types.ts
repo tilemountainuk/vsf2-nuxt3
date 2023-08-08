@@ -1,12 +1,13 @@
 import type { Ref } from 'vue';
-import type { SfProduct, Maybe } from '@vue-storefront/unified-data-model';
+import { ProductDetailsQuery } from '@vue-storefront/magento-types';
+import type { Maybe } from '@vue-storefront/unified-data-model';
 
 export interface UseProductState {
-  data: Maybe<SfProduct>;
+  data: Maybe<ProductDetailsQuery> | undefined | null;
   loading: boolean;
 }
 
-export type FetchProduct = (slug: string) => Promise<Ref<Maybe<SfProduct>>>;
+export type FetchProduct = (slug: string) => Promise<ProductDetailsQuery | undefined>;
 
 export interface UseProduct {
   data: Readonly<Ref<UseProductState['data']>>;
