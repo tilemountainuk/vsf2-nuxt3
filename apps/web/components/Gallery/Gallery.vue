@@ -39,7 +39,7 @@
       </SfScrollable>
     </div>
 
-    <div class="md:-order-1 overflow-hidden flex-shrink-0 basis-auto">
+    <div class="md:-order-1 overflow-hidden flex-shrink-0 basis-auto" v-if="images">
       <SfScrollable
         ref="thumbsReference"
         wrapper-class="hidden md:inline-flex"
@@ -175,7 +175,7 @@ const onChangeIndex = (index: number) => {
 };
 
 const onScroll = ({ left, scrollWidth }: SfScrollableOnScrollData) => {
-  if (!isPending.value) {
+  if (!isPending.value && props.images) {
     onChangeIndex(Math.round(left / (scrollWidth / props.images.length)));
   }
 };

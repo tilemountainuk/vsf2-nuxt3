@@ -31,6 +31,49 @@ const config = {
             }
           }`
         }),
+        'add-products-to-cart-custom-query': ({ variables, metadata }: {variables:any, metadata: any}) => ({
+          variables,
+          query: `
+            mutation addProductsToCart($cartId: String!, $cartItems: [CartItemInput!]!) {
+              addProductsToCart(cartId: $cartId, cartItems: $cartItems) {
+                cart {
+                  ${metadata.fields}
+                }
+                user_errors {
+                  code
+                  message
+                }
+              }
+            }`
+        }),
+        'cart-custom-query': ({ variables, metadata }: {variables:any, metadata: any}) => ({
+          variables,
+          query:`
+            query cart($cartId: String!) {
+              cart(cart_id:$cartId) {
+                ${metadata.fields}
+              }
+            }
+          `
+        }),
+        'apply-coupon-to-cart-custom-query': ({ variables, metadata }: {variables:any, metadata: any}) => ({
+          variables,
+          query: `
+            mutation applyCouponToCart($input: ApplyCouponToCartInput) {
+              applyCouponToCart(input: $input) {
+                ${metadata.fields}
+              }
+            }`
+        }),
+        'remove-coupon-from-cart-custom-query': ({ variables, metadata }: {variables:any, metadata: any}) => ({
+          variables,
+          query: `
+          mutation removeCouponFromCart($input: RemoveCouponFromCartInput) {
+            removeCouponFromCart(input: $input) {
+              ${metadata.fields}
+            }
+          }`
+        }),
       },
       configuration: {
         api: process.env.VSF_MAGENTO_GRAPHQL_URL,

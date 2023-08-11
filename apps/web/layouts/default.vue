@@ -92,6 +92,7 @@
     </header>
     <UiSearch :close="searchModalClose" />
   </SfModal>
+  <Notification />
 </template>
 
 <script setup lang="ts">
@@ -108,6 +109,7 @@ import {
   SfModal,
   useDisclosure,
 } from '@storefront-ui/vue';
+import Notification from '~/components/ui/Notification.vue';
 import { DefaultLayoutProps } from '~/layouts/types';
 
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();

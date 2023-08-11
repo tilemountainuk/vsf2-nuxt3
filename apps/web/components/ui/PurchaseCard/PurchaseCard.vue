@@ -25,15 +25,24 @@
         {{ $t('reviewsCount', { count: 0 }) }}
       </SfLink>
     </div>
-    <p
-      class="mb-4 font-normal typography-text-sm"
-      data-testid="product-description"
+    <div
+      v-if="product?.products?.items?.[0]?.description?.html"
       v-html="product?.products?.items?.[0]?.description?.html"
-    />
+    ></div>
     <div class="py-4 mb-4 border-gray-200 border-y">
       <div class="flex flex-col md:flex-row flex-wrap gap-4">
-        <UiQuantitySelector :value="quantitySelectorValue" class="min-w-[145px] flex-grow flex-shrink-0 basis-0" />
-        <SfButton type="button" size="lg" class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap">
+        <UiQuantitySelector
+          :value="quantitySelectorValue"
+          @on-update="updatedQuantitySelectorValue"
+          class="min-w-[145px] flex-grow flex-shrink-0 basis-0"
+        />
+        <SfButton
+          type="button"
+          size="lg"
+          v-if="product?.products?.items?.[0]?.sku"
+          class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap"
+          @click="productAddToCart(product?.products?.items?.[0]?.sku, quantitySelectorValue)"
+        >
           <template #prefix>
             <SfIconShoppingCart size="sm" />
           </template>
@@ -103,6 +112,11 @@ import {
 import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 
 defineProps<PurchaseCardProps>();
+const { productAddToCart } = useCart();
 
 const quantitySelectorValue = ref(1);
+
+const updatedQuantitySelectorValue = (updatedCount: number) => {
+  quantitySelectorValue.value = updatedCount;
+};
 </script>
