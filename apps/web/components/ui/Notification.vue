@@ -29,7 +29,7 @@
               '-900'
             "
             class="p-1.5 md:p-2 ml-auto rounded-md focus-visible:outline focus-visible:outline-offset"
-            aria-label="Close positive alert"
+            :aria-label="'Close ' + notification.type + ' alert'"
             @click="close"
           >
             <SfIconClose class="hidden md:block" />
