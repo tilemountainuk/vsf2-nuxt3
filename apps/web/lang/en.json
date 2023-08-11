@@ -293,9 +293,40 @@
     },
     "ordersAndReturns": {
       "heading": "Orders & Returns",
+      "orderId":"Order ID",
+      "orderDate":"Order date",
+      "amount":"Amount",
+      "status":"Status",
+      "details":"Details",
+      "myOrders":"My orders",
+      "noOrders": "You haven’t shopped with us yet",
+      "continue": "Continue shopping",
+      "noOrdersAltText": "No orders",
+      "returnsHeading": "Returns",
+      "returnsAltText": "No returns",
+      "returnsDescription": "You haven't returned products yet",
       "section": {
         "myOrders": "My Orders",
         "returns": "Returns"
+      },
+      "orderDetails": {
+        "heading": "Order details",
+        "orderId": "Order ID",
+        "orderDate": "Order date",
+        "paymentAmount": "Payment amount",
+        "status": "Status",
+        "price": "Price",
+        "quantity": "Quantity",
+        "subtotal": "Subtotal",
+        "tableCaption": "Order details",
+        "product": "Product",
+        "itemsSubtotal": "Items Subtotal",
+        "delivery": "Delivery",
+        "estimatedTax": "Estimated Sales Tax",
+        "total": "Total", 
+        "billingAddress": "Billing address",
+        "paymentMethod": "Payment method",
+        "shippingAddress": "Shipping address"
       }
     }
   },
