@@ -27,10 +27,7 @@ const { t } = useI18n();
 
 await fetchProducts();
 
-const breadcrumbs: Breadcrumb[] = [
-  { name: t('home'), link: '/' },
-  { name: t('allProducts'), link: '/category' },
-];
+const breadcrumbs: Breadcrumb[] = [{ name: t('home'), link: '/' }];
 const subCategories = productsCatalog.value?.subCategories;
 const categories = computed(
   () =>

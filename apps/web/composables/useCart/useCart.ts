@@ -24,7 +24,7 @@ export const useCart: UseCartReturn = () => {
   const state = useState<UseCartState>('useCart', () => ({
     data: null,
     loading: false,
-    cartId: 'TU0BWgigwe2NvhtX6J6tvNs9xNL1iVSF',
+    cartId: 'Uf7ZHqFozj8sfzwySLnIYO7ihNuSkYXX',
     creatingEmptyCartLoading: false,
   }));
 

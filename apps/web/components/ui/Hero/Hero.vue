@@ -21,24 +21,13 @@
           {{ title }}
         </h1>
         <p class="typography-text-base md:typography-text-lg">{{ description }}</p>
-        <div class="flex flex-col md:flex-row gap-4 mt-6">
-          <SfButton size="lg" :tag="NuxtLink" :to="primaryButtonLink">
-            {{ primaryButtonText }}
-          </SfButton>
-          <SfButton size="lg" :tag="NuxtLink" :to="secondaryButtonLink" class="bg-white" variant="secondary">
-            {{ secondaryButtonText }}
-          </SfButton>
-        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { SfButton } from '@storefront-ui/vue';
 import type { HeroProps } from '~/components/ui/Hero/types';
 
 defineProps<HeroProps>();
-
-const NuxtLink = resolveComponent('NuxtLink');
 </script>

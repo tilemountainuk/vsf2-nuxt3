@@ -31,7 +31,6 @@ const mappedImages: MediaGalleryInterface[] = product?.value?.products?.items?.[
 
 const breadcrumbs: Breadcrumb[] = [
   { name: t('home'), link: '/' },
-  { name: t('category'), link: '/category' },
   { name: product.value?.products?.items?.[0]?.name as string, link: `#` },
 ];
 
