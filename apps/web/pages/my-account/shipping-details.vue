@@ -27,7 +27,7 @@
         {{ $t('account.accountSettings.shippingDetails.shippingAddress') }}
       </h3>
     </header>
-    <AddressForm :saved-address="userShippingAddress" type="shippingAddress" @on-save="close" @on-close="close" />
+    <!-- <AddressForm :saved-address="userShippingAddress" type="shippingAddress" @on-save="close" @on-close="close" /> -->
   </UiModal>
 </template>
 

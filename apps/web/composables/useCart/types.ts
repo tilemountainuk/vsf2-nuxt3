@@ -4,7 +4,8 @@ import type { AddProductsToCartOutput, Cart } from '@vue-storefront/magento-type
 import type { Maybe } from '@vue-storefront/unified-data-model';
 
 export interface UseCartState {
-  data: Maybe<Cart> | undefined;
+  // data: Maybe<Cart> | undefined;
+  data: any;
   loading: boolean;
   cartId: string;
   creatingEmptyCartLoading: boolean;
@@ -19,10 +20,12 @@ export type ProductAddToCart = (
 ) => Promise<Maybe<{ addProductsToCart: AddProductsToCartOutput | undefined | null } | undefined> | undefined>;
 
 export interface UseCart {
-  data: Readonly<Ref<UseCartState['data']>>;
+  // data: Readonly<Ref<UseCartState['data']>>;
+  data: any;
   loading: Readonly<Ref<boolean>>;
   fetchCard: FetchCard;
   productAddToCart: ProductAddToCart;
+  cartId: any;
 }
 
 export type UseCartReturn = () => UseCart;

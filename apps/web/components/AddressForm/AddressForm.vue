@@ -2,24 +2,24 @@
   <form
     class="grid grid-cols-1 md:grid-cols-[50%_1fr_120px] gap-4"
     data-testid="address-form"
-    @submit.prevent="$emit('on-save', defaultValues)"
+    @submit.prevent="storeAddressFormData"
   >
     <label>
       <UiFormLabel>{{ $t('form.firstNameLabel') }}</UiFormLabel>
-      <SfInput name="firstName" autocomplete="given-name" v-model="defaultValues.firstName" required />
+      <SfInput name="firstName" autocomplete="given-name" v-model="defaultValues.firstname" required />
     </label>
     <label class="md:col-span-2">
       <UiFormLabel>{{ $t('form.lastNameLabel') }}</UiFormLabel>
-      <SfInput name="lastName" autocomplete="family-name" v-model="defaultValues.lastName" required />
+      <SfInput name="lastName" autocomplete="family-name" v-model="defaultValues.lastname" required />
     </label>
     <label class="md:col-span-3">
       <UiFormLabel>{{ $t('form.phoneLabel') }}</UiFormLabel>
-      <SfInput name="phone" type="tel" autocomplete="tel" v-model="defaultValues.phone" required />
+      <SfInput name="telephone" type="tel" autocomplete="tel" v-model="defaultValues.telephone" required />
     </label>
     <label class="md:col-span-3">
       <UiFormLabel>{{ $t('form.countryLabel') }}</UiFormLabel>
       <SfSelect
-        v-model="defaultValues.country"
+        v-model="defaultValues.country_code"
         name="country"
         :placeholder="$t('form.selectPlaceholder')"
         autocomplete="country-name"
@@ -30,37 +30,25 @@
     </label>
     <label class="md:col-span-2">
       <UiFormLabel>{{ $t('form.streetNameLabel') }}</UiFormLabel>
-      <SfInput name="streetName" autocomplete="address-line1" v-model="defaultValues.streetName" required />
+      <SfInput name="streetName" autocomplete="address-line1" v-model="defaultValues.street[0]" required />
       <UiFormHelperText>{{ $t('form.streetNameHelp') }}</UiFormHelperText>
     </label>
     <label>
       <UiFormLabel>{{ $t('form.streetNumberLabel') }}</UiFormLabel>
-      <SfInput name="streetNumber" v-model="defaultValues.streetNumber" />
+      <SfInput name="streetNumber" v-model="defaultValues.street[1]" />
       <UiFormHelperText>{{ $t('form.streetNumberHelp') }}</UiFormHelperText>
     </label>
     <label class="md:col-span-3">
       <UiFormLabel>{{ $t('form.cityLabel') }}</UiFormLabel>
       <SfInput name="city" autocomplete="address-level2" v-model="defaultValues.city" required />
     </label>
-    <label class="md:col-span-2">
-      <UiFormLabel>{{ $t('form.stateLabel') }}</UiFormLabel>
-      <SfSelect
-        v-model="defaultValues.state"
-        name="state"
-        autocomplete="address-level1"
-        :placeholder="$t('form.selectPlaceholder')"
-        required
-      >
-        <option v-for="state in states" :key="state">{{ state }}</option>
-      </SfSelect>
-    </label>
     <label>
       <UiFormLabel>{{ $t('form.postalCodeLabel') }}</UiFormLabel>
-      <SfInput name="postalCode" autocomplete="postal-code" v-model="defaultValues.postalCode" required />
+      <SfInput name="postalCode" autocomplete="postal-code" v-model="defaultValues.postcode" required />
     </label>
 
     <label v-if="type === 'billingAddress'" class="md:col-span-3 flex items-center gap-2">
-      <SfCheckbox name="useAsShipping" />
+      <SfCheckbox name="useAsShipping" v-model="useForShipping" />
       {{ $t('form.useAsShippingLabel') }}
     </label>
 
@@ -79,6 +67,7 @@
 </template>
 <script lang="ts" setup>
 import { SfButton, SfCheckbox, SfInput, SfLoaderCircular, SfSelect } from '@storefront-ui/vue';
+import { useCart } from '~/composables/useCart/useCart';
 import type { AddressFormProps } from './types';
 
 const props = defineProps<AddressFormProps>();
@@ -86,19 +75,54 @@ const props = defineProps<AddressFormProps>();
 const isCartUpdateLoading = false;
 
 const { savedAddress } = toRefs(props);
+const { cartId } = useCart();
 
 const defaultValues = ref({
-  firstName: savedAddress?.value?.firstName ?? '',
-  lastName: savedAddress?.value?.lastName ?? '',
-  phone: savedAddress?.value?.phoneNumber ?? '',
-  country: savedAddress?.value?.country ?? '',
-  streetName: savedAddress?.value?.address1 ?? '',
-  streetNumber: savedAddress?.value?.address2 ?? '',
-  city: savedAddress?.value?.city ?? '',
-  state: savedAddress?.value?.state ?? '',
-  postalCode: savedAddress?.value?.postalCode ?? '',
+  firstname: Array.isArray(savedAddress?.value)
+    ? savedAddress?.value?.[0]?.firstname
+    : savedAddress?.value?.firstname ?? '',
+  lastname: Array.isArray(savedAddress?.value)
+    ? savedAddress?.value?.[0]?.lastname
+    : savedAddress?.value?.lastname ?? '',
+  telephone: Array.isArray(savedAddress?.value)
+    ? savedAddress?.value?.[0]?.telephone
+    : savedAddress?.value?.telephone ?? '',
+  country_code: Array.isArray(savedAddress?.value)
+    ? savedAddress?.value?.[0]?.country?.code
+    : savedAddress?.value?.country?.code ?? '',
+  street: Array.isArray(savedAddress?.value)
+    ? savedAddress?.value?.[0]?.street ?? ''
+    : savedAddress?.value?.street ?? '',
+  city: Array.isArray(savedAddress?.value) ? savedAddress?.value?.[0]?.city ?? '' : savedAddress?.value?.city ?? '',
+  postcode: Array.isArray(savedAddress?.value)
+    ? savedAddress?.value?.[0]?.postcode ?? ''
+    : savedAddress?.value?.postcode ?? '',
 });
-const countries = ['US'];
-const states = ['California'];
-defineEmits(['on-save', 'on-close']);
+
+const useForShipping = ref(false);
+const countries = ['GB'];
+const emit = defineEmits(['on-save', 'on-close']);
+
+const { saveBillingAddress, saveShippingAddress } = useCheckout();
+
+const storeAddressFormData = async () => {
+  const params = {
+    cart_id: cartId.value,
+    billing_address: {
+      address: defaultValues.value,
+      use_for_shipping: useForShipping.value,
+    },
+  };
+  if (props.type === 'shippingAddress') {
+    const result = await saveShippingAddress(defaultValues.value);
+    if (result === 'Success') {
+      emit('on-save');
+    }
+  } else {
+    const result = await saveBillingAddress(params);
+    if (result === 'Success') {
+      emit('on-save');
+    }
+  }
+};
 </script>

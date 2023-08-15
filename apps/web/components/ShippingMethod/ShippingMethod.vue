@@ -4,21 +4,26 @@
       <h3 class="text-neutral-900 text-lg font-bold">{{ $t('shippingMethod.heading') }}</h3>
     </div>
     <div class="mt-4">
-      <ul v-if="shippingMethods?.methods" class="grid gap-y-4 md:grid-cols-2 md:gap-x-4" role="radiogroup">
+      <ul v-if="shippingMethods" class="grid gap-y-4 md:grid-cols-2 md:gap-x-4" role="radiogroup">
         <SfListItem
-          v-for="{ id, name, estimatedDelivery, price: { amount } } in shippingMethods.methods"
+          v-for="(shippingMethod, index) in shippingMethods"
           tag="label"
-          :key="id"
+          :key="index"
           class="border rounded-md items-start"
-          @click="radioModel = id"
         >
           <div class="flex gap-2">
-            <SfRadio v-model="radioModel" :checked="cart?.shippingMethod?.id === id" :value="id" />
+            <SfRadio
+              v-model="radioModel"
+              @click="updateShippingMethod(shippingMethod?.method_code, shippingMethod?.carrier_code)"
+              :checked="cart?.shippingMethod?.id === shippingMethod?.method_code"
+              :value="shippingMethod?.method_code"
+            />
             <div>
-              <p>{{ name }}</p>
-              <p class="text-xs text-neutral-500">{{ estimatedDelivery }}</p>
+              <p>{{ shippingMethod?.method_title }}</p>
+              <p class="ml-auto">
+                {{ shippingMethod?.price_incl_tax.currency }} {{ shippingMethod?.price_incl_tax.value }}
+              </p>
             </div>
-            <p class="ml-auto">${{ amount }}</p>
           </div>
         </SfListItem>
       </ul>
@@ -37,5 +42,10 @@ import type { ShippingMethodProps } from '~/components/ShippingMethod/types';
 defineProps<ShippingMethodProps>();
 
 const { data: cart } = useCart();
-const radioModel = ref(cart.value?.shippingMethod?.id);
+const { setShippingMethodsOnCart } = useCheckout();
+const radioModel = ref(cart.value?.shipping_addresses?.[0]?.selected_shipping_method.method_code);
+
+const updateShippingMethod = (method_code: string, carrier_code: string) => {
+  setShippingMethodsOnCart(method_code, carrier_code);
+};
 </script>

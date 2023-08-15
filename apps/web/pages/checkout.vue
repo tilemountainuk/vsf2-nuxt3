@@ -15,7 +15,7 @@
           :heading="$t('billing.heading')"
           :description="$t('billing.description')"
           :button-text="$t('billing.addButton')"
-          :saved-address="cart.billingAddress"
+          :saved-address="cart.billing_address"
           type="billingAddress"
         />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
@@ -23,17 +23,20 @@
           :heading="$t('shipping.heading')"
           :description="$t('shipping.description')"
           :button-text="$t('shipping.addButton')"
-          :saved-address="cart.shippingAddress"
+          :saved-address="cart.shipping_addresses"
           type="shippingAddress"
         />
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
-        <ShippingMethod :shipping-methods="shippingMethods" />
+        <ShippingMethod
+          v-if="cart && cart.shipping_addresses && cart.shipping_addresses.length > 0"
+          :shipping-methods="cart.shipping_addresses[0].available_shipping_methods"
+        />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <CheckoutPayment :active-payment="activePayment" @update:active-payment="activePayment = $event" />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
       </div>
       <OrderSummary v-if="cart" :cart="cart" class="col-span-5 md:sticky md:top-20 h-fit">
-        <SfButton :tag="NuxtLink" :to="paths.orderSuccess" size="lg" class="w-full mb-4 md:mb-0">
+        <SfButton @click="placeOrder" size="lg" class="w-full mb-4 md:mb-0">
           {{ $t('placeOrder') }}
         </SfButton>
         <p class="text-sm text-center mt-4 pb-4 md:pb-0">
@@ -69,9 +72,13 @@ definePageMeta({
   layout: false,
 });
 
-const NuxtLink = resolveComponent('NuxtLink');
 const { data: cart } = useCart();
-const { data: shippingMethods, getShippingMethods } = useCartShippingMethods();
+const { setPaymentMethodOnCart, placeOrder } = useCheckout();
+const { getShippingMethods } = useCartShippingMethods();
 await getShippingMethods();
 const activePayment = ref<PaymentMethod>(PaymentMethod.CreditCard);
+
+watch(activePayment, () => {
+  setPaymentMethodOnCart(activePayment.value);
+});
 </script>

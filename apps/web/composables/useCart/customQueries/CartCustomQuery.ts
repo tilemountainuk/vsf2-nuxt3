@@ -39,6 +39,75 @@ export const cartCustomQuery = {
         id
         total_quantity
         is_virtual
+        billing_address {
+            city
+            company
+            country {
+                code
+                label
+            }
+            firstname
+            lastname
+            postcode
+            region {
+                code
+                label
+                region_id
+            }
+            street
+            telephone
+        }
+        selected_payment_method {
+            code
+            title
+        }
+        shipping_addresses {
+            available_shipping_methods {
+                amount {
+                    currency
+                    value
+                }
+                available
+                carrier_code
+                carrier_title
+                method_code
+                method_title
+                price_incl_tax {
+                    currency
+                    value
+                }
+            }
+            selected_shipping_method {
+                amount {
+                    currency
+                    value
+                }
+                carrier_code
+                carrier_title
+                method_code
+                method_title
+                price_incl_tax {
+                    currency
+                    value
+                }
+            }
+            city
+            company
+            country {
+                code
+                label
+            }
+            firstname
+            lastname
+            postcode
+            region {
+                code
+                label
+                region_id
+            }
+            street
+            telephone
+        }
         applied_coupons { 
             code
         }

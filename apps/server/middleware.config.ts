@@ -74,6 +74,51 @@ const config = {
             }
           }`
         }),
+        'set-billing-address-on-cart-custom-query': ({ variables, metadata }: {variables:any, metadata: any}) => ({
+          variables,
+          query: `
+            mutation setBillingAddressOnCart($input: SetBillingAddressOnCartInput) {
+              setBillingAddressOnCart(input: $input) {
+              cart {
+                ${metadata.fields}
+              }
+            }
+          }`
+        }),
+        'set-shipping-addresses-on-cart-custom-query': ({ variables, metadata }: {variables:any, metadata: any}) => ({
+          variables,
+          query: `
+            mutation setShippingAddressesOnCart($input: SetShippingAddressesOnCartInput) {
+              setShippingAddressesOnCart(input: $input) {
+              cart {
+                ${metadata.fields}
+              }
+            }
+          }`
+        }),
+        'set-shipping-methods-on-cart-custom-query': ({ variables, metadata }: {variables:any, metadata: any}) => ({
+          variables,
+          query: `
+            mutation setShippingMethodsOnCart($input: SetShippingMethodsOnCartInput) {
+              setShippingMethodsOnCart(input: $input) {
+                cart {
+                  ${metadata.fields}
+                }
+              }
+            }`
+        }),
+        'set-payment-method-on-cart-custom-query': ({ variables, metadata }: {variables:any, metadata: any}) => ({
+          variables,
+          query: `
+            mutation setPaymentMethodOnCart($input: SetPaymentMethodOnCartInput) {
+              setPaymentMethodOnCart(input: $input) {
+                cart {
+                  ${metadata.fields}
+                }
+              }
+            }
+          `
+        }),
       },
       configuration: {
         api: process.env.VSF_MAGENTO_GRAPHQL_URL,

@@ -1,5 +1,7 @@
-import { SfShippingMethods, Maybe } from '@vue-storefront/unified-data-model';
+import { AvailableShippingMethod } from '@vue-storefront/magento-types';
+import { Maybe } from '@vue-storefront/unified-data-model';
 
 export type ShippingMethodProps = {
-  shippingMethods: Maybe<SfShippingMethods>;
+  // shippingMethods: AvailableShippingMethod;
+  shippingMethods: any;
 };

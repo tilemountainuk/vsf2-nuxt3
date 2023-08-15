@@ -1,8 +1,6 @@
 export enum PaymentMethod {
-  CreditCard = 'credit-card',
-  PayPal = 'pay-pal',
-  ApplePay = 'apple-pay',
-  GooglePay = 'google-pay',
+  CreditCard = 'checkoutcom_card_payment',
+  PayPal = 'paypal_express',
 }
 
 export type CheckoutPaymentProps = {

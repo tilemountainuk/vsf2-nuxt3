@@ -125,9 +125,7 @@ fetchCustomer();
 usePageTitle();
 
 const NuxtLink = resolveComponent('NuxtLink');
-const cartLineItemsCount = computed(
-  () => cart.value?.lineItems.reduce((total, { quantity }) => total + quantity, 0) ?? 0,
-);
+const cartLineItemsCount = computed(() => cart.value?.items.length ?? 0);
 
 const accountDropdown = [
   {

@@ -28,7 +28,7 @@
         {{ $t('account.accountSettings.billingDetails.billingAddress') }}
       </h3>
     </header>
-    <AddressForm :saved-address="userShippingAddress" type="billingAddress" @on-save="close" @on-close="close" />
+    <!-- <AddressForm :saved-address="userShippingAddress" type="billingAddress" @on-save="close" @on-close="close" /> -->
   </UiModal>
 </template>
 

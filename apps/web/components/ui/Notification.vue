@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed md:max-w-lg w-auto top-14 mt-2 md:top-20 md:right-6 lg:right-10 inset-x-2 md:left-auto font-normal"
+    class="fixed md:max-w-lg w-auto z-10 bg-white top-14 mt-2 md:top-20 md:right-6 lg:right-10 inset-x-2 md:left-auto font-normal"
     data-testid="notifications"
   >
     <div class="flex flex-col gap-2 items-end" v-if="isOpen && notifications.length > 0">

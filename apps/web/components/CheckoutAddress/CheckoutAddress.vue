@@ -6,12 +6,24 @@
         {{ $t('contactInfo.edit') }}
       </SfButton>
     </div>
-
-    <div v-if="savedAddress" class="mt-2 md:w-[520px]">
-      <p>{{ `${savedAddress.firstName} ${savedAddress.lastName}` }}</p>
-      <p>{{ savedAddress.phoneNumber }}</p>
-      <p>{{ `${savedAddress.address1} ${savedAddress.address2}` }}</p>
-      <p>{{ `${savedAddress.state}, ${savedAddress.postalCode}` }}</p>
+    <div v-if="!Array.isArray(savedAddress) && savedAddress && type === 'billingAddress'" class="mt-2 md:w-[520px]">
+      <p>{{ `${savedAddress.firstname} ${savedAddress.lastname}` }}</p>
+      <p>{{ savedAddress.telephone }}</p>
+      <p>{{ `${savedAddress.street}` }}</p>
+      <p>{{ `${savedAddress?.country?.code}` }}</p>
+      <p>{{ `${savedAddress.postcode}` }}</p>
+    </div>
+    <div
+      v-else-if="Array.isArray(savedAddress) && savedAddress && type === 'shippingAddress'"
+      class="mt-2 md:w-[520px]"
+    >
+      <div v-for="(address, index) in savedAddress" :key="index">
+        <p>{{ address?.firstname }} {{ address?.lastname }}</p>
+        <p>{{ address?.telephone }}</p>
+        <p>{{ address?.street?.[0] }} {{ address?.street?.[1] }}</p>
+        <p>{{ address?.country?.code }}</p>
+        <p>{{ address?.postcode }}</p>
+      </div>
     </div>
 
     <div v-else class="w-full md:max-w-[520px]">

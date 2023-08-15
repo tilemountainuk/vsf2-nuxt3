@@ -32,10 +32,12 @@
     </NarrowContainer>
   </main>
   <UiFooter />
+  <Notification />
 </template>
 
 <script setup lang="ts">
 import { SfButton, SfIconArrowBack, SfLoaderCircular } from '@storefront-ui/vue';
+import Notification from '~/components/ui/Notification.vue';
 
 const { fetchCard, data: cart, loading: isLoading } = useCart();
 

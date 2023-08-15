@@ -1,8 +1,8 @@
 <template>
-  <form data-testid="contact-information-form" @submit.prevent="$emit('on-save')">
+  <form data-testid="contact-information-form" @submit.prevent="storeFormData">
     <label>
       <UiFormLabel>{{ $t('contactInfo.email') }}</UiFormLabel>
-      <SfInput name="email" type="email" v-model="cart.customerEmail" required />
+      <SfInput name="email" type="email" v-model="cartEmail" required />
     </label>
     <div class="mt-4 flex flex-col-reverse md:flex-row md:justify-end">
       <SfButton type="reset" class="md:mr-4" variant="secondary" @click="$emit('on-cancel')">
@@ -15,8 +15,17 @@
 <script setup>
 import { SfButton, SfInput } from '@storefront-ui/vue';
 
-defineEmits(['on-save', 'on-cancel']);
+const { saveEmailAddress, cartEmail } = useCheckout();
+
+const emit = defineEmits(['on-save', 'on-cancel']);
 const cart = ref({
-  customerEmail: '',
+  customerEmail: cartEmail.value || '',
 });
+const storeFormData = async () => {
+  const result = await saveEmailAddress(cartEmail.value || cart.value.customerEmail);
+  console.log('Result :', result);
+  if (result === 'Success') {
+    emit('on-save');
+  }
+};
 </script>

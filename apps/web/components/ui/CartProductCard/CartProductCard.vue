@@ -16,8 +16,7 @@
         />
       </SfLink>
       <div class="absolute top-0 left-0 text-white bg-secondary-600 py-1 pl-1.5 pr-2 text-xs font-medium">
-        <SfIconSell size="xs" class="mr-1" />
-        {{ $t('sale') }}
+        {{ imageAlt }}
       </div>
     </div>
     <div class="flex flex-col pl-4 min-w-[180px] flex-1">
@@ -29,6 +28,7 @@
       >
         {{ name }}
       </SfLink>
+      <p>Quantity: {{ value }}</p>
       <div class="my-2 sm:mb-0">
         <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">
           <li v-for="attribute in attributes" :key="attribute.name">
@@ -57,7 +57,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfLink, SfIconSell } from '@storefront-ui/vue';
+import { SfLink } from '@storefront-ui/vue';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
 
 defineProps<CartProductCardProps>();
