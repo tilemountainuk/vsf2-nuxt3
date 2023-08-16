@@ -32,7 +32,7 @@
         ref="dropdownListRef"
         class="py-2 bg-white border border-solid rounded-md border-neutral-100 drop-shadow-md"
       >
-        <li v-for="{ highlight, rest, product } in snippets" :key="product?.sku">
+        <li v-for="{ highlight, product } in snippets" :key="product?.sku">
           <SfListItem
             tag="button"
             type="button"
@@ -42,8 +42,7 @@
           >
             <nuxt-link :to="getProductUrl(product?.url_key)">
               <p class="text-left text-black">
-                <span>{{ highlight }}</span>
-                <span class="font-medium">{{ rest }}</span>
+                <span v-html="highlight"></span>
               </p>
             </nuxt-link>
           </SfListItem>
@@ -148,14 +147,22 @@ watchDebounced(
           if (dataNew.products && dataNew.products.items) {
             snippets.value = dataNew.products.items
               .filter((product) =>
-                product && product.name ? product.name.toLowerCase().startsWith(inputModel.value.toLowerCase()) : '',
+                product && product.name ? product.name.toLowerCase().includes(inputModel.value.toLowerCase()) : '',
               )
               .map((product) => {
+                const matchIndex =
+                  product && product.name ? product.name.toLowerCase().indexOf(inputModel.value.toLowerCase()) : -1;
                 const highlight =
-                  product && product.name ? product.name.slice(0, Math.max(0, inputModel.value.length)) : '';
-                const rest = product && product.name ? product?.name.slice(inputModel.value.length) : '';
+                  product && product.name
+                    ? product.name.slice(0, matchIndex) +
+                      `<span class="font-medium">${product.name.slice(
+                        matchIndex,
+                        matchIndex + inputModel.value.length,
+                      )}</span>` +
+                      product.name.slice(matchIndex + inputModel.value.length)
+                    : '';
                 const url = product?.url_key;
-                return { highlight, rest, url, product };
+                return { highlight, url, product };
               });
           }
           // const data = await mockAutocompleteRequest(inputModel.value);
