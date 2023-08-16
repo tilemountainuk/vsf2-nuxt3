@@ -24,6 +24,9 @@
       <SfButton :tag="NuxtLink" :to="paths.checkout" size="lg" class="w-full mb-4 md:mb-0">
         {{ $t('goToCheckout') }}
       </SfButton>
+      <SfButton tag="a" :href="externalCheckoutUrl" size="lg" class="w-full mt-4 mb-4 md:mb-0">
+        {{ $t('goToCheckout') }}
+      </SfButton>
     </OrderSummary>
   </div>
   <div v-else class="flex items-center justify-center flex-col pt-24 pb-32" data-testid="cart-page-content">
@@ -35,8 +38,9 @@
 <script lang="ts" setup>
 import { SfButton } from '@storefront-ui/vue';
 
-const { data: cart } = useCart();
+const { data: cart, cartId } = useCart();
 
 const cartData = computed(() => cart.value?.items);
+const externalCheckoutUrl = 'https://vsfm2.tilemountain.co.uk/vue/cart/sync/token//cart/' + cartId.value;
 const NuxtLink = resolveComponent('NuxtLink');
 </script>

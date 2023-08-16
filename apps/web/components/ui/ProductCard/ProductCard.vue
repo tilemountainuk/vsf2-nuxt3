@@ -32,12 +32,6 @@
       <span class="block pb-2 font-bold typography-text-sm" data-testid="product-card-vertical-price">
         ${{ price }}
       </span>
-      <SfButton type="button" size="sm">
-        <template #prefix>
-          <SfIconShoppingCart size="sm" />
-        </template>
-        {{ $t('addToCartShort') }}
-      </SfButton>
     </div>
   </div>
 </template>
