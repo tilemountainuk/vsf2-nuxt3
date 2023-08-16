@@ -24,26 +24,26 @@
             data-testid="category-grid"
           >
             <UiProductCard
-              v-for="({ id, name, rating, price, primaryImage, slug }, index) in products"
-              :key="id"
+              v-for="({ uid, name, price_range, thumbnail, url_key }, index) in products"
+              :key="uid"
               :name="name ?? ''"
-              :rating-count="rating?.count"
-              :rating="rating?.average"
-              :price="price?.value.amount"
-              :image-url="primaryImage?.url ?? ''"
-              :image-alt="primaryImage?.alt ?? ''"
-              :slug="slug"
+              :rating-count="0"
+              :rating="0"
+              :price="price_range?.maximum_price?.regular_price?.value"
+              :image-url="thumbnail?.url ?? ''"
+              :image-alt="name ?? ''"
+              :slug="url_key"
               :priority="index === 0"
             />
           </section>
           <CategoryEmptyState v-else />
-          <UiPagination
+          <!-- <UiPagination
             v-if="totalProducts > itemsPerPage"
             :current-page="1"
             :total-items="totalProducts"
             :page-size="itemsPerPage"
             :max-visible-pages="maxVisiblePages"
-          />
+          /> -->
         </div>
       </div>
     </div>

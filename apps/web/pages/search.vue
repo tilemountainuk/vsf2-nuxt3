@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout name="default">
-    <CategoryPageContent
+    <!-- <CategoryPageContent
       v-if="productsCatalog"
       :title="$t('resultsFor', { phrase: query.search })"
       :total-products="productsCatalog.pagination.totalResults"
@@ -10,7 +10,7 @@
         <CategorySorting />
         <CategoryFilters :facets="productsCatalog.facets" />
       </template>
-    </CategoryPageContent>
+    </CategoryPageContent> -->
   </NuxtLayout>
 </template>
 
@@ -19,8 +19,8 @@ definePageMeta({
   layout: false,
 });
 
-const { query } = useRoute();
-const { fetchProducts, data: productsCatalog } = useProducts();
+// const { query } = useRoute();
+// const { fetchProducts, data: productsCatalog } = useProducts();
 
-await fetchProducts();
+// await fetchProducts();
 </script>

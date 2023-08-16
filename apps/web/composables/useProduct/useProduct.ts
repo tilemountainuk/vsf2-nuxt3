@@ -26,6 +26,7 @@ export const useProduct: UseProductReturn = (slug) => {
     const { data, error } = await useAsyncData(() =>
       useSdk().magento.productDetails(
         {
+          search: slug,
           pageSize: 20,
           currentPage: 1,
           filter: {

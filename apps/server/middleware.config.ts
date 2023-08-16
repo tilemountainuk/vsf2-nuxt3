@@ -16,6 +16,15 @@ const config = {
     magento: {
       location: '@vue-storefront/magento-api/server',
       customQueries: {
+        'category-search-custom-query': ({ variables, metadata }: {variables:any, metadata: any}) => ({
+          variables,
+          query: `
+          query categorySearch($filters: CategoryFilterInput) {
+            categoryList(filters: $filters) {
+              ${metadata.fields}
+            }
+          }`
+        }),
         'product-details-custom-query': ({ variables, metadata }: {variables:string, metadata: any}) => ({
           variables,
           query: `

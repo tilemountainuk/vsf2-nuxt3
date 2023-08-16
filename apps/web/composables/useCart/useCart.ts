@@ -36,12 +36,16 @@ export const useCart: UseCartReturn = () => {
   const fetchCard: FetchCard = async () => {
     state.value.loading = true;
     try {
-      const { data, error } = await useAsyncData<CartResponse<CartQuery>>(() =>
-        useSdk().magento.cart({ cartId: state.value.cartId }, { customQuery: cartCustomQuery }),
-      );
-      useHandleError(error.value);
-      state.value.data = data.value?.data.cart;
-      return data.value;
+      if (state.value.cartId) {
+        const { data, error } = await useAsyncData<CartResponse<CartQuery>>(() =>
+          useSdk().magento.cart({ cartId: state.value.cartId }, { customQuery: cartCustomQuery }),
+        );
+        useHandleError(error.value);
+        state.value.data = data.value?.data.cart;
+        return data.value;
+      } else {
+        return null;
+      }
     } catch (error) {
       throw new Error(error as string);
     } finally {
