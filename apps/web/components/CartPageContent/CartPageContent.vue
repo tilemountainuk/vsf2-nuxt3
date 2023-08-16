@@ -25,7 +25,7 @@
         {{ $t('goToCheckout') }}
       </SfButton>
       <SfButton tag="a" :href="externalCheckoutUrl" size="lg" class="w-full mt-4 mb-4 md:mb-0">
-        {{ $t('goToCheckout') }}
+        Go to External Checkout
       </SfButton>
     </OrderSummary>
   </div>
