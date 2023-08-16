@@ -60,7 +60,7 @@
                   <li v-for="item in children" :key="item.name">
                     <SfListItem
                       :tag="NuxtLink"
-                      :href="`/category/${item.url_key}`"
+                      :href="`/c/${item.url_key}`"
                       size="sm"
                       role="none"
                       class="typography-text-base font-normal text-neutral-900 md:typography-text-sm py-4 md:py-1.5"
