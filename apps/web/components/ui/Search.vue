@@ -40,7 +40,7 @@
             @click="() => selectValue(product?.name)"
             @keydown.enter.space.prevent="selectValue(product?.name)"
           >
-            <nuxt-link :to="getProductUrl(product?.url_path)">
+            <nuxt-link :to="getProductUrl(product?.url_key)">
               <p class="text-left text-black">
                 <span>{{ highlight }}</span>
                 <span class="font-medium">{{ rest }}</span>
@@ -173,7 +173,7 @@ watchDebounced(
 );
 const getProductUrl = (url: string) => {
   if (url) {
-    return url + '.html';
+    return '/product/' + url;
   }
 };
 </script>

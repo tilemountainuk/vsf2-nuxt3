@@ -8,7 +8,7 @@
       <span class="font-medium">{{ $t('successInfoMessage') }}</span>
       <div class="border border-1 border-neutral-200 rounded bg-neutral-100 p-4 w-full my-4 text-sm">
         <h2 class="font-medium text-base mt-4">{{ $t('orderNumber') }}</h2>
-        <p>123456789</p>
+        <p>{{ orderId }}</p>
       </div>
       <SfButton :tag="NuxtLink" href="/" class="max-md:w-full" variant="secondary">
         {{ $t('continueShopping') }}
@@ -19,6 +19,8 @@
 
 <script setup lang="ts">
 import { SfButton } from '@storefront-ui/vue';
+
+const { orderId } = useCheckout();
 
 const NuxtLink = resolveComponent('NuxtLink');
 

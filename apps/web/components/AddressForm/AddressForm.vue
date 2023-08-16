@@ -30,12 +30,12 @@
     </label>
     <label class="md:col-span-2">
       <UiFormLabel>{{ $t('form.streetNameLabel') }}</UiFormLabel>
-      <SfInput name="streetName" autocomplete="address-line1" v-model="defaultValues.street[0]" required />
+      <SfInput name="streetName" autocomplete="address-line1" v-model="defaultValues.streetName" required />
       <UiFormHelperText>{{ $t('form.streetNameHelp') }}</UiFormHelperText>
     </label>
     <label>
       <UiFormLabel>{{ $t('form.streetNumberLabel') }}</UiFormLabel>
-      <SfInput name="streetNumber" v-model="defaultValues.street[1]" />
+      <SfInput name="streetNumber" v-model="defaultValues.streetNumber" />
       <UiFormHelperText>{{ $t('form.streetNumberHelp') }}</UiFormHelperText>
     </label>
     <label class="md:col-span-3">
@@ -90,9 +90,12 @@ const defaultValues = ref({
   country_code: Array.isArray(savedAddress?.value)
     ? savedAddress?.value?.[0]?.country?.code
     : savedAddress?.value?.country?.code ?? '',
-  street: Array.isArray(savedAddress?.value)
-    ? savedAddress?.value?.[0]?.street ?? ''
-    : savedAddress?.value?.street ?? '',
+  streetName: Array.isArray(savedAddress?.value)
+    ? savedAddress?.value?.[0]?.street[0] ?? ''
+    : savedAddress?.value?.street[0] ?? '',
+  streetNumber: Array.isArray(savedAddress?.value)
+    ? savedAddress?.value?.[0]?.street[1] ?? ''
+    : savedAddress?.value?.street[1] ?? '',
   city: Array.isArray(savedAddress?.value) ? savedAddress?.value?.[0]?.city ?? '' : savedAddress?.value?.city ?? '',
   postcode: Array.isArray(savedAddress?.value)
     ? savedAddress?.value?.[0]?.postcode ?? ''
@@ -109,12 +112,36 @@ const storeAddressFormData = async () => {
   const params = {
     cart_id: cartId.value,
     billing_address: {
-      address: defaultValues.value,
+      address: {
+        firstname: defaultValues.value.firstname,
+        lastname: defaultValues.value.lastname,
+        telephone: defaultValues.value.telephone,
+        country_code: defaultValues.value.country_code,
+        street: [defaultValues.value.streetName, defaultValues.value.streetNumber],
+        city: defaultValues.value.city,
+        postcode: defaultValues.value.postcode,
+      },
       use_for_shipping: useForShipping.value,
     },
   };
   if (props.type === 'shippingAddress') {
-    const result = await saveShippingAddress(defaultValues.value);
+    const paramsShipping = {
+      cart_id: cartId.value,
+      shipping_addresses: [
+        {
+          address: {
+            firstname: defaultValues.value.firstname,
+            lastname: defaultValues.value.lastname,
+            telephone: defaultValues.value.telephone,
+            country_code: defaultValues.value.country_code,
+            street: [defaultValues.value.streetName, defaultValues.value.streetNumber],
+            city: defaultValues.value.city,
+            postcode: defaultValues.value.postcode,
+          },
+        },
+      ],
+    };
+    const result = await saveShippingAddress(paramsShipping);
     if (result === 'Success') {
       emit('on-save');
     }

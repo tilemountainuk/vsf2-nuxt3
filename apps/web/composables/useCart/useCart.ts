@@ -24,7 +24,7 @@ export const useCart: UseCartReturn = () => {
   const state = useState<UseCartState>('useCart', () => ({
     data: null,
     loading: false,
-    cartId: 'Uf7ZHqFozj8sfzwySLnIYO7ihNuSkYXX',
+    cartId: 'y7sqNGNOJEG6u606vsihzjit4J1OTkHX',
     creatingEmptyCartLoading: false,
   }));
 
@@ -91,6 +91,7 @@ export const useCart: UseCartReturn = () => {
         addProductsToCartResult.data.value.data.addProductsToCart.user_errors &&
         addProductsToCartResult.data.value.data.addProductsToCart.user_errors.length === 0
       ) {
+        fetchCard();
         sendNotification({
           icon: 'Check',
           message: 'Your Basket has been updated',

@@ -13,6 +13,7 @@ const { send: sendNotification } = useUiNotification();
 export const useCheckout = () => {
   const state = useState('useCheckout', () => ({
     cartEmail: '',
+    orderId: '',
   }));
   const { fetchCard, cartId } = useCart();
   const saveEmailAddress = async (email: string) => {
@@ -81,15 +82,15 @@ export const useCheckout = () => {
   };
   const saveShippingAddress = async (defaultValues: any) => {
     try {
-      const params = {
-        cart_id: cartId.value,
-        shipping_addresses: [
-          {
-            address: defaultValues,
-          },
-        ],
-      };
-      const { errors } = await useSdk().magento.setShippingAddressesOnCart(params, {
+      // const params = {
+      //   cart_id: cartId.value,
+      //   shipping_addresses: [
+      //     {
+      //       address: defaultValues,
+      //     },
+      //   ],
+      // };
+      const { errors } = await useSdk().magento.setShippingAddressesOnCart(defaultValues, {
         customQuery: setShippingAddressesOnCartCustomQuery,
       });
       if (errors && errors.length > 0) {
@@ -158,7 +159,9 @@ export const useCheckout = () => {
   const placeOrder = async () => {
     try {
       const { data } = await useSdk().magento.placeOrder({ cart_id: cartId.value });
-      console.log('placeOrder Data is', data);
+      const mappedOrderId: string = data?.placeOrder?.order.order_number as string;
+      state.value.orderId = mappedOrderId;
+      navigateTo('/order/success');
     } catch (error) {
       throw new Error(error as string);
     }

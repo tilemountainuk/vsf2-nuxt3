@@ -15,7 +15,9 @@
             <SfRadio
               v-model="radioModel"
               @click="updateShippingMethod(shippingMethod?.method_code, shippingMethod?.carrier_code)"
-              :checked="cart?.shippingMethod?.id === shippingMethod?.method_code"
+              :checked="
+                cart?.shipping_addresses?.[0]?.selected_shipping_method?.method_code === shippingMethod?.method_code
+              "
               :value="shippingMethod?.method_code"
             />
             <div>
@@ -43,7 +45,7 @@ defineProps<ShippingMethodProps>();
 
 const { data: cart } = useCart();
 const { setShippingMethodsOnCart } = useCheckout();
-const radioModel = ref(cart.value?.shipping_addresses?.[0]?.selected_shipping_method.method_code);
+const radioModel = ref(cart.value?.shipping_addresses?.[0]?.selected_shipping_method?.method_code);
 
 const updateShippingMethod = (method_code: string, carrier_code: string) => {
   setShippingMethodsOnCart(method_code, carrier_code);

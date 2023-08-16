@@ -19,30 +19,3 @@ export function useSearch() {
     searchedProducts,
   };
 }
-// import {
-//     UseSearchReturn,
-//     UseSearchState,
-//     FetchSearchedProducts
-// } from '~/composables/useSearch/types';
-// import { computed } from 'vue';
-// import { sdk } from '~/sdk';
-// import { searchCustomQuery } from "~/composables/useSearch/customQueries/searchCustomQuery";
-//
-// export const useSearch: UseSearchReturn = () => {
-//
-//     const searchedProducts: FetchSearchedProducts = async () => {
-//         // const { data } = await useAsyncData(
-//         //     // await sdk.magento.categorySearch(),
-//         //     // console.log('datacategory', data)
-//         // );
-//     };
-//     /**
-//      * @description Function for fetching products.
-//      * @example
-//      * getProducts();
-//      */
-//
-//     return {
-//         searchedProducts
-//     };
-// };
