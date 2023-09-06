@@ -7,11 +7,12 @@ export interface UseProductState {
 }
 
 export type FetchProduct = (slug: string) => Promise<Ref<Maybe<SfProduct>>>;
-
+export type FetchMagentoProduct = (slug: string) => any;
 export interface UseProduct {
   data: Readonly<Ref<UseProductState['data']>>;
   loading: Readonly<Ref<boolean>>;
   fetchProduct: FetchProduct;
+  fetchMagentoProduct: FetchMagentoProduct;
 }
 
 export type UseProductReturn = (slug: string) => UseProduct;

@@ -1,6 +1,6 @@
 import { toRefs } from '@vueuse/shared';
 import { useSdk } from '~/sdk';
-import type { UseProductReturn, UseProductState, FetchProduct } from './types';
+import type { UseProductReturn, UseProductState, FetchProduct ,FetchMagentoProduct} from './types';
 
 /**
  * @description Composable managing product data
@@ -28,9 +28,19 @@ export const useProduct: UseProductReturn = (slug) => {
     state.value.loading = false;
     return data;
   };
+  const fetchMagentoProduct: FetchMagentoProduct = async (slug) => {
+    state.value.loading = true;
+    const { data, error } = await useAsyncData(() => useSdk().magento.productDetails());
+    useHandleError(error.value);
+    state.value.data = data.value;
+    console.log('fetchMagentoProduct', data.value)
+    state.value.loading = false;
+    return data;
+  };
 
   return {
     fetchProduct,
+    fetchMagentoProduct,
     ...toRefs(state.value),
   };
 };

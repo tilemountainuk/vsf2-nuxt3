@@ -23,6 +23,7 @@
         {{ $t('reviewsCount', { count: product.rating?.count }) }}
       </SfLink>
     </div>
+<!--    <Notification class="notification-bar"/>-->
     <p class="mb-4 font-normal typography-text-sm" data-testid="product-description">
       {{ product.description }}
     </p>
@@ -33,7 +34,8 @@
       </UiTag>
       <div class="flex flex-col md:flex-row flex-wrap gap-4">
         <UiQuantitySelector :value="quantitySelectorValue" class="min-w-[145px] flex-grow flex-shrink-0 basis-0" />
-        <SfButton type="button" size="lg" class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap">
+        fetchMagentoCard  {{magentoProductDataComputed}}
+        <SfButton  @click="testClick()" type="button" size="lg" class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap add-to-cart">
           <template #prefix>
             <SfIconShoppingCart size="sm" />
           </template>
@@ -102,8 +104,31 @@ import {
   SfIconShoppingCart,
 } from '@storefront-ui/vue';
 import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
+import {addProductsToCartCustomQuery} from '~/composables/useCart/addProductsToCartCustomQuery'
+import { useCart} from '~/composables/useCart'
+import Notification from '~/components/ui/Notification'
+import {useSdk} from "~/sdk";
+import {log} from "util";
 
+const { fetchMagentoCard } = useCart();
+const testClick = (async() => {
+  console.log('This is click');
+//   const cart = await useSdk().magento.addProductsToCart(
+//          {
+//              cartId: 'jaJT5CARj6Hh6QCDLPlMcyBr5KqvHxuJ',
+//              cartItems: [
+//                {
+//                    sku: '450065',
+//                    quantity: 1,
+//       }
+//     ]
+//    },
+//       { customQuery: addProductsToCartCustomQuery },
+//  )
+//   console.log('productsadded', cart)
+  }
+  )
 defineProps<PurchaseCardProps>();
-
+const magentoProductDataComputed = computed(() => fetchMagentoCard ?? '');
 const quantitySelectorValue = ref(1);
 </script>

@@ -10,6 +10,7 @@
     "lint:fix": "eslint . --ext .ts --fix"
   },
   "dependencies": {
+    "@vue-storefront/magento-api": "^2.1.0",
     "@vue-storefront/middleware": "3.4.0",
     "consola": "^2.15.3",
     "nodemon": "^2.0.19",
