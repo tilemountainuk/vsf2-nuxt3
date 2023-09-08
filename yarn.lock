@@ -4995,33 +4995,36 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue-storefront/magento-api@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "@vue-storefront/magento-api@npm:2.1.0"
+"@vue-storefront/magento-api@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "@vue-storefront/magento-api@npm:2.2.0"
   dependencies:
     "@apollo/client": ^3.6.9
     "@nuxtjs/composition-api": 0.31.0
-    "@vue-storefront/middleware": 3.0.0
+    "@vue-storefront/middleware": ^3.5.0
     agentkeepalive: ^4.2.1
     consola: ^3.1.0
     dotenv: ^16.0.1
     graphql: ^16.3.0
     graphql-tag: ^2.12.6
     isomorphic-fetch: ^3.0.0
-  checksum: bb7b9fed8d00492a0ca9e5c5fa24b0d5f4873d7f8064bbf8c956da15fa5b35863b0fbfb94b6854bb9f12db07f9901e578c12fc9353e90a5809794d6b821da2c2
+  checksum: 76db1ab34f1e773c57b3a8abf74628d4d64d4dc9d61547bcd413ea5ac565971154815d25082688be8398b34c9cd48c568670fccaa357ee3d3f835ed02653b1b0
   languageName: node
   linkType: hard
 
-"@vue-storefront/magento-sdk@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "@vue-storefront/magento-sdk@npm:1.1.0"
+"@vue-storefront/magento-sdk@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@vue-storefront/magento-sdk@npm:2.0.0"
   dependencies:
     "@apollo/client": ^3.6.9
     "@vue-storefront/magento-types": ^1.0.0
     "@vue-storefront/sdk": ^1.0.0
+    "@vue-storefront/sdk-axios-request-sender": 1.0.0
     axios: ^0.27.2
     ts-essentials: ^9.3.1
-  checksum: d03d7aeb25470b87a226e9f383fc158e0af91c93e6ac370ae01b357aa6ffe3f2ac1c2c79bbadb008c9540a3428fdab768782cf735ad1f97238afe2bc53a86ebe
+  peerDependencies:
+    "@vue-storefront/middleware": ^3.5.0
+  checksum: 2214e7096a9ad848c75ac75a650dcd8d37d4ec29a954e3cfb820616e22cfcac0e422a7a0143e23e5dd23f0673323cd27abb3ae4657f7f18ce2ccfe17219d90e4
   languageName: node
   linkType: hard
 
@@ -5029,20 +5032,6 @@ __metadata:
   version: 1.0.0
   resolution: "@vue-storefront/magento-types@npm:1.0.0"
   checksum: 0fe48a3fa5be288239ecf59ca810dffdb5dc1322bbaefba6d49c46446863efc07f391204129f1ce5673c2deaa4ab77ef9d291aa072f461635788687281dc7b63
-  languageName: node
-  linkType: hard
-
-"@vue-storefront/middleware@npm:3.0.0":
-  version: 3.0.0
-  resolution: "@vue-storefront/middleware@npm:3.0.0"
-  dependencies:
-    consola: ^2.15.3
-    cookie-parser: ^1.4.6
-    cors: ^2.8.5
-    express: ^4.18.1
-    helmet: ^5.1.1
-    rimraf: ^4.1.2
-  checksum: 4800a622a6dc813bbcdf319e04a069bd56f78e69d8d6da3d84fecb482dbeceb5143924490f3f4c3a08506e5fe5910df02c7da40d8ef68fcdf3488a6dc856e9ba
   languageName: node
   linkType: hard
 
@@ -5056,6 +5045,26 @@ __metadata:
     express: ^4.18.1
     helmet: ^5.1.1
   checksum: 207c1a0aa142ceb58d814a13f76b3e5d8b3ca2c436c121f9deecb3053545f51dd702cd9fd41be0015a0f41975e4e67534a4ea6d1ec7ee4e8f8b917501e6d3584
+  languageName: node
+  linkType: hard
+
+"@vue-storefront/middleware@npm:^3.5.0":
+  version: 3.5.1
+  resolution: "@vue-storefront/middleware@npm:3.5.1"
+  dependencies:
+    consola: ^2.15.3
+    cookie-parser: ^1.4.6
+    cors: ^2.8.5
+    express: ^4.18.1
+    helmet: ^5.1.1
+  checksum: 5bfcfceaee4b5fd3516ffbea36996cfef4071a8d0876666c21ec40dd46cf0fe14d144df97ab6910663dd62627d9ac31dc8ad90c0822ed28bf0ae23be40ccd3c0
+  languageName: node
+  linkType: hard
+
+"@vue-storefront/sdk-axios-request-sender@npm:1.0.0":
+  version: 1.0.0
+  resolution: "@vue-storefront/sdk-axios-request-sender@npm:1.0.0"
+  checksum: 1f012588c73583631e7cd2b9b414b470fdb811a53d18f2675e2d7103e707ba7d9c10b8ac8b400df186ba5ece286edad49010076ba39093f9c79fcb84869f41c9
   languageName: node
   linkType: hard
 
@@ -10720,18 +10729,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:^9.2.0":
-  version: 9.3.5
-  resolution: "glob@npm:9.3.5"
-  dependencies:
-    fs.realpath: ^1.0.0
-    minimatch: ^8.0.2
-    minipass: ^4.2.4
-    path-scurry: ^1.6.1
-  checksum: 94b093adbc591bc36b582f77927d1fb0dbf3ccc231828512b017601408be98d1fe798fc8c0b19c6f2d1a7660339c3502ce698de475e9d938ccbb69b47b647c84
-  languageName: node
-  linkType: hard
-
 "global-dirs@npm:^0.1.1":
   version: 0.1.1
   resolution: "global-dirs@npm:0.1.1"
@@ -13078,7 +13075,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lru-cache@npm:^10.0.0, lru-cache@npm:^9.1.1 || ^10.0.0":
+"lru-cache@npm:^10.0.0":
   version: 10.0.0
   resolution: "lru-cache@npm:10.0.0"
   checksum: 18f101675fe283bc09cda0ef1e3cc83781aeb8373b439f086f758d1d91b28730950db785999cd060d3c825a8571c03073e8c14512b6655af2188d623031baf50
@@ -13494,15 +13491,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:^8.0.2":
-  version: 8.0.4
-  resolution: "minimatch@npm:8.0.4"
-  dependencies:
-    brace-expansion: ^2.0.1
-  checksum: 2e46cffb86bacbc524ad45a6426f338920c529dd13f3a732cc2cf7618988ee1aae88df4ca28983285aca9e0f45222019ac2d14ebd17c1edadd2ee12221ab801a
-  languageName: node
-  linkType: hard
-
 "minimatch@npm:~3.0.4":
   version: 3.0.8
   resolution: "minimatch@npm:3.0.8"
@@ -13607,13 +13595,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minipass@npm:^4.2.4":
-  version: 4.2.8
-  resolution: "minipass@npm:4.2.8"
-  checksum: 7f4914d5295a9a30807cae5227a37a926e6d910c03f315930fde52332cf0575dfbc20295318f91f0baf0e6bb11a6f668e30cde8027dea7a11b9d159867a3c830
-  languageName: node
-  linkType: hard
-
 "minipass@npm:^5.0.0":
   version: 5.0.0
   resolution: "minipass@npm:5.0.0"
@@ -13625,13 +13606,6 @@ __metadata:
   version: 6.0.2
   resolution: "minipass@npm:6.0.2"
   checksum: d140b91f4ab2e5ce5a9b6c468c0e82223504acc89114c1a120d4495188b81fedf8cade72a9f4793642b4e66672f990f1e0d902dd858485216a07cd3c8a62fac9
-  languageName: node
-  linkType: hard
-
-"minipass@npm:^5.0.0 || ^6.0.2 || ^7.0.0":
-  version: 7.0.2
-  resolution: "minipass@npm:7.0.2"
-  checksum: 46776de732eb7cef2c7404a15fb28c41f5c54a22be50d47b03c605bf21f5c18d61a173c0a20b49a97e7a65f78d887245066410642551e45fffe04e9ac9e325bc
   languageName: node
   linkType: hard
 
@@ -14886,16 +14860,6 @@ __metadata:
   version: 1.0.7
   resolution: "path-parse@npm:1.0.7"
   checksum: 49abf3d81115642938a8700ec580da6e830dde670be21893c62f4e10bd7dd4c3742ddc603fe24f898cba7eb0c6bc1777f8d9ac14185d34540c6d4d80cd9cae8a
-  languageName: node
-  linkType: hard
-
-"path-scurry@npm:^1.6.1":
-  version: 1.10.1
-  resolution: "path-scurry@npm:1.10.1"
-  dependencies:
-    lru-cache: ^9.1.1 || ^10.0.0
-    minipass: ^5.0.0 || ^6.0.2 || ^7.0.0
-  checksum: e2557cff3a8fb8bc07afdd6ab163a92587884f9969b05bbbaf6fe7379348bfb09af9ed292af12ed32398b15fb443e81692047b786d1eeb6d898a51eb17ed7d90
   languageName: node
   linkType: hard
 
@@ -16492,17 +16456,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rimraf@npm:^4.1.2":
-  version: 4.4.1
-  resolution: "rimraf@npm:4.4.1"
-  dependencies:
-    glob: ^9.2.0
-  bin:
-    rimraf: dist/cjs/src/bin.js
-  checksum: b786adc02651e2e24bbedb04bbdea80652fc9612632931ff2d9f898c5e4708fe30956186597373c568bd5230a4dc2fadfc816ccacba8a1daded3a006a6b74f1a
-  languageName: node
-  linkType: hard
-
 "robots-parser@npm:^3.0.0":
   version: 3.0.1
   resolution: "robots-parser@npm:3.0.1"
@@ -16844,7 +16797,7 @@ __metadata:
   resolution: "server@workspace:apps/server"
   dependencies:
     "@types/express": ^4.17.13
-    "@vue-storefront/magento-api": ^2.1.0
+    "@vue-storefront/magento-api": ^2.2.0
     "@vue-storefront/middleware": 3.4.0
     consola: ^2.15.3
     nodemon: ^2.0.19
@@ -19703,7 +19656,7 @@ __metadata:
     "@types/node": ^18
     "@vite-pwa/nuxt": ^0.1.0
     "@vitest/coverage-v8": ^0.33.0
-    "@vue-storefront/magento-sdk": ^1.1.0
+    "@vue-storefront/magento-sdk": ^2.0.0
     "@vue-storefront/sdk": ^1.0.1
     "@vue-storefront/storefront-boilerplate-sdk": ~0.2.0
     "@vue-storefront/unified-data-model": ^0.6.0
