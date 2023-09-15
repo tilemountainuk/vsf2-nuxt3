@@ -3,7 +3,7 @@
     <NarrowContainer>
       <div :class="['mb-20 md:px-0', { 'px-4': !isRoot }]" data-testid="account-layout">
         <h1
-          v-if="isRoot || isTabletScreen"
+          v-if="isRoot || isTablet"
           class="mt-4 mb-10 md:my-10 mx-4 md:mx-0 font-bold typography-headline-3 md:typography-headline-2"
         >
           {{ $t('account.heading') }}
@@ -35,7 +35,7 @@
                 { hidden: !isRoot },
               ]"
             >
-              <ul class="[&:not(:last-child)]:mb-4" v-for="{ title, icon, subsections } in sections" :key="title">
+              <ul class="[&:not(:first-child)]:mt-4" v-for="{ title, icon, subsections } in sections" :key="title">
                 <SfListItem class="py-4 md:py-2 hover:!bg-transparent font-medium !cursor-auto">
                   <template #prefix><component :is="icon" /></template>
                   {{ title }}
@@ -57,8 +57,8 @@
                   </SfListItem>
                 </li>
               </ul>
-              <UiDivider />
-              <ul>
+              <UiDivider class="mt-4 md:hidden" />
+              <ul class="md:hidden">
                 <SfListItem
                   :tag="NuxtLink"
                   :to="paths.home"
@@ -86,10 +86,9 @@
 
 <script setup lang="ts">
 import { SfIconBase, SfIconPerson, SfIconShoppingCart, SfListItem, SfButton, SfIconArrowBack, SfIconChevronRight } from '@storefront-ui/vue';
-import { useMediaQuery } from '@vueuse/core';
 
 
-const isTabletScreen = useMediaQuery(mediaQueries.tablet);
+const { isTablet } = useBreakpoints();
 const { t } = useI18n();
 const router = useRouter();
 const sections = [
