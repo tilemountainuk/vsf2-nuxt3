@@ -1,6 +1,6 @@
 {
-  "name": "@vsf/nuxt3-boilerplate",
-  "version": "0.1.0",
+  "name": "tiles247",
+  "version": "0.1.1",
   "private": true,
   "license": "MIT",
   "workspaces": [

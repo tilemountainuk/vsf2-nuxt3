@@ -4,7 +4,7 @@
     { "src": "web/package.json", "use": "@vercel/node" }
   ],
   "routes": [
-    { "src": "/api/(.*)", "dest": "/server/src/index.ts" },
-    { "src": "/(.*)", "dest": "/web/.output/public/$1" }
+    { "src": "/api/(.*)", "dest": "apps/server/src/index.ts" },
+    { "src": "/(.*)", "dest": "apps/web/.output/public/$1" }
   ]
 }
