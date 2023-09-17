@@ -16,8 +16,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { sdk } from '~/sdk';
-const { magento } = sdk;
+import { useSdk } from '~/sdk';
+const { magento } = useSdk();
 
 interface Product {
   id: string;

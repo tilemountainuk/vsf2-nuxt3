@@ -1,5 +1,5 @@
 import { RoutableInterface } from '@vue-storefront/magento-types';
-import { sdk } from '~/sdk';
+import { useSdk } from '~/sdk';
 
 interface ExtendedRoutableInterface extends RoutableInterface {
     sku: string | undefined;
@@ -8,7 +8,7 @@ interface ExtendedRoutableInterface extends RoutableInterface {
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
     try {
-        const mageRoute = await sdk.magento.route({ url: to.path });
+        const mageRoute = await useSdk().magento.route({ url: to.path });
         const route = mageRoute?.data?.route as ExtendedRoutableInterface;
         const routeData = {
             type: route?.type,

@@ -1,47 +1,35 @@
 <template>
-  <NuxtLayout name="default" :breadcrumbs="breadcrumbs">
-    <CategoryPageContent
-        v-if="productsCatalog"
-        :title="$t('allProducts')"
-        :total-products="productsCatalog.pagination.totalResults"
-        :products="productsCatalog.products"
-    >
-      <template #sidebar>
-        <div class="Faawada">{{ magentoProducts }}</div>
-        <CategoryTree :categories="categories" :parent="{ name: $t('allProducts'), href: paths.category }" />
-        <CategorySorting />
-        <CategoryFilters :facets="productsCatalog.facets" />
-      </template>
-    </CategoryPageContent>
-  </NuxtLayout>
+  <div>
+    <component :is="type" v-if="type" v-bind="dynamicProps" />
+  </div>
 </template>
 
-<script setup lang="ts">
-import type { Breadcrumb } from '~/components/ui/Breadcrumbs/types';
+<script lang="ts" setup>
+import { defineAsyncComponent } from 'vue'
 
-definePageMeta({
-  layout: false,
-});
+const CATEGORY = markRaw(defineAsyncComponent(() =>
+        import('~/modules/pages/category.vue')
+    )
+)
 
-const { fetchProducts, categoryProducts, data: productsCatalog, productsTM } = useProducts();
-const { t } = useI18n();
+const PRODUCT = markRaw(defineAsyncComponent(() =>
+        import('~/modules/pages/product.vue')
+    )
+)
 
-await fetchProducts();
-await categoryProducts();
-const breadcrumbs: Breadcrumb[] = [
-  { name: t('home'), link: '/' },
-  { name: t('allProducts'), link: '/category' },
-];
-const subCategories = productsCatalog.value?.subCategories;
-const magentoProducts = computed(() => {
-  return productsTM;
-});
-const categories = computed(
-    () =>
-        subCategories?.map(({ name, productCount }) => ({
-          name,
-          count: productCount || undefined,
-          href: paths.category,
-        })) || [],
-);
+const routeType = useState<{ type: string }>('routeData')?.value?.type
+const dynamicProps = ref({})
+const type = ref();
+
+if (routeType == 'PRODUCT') {
+  const sku = useState<{ sku: string }>('routeData')?.value?.sku
+  dynamicProps.value = { sku }
+  type.value = PRODUCT
+}
+
+if (routeType == 'CATEGORY') {
+  const uid = useState<{ uid: string }>('routeData')?.value?.uid
+  dynamicProps.value = { uid }
+  type.value = CATEGORY
+}
 </script>
