@@ -6,5 +6,16 @@
   "routes": [
     { "src": "/api/(.*)", "dest": "apps/server/src/index.ts" },
     { "src": "/(.*)", "dest": "apps/web/.output/public/$1" }
-  ]
+  ],
+  "env": {
+    "VSF_NUXT_APP_ENV": "production",
+    "VSF_NUXT_APP_PORT": "3000",
+    "VSF_NUXT_APP_HOST": "0.0.0.0",
+    "VSF_STORE_URL": "https://tiles247.vercel.app",
+    "API_BASE_URL": "https://tiles247.vercel.app/api/",
+    "API_SSR_BASE_URL": "https://tiles247.vercel.app/api/",
+    "VSF_MAGENTO_BASE_URL": "https://tilemountain.co.uk",
+    "VSF_MAGENTO_GRAPHQL_URL": "https://tilemountain.co.uk/graphql",
+    "NUXT_IMAGE_PROVIDER": "ipx"
+  }
 }
