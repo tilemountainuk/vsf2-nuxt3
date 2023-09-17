@@ -10,7 +10,7 @@
     "prepare": "is-ci || husky install",
     "build": "turbo run build",
     "build:analyze": "turbo run build:analyze",
-    "dev": "turbo run dev",
+    "dev": "NODE_TLS_REJECT_UNAUTHORIZED='0' turbo run dev",
     "start": "turbo run start",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
