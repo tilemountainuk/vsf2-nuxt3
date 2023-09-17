@@ -4,7 +4,9 @@
       <h1 class="my-10 font-bold typography-headline-3 md:typography-headline-2">{{ title }}</h1>
       <div class="md:flex gap-6" data-testid="category-page-content">
         <CategorySidebar :is-open="isOpen" @close="close">
-          <slot name="sidebar" />
+          <NuxtLazyHydrate when-visible>
+            <slot name="sidebar" />
+          </NuxtLazyHydrate>
         </CategorySidebar>
         <div class="flex-1">
           <div class="flex justify-between items-center mb-6">
@@ -23,20 +25,24 @@
             class="grid grid-cols-1 2xs:grid-cols-2 gap-4 md:gap-6 md:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 mb-10 md:mb-5"
             data-testid="category-grid"
           >
-            <UiProductCard
+            <NuxtLazyHydrate
+              when-visible
               v-for="({ id, name, rating, price, primaryImage, slug }, index) in products"
               :key="id"
-              :name="name ?? ''"
-              :rating-count="rating?.count"
-              :rating="rating?.average"
-              :price="price?.value.amount"
-              :image-url="primaryImage?.url ?? ''"
-              :image-alt="primaryImage?.alt ?? ''"
-              :slug="slug"
-              :priority="index === 0"
-            />
+            >
+              <UiProductCard
+                :name="name ?? ''"
+                :rating-count="rating?.count"
+                :rating="rating?.average"
+                :price="price?.value.amount"
+                :image-url="primaryImage?.url ?? ''"
+                :image-alt="primaryImage?.alt ?? ''"
+                :slug="slug"
+                :priority="index === 0"
+              />
+            </NuxtLazyHydrate>
           </section>
-          <CategoryEmptyState v-else />
+          <LazyCategoryEmptyState v-else />
           <UiPagination
             v-if="totalProducts > itemsPerPage"
             :current-page="1"
@@ -52,7 +58,7 @@
 
 <script setup lang="ts">
 import { SfButton, SfIconTune, useDisclosure } from '@storefront-ui/vue';
-import { useMediaQuery } from '@vueuse/core';
+import { whenever } from '@vueuse/core';
 import type { CategoryPageContentProps } from '~/components/CategoryPageContent/types';
 
 withDefaults(defineProps<CategoryPageContentProps>(), {
@@ -60,17 +66,8 @@ withDefaults(defineProps<CategoryPageContentProps>(), {
 });
 
 const { isOpen, open, close } = useDisclosure();
-const isTabletScreen = useMediaQuery(mediaQueries.tablet);
-const isWideScreen = useMediaQuery(mediaQueries.desktop);
-const maxVisiblePages = ref(1);
+const { isTablet, isDesktop } = useBreakpoints();
+const maxVisiblePages = computed(() => (isDesktop.value ? 5 : 1));
 
-const setMaxVisiblePages = (isWide: boolean) => (maxVisiblePages.value = isWide ? 5 : 1);
-
-watch(isWideScreen, (value) => setMaxVisiblePages(value));
-onMounted(() => setMaxVisiblePages(isWideScreen.value));
-watch(isTabletScreen, (value) => {
-  if (value && isOpen.value) {
-    close();
-  }
-});
+whenever(isTablet, close);
 </script>

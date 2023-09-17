@@ -1,9 +1,10 @@
+import { paths } from '../../../utils/paths';
 import { ProductListPageObject } from '../../support/pageObjects/ProductListPageObject';
 
 const productListPage = new ProductListPageObject();
 
 beforeEach(() => {
-  cy.visit('/category');
+  cy.visitAndHydrate(paths.category);
 });
 
 describe('Smoke: Product List Page', function () {
@@ -22,9 +23,7 @@ describe('Smoke: Product List Page', function () {
   context('Product details and actions', () => {
     it('[smoke] User should see the product information', () => {
       // ASSERT - product details are displayed
-      productListPage
-        .assertProductListElements()
-        .assertFirstProduct();
-      });
+      productListPage.assertProductListElements().assertFirstProduct();
     });
+  });
 });

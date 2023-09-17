@@ -71,6 +71,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@vite-pwa/nuxt',
     'nuxt-vitest',
+    'nuxt-lazy-hydrate',
   ],
   nitro: {
     prerender: {
@@ -87,7 +88,26 @@ export default defineNuxtConfig({
     registerType: 'autoUpdate',
     workbox: {
       navigateFallback: null,
-      globPatterns: ['**/*.{js,css,html,ico}', 'icons/*'],
+      globPatterns: ['**/*.{js,json,css,html,ico,svg,png,webp,ico,woff,woff2,ttf,eit,otf}', 'icons/*'],
+      globIgnores: ['manifest**.webmanifest'],
+      additionalManifestEntries: [
+        {
+          url: '/offline',
+          revision: Math.random().toString(32),
+        },
+      ],
+      navigationPreload: true,
+      runtimeCaching: [
+        {
+          urlPattern: ({ request }) => request.mode === 'navigate',
+          handler: 'NetworkOnly',
+          options: {
+            precacheFallback: {
+              fallbackURL: '/offline',
+            },
+          },
+        },
+      ],
       cleanupOutdatedCaches: true,
     },
     manifest: {
