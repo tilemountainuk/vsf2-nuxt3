@@ -14,7 +14,7 @@
 
 ## Getting Started with Vue Storefront
 
-To get started, see the following guides:
+To get started, see the following guides 1:
 
 - [Introduction](https://docs.vuestorefront.io/v2/getting-started/introduction.html) to learn what is Vue Storefront.
 
