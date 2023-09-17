@@ -3,7 +3,7 @@ import type { Maybe, SfAddress, SfProduct } from '@vue-storefront/unified-data-m
 
 export type OrderData = {
   id: string;
-  date: string; //probably should be number in ms
+  date: string; // probably should be number in ms
   paymentAmount: number;
   status: 'Completed' | 'Shipped' | 'Open' | 'Cancelled';
   products: Array<
