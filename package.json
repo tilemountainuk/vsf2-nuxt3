@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "prepare": "is-ci || husky install",
-    "build": "turbo run build",
+    "build": "turbo run build --filter=web...",
     "build:analyze": "turbo run build:analyze",
     "dev": "turbo run dev",
     "start": "turbo run start",
@@ -50,7 +50,7 @@
   },
   "engines": {
     "yarn": ">=3.6.1",
-    "node": ">=20.0.0"
+    "node": ">=18.0.0"
   },
   "packageManager": "yarn@3.6.3",
   "config": {
