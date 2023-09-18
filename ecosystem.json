@@ -1,0 +1,16 @@
+{
+  "apps": [
+    {
+      "name": "tiles247",
+      "script": "apps/web/.output/server/index.mjs",
+      "args": "yarn start",
+      "watch": false,
+      "instances": 2,
+      "max_memory_restart": "1G",
+      "exec_mode": "cluster",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    }
+  ]
+}
