@@ -7,6 +7,7 @@
     "apps/*"
   ],
   "scripts": {
+    "vercel:dev": "yarn install && yarn turbo run dev",
     "prepare": "is-ci || husky install",
     "build": "turbo run build",
     "build:analyze": "turbo run build:analyze",
@@ -50,7 +51,7 @@
   },
   "engines": {
     "yarn": ">=3.6.1",
-    "node": ">=20.0.0"
+    "node": ">=18.17.1"
   },
   "packageManager": "yarn@3.6.3",
   "config": {

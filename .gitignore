@@ -27,6 +27,7 @@ coverage
 .idea
 *.pem
 .idea
+.vercel
 
 # debug
 npm-debug.log*
