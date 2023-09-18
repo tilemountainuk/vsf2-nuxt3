@@ -2,12 +2,12 @@ name: Deploy
 on:
   push:
     branches:
-      - develop
+      - staging
       - force/*
 
 jobs:
   configure:
-    if: github.event.repository.name == 'storefront-nuxt3-boilerplate'
+    if: github.event.repository.name == 'vsf2-nuxt3'
     name: Configure
     runs-on: ubuntu-latest
     outputs:
