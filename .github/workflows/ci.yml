@@ -11,10 +11,6 @@ jobs:
     name: Build and Test
     timeout-minutes: 15
     runs-on: ubuntu-latest
-    # To use Remote Caching, uncomment the next lines and follow the steps below.
-    # env:
-    #  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-    #  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
 
     steps:
       - name: Check out code
@@ -36,3 +32,16 @@ jobs:
 
       - name: Test
         run: yarn test
+
+      # Deploy to DigitalOcean using SSH with username and password
+      - name: Install sshpass
+        run: sudo apt-get install -y sshpass
+
+      - name: Deploy to DigitalOcean Droplet via SSH (Username and Password)
+        run: |
+          sshpass -p "${{ secrets.SSH_PASSWORD }}" rsync -av --delete ./apps/web/.output/ www-data@${{ secrets.DO_IP }}:/var/www/html/vsf2_tiles247/
+          sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh www-data@${{ secrets.DO_IP }} 'your post-deployment commands here'
+        env:
+          SSH_USERNAME: www-data
+          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+          DO_IP: ${{ secrets.DO_IP }}
