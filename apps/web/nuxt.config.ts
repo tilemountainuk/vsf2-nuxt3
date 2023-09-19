@@ -39,6 +39,7 @@ export default defineNuxtConfig({
       xs: 376,
       '2xs': 360,
     },
+    provider: process.env.NUXT_IMAGE_PROVIDER || 'ipx',
   },
   modules: [
     '@nuxtjs/tailwindcss',
