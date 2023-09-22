@@ -78,7 +78,7 @@ jobs:
   deploy:
     name: Deploying with webhook
     runs-on: ubuntu-latest
-    needs: build # This job depends on the 'test' job
+    needs: create-deployment-artifacts # This job depends on the 'test' job
     steps:
       - name: Trigger Webhook
         run: |
