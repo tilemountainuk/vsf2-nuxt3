@@ -11,7 +11,7 @@ env:
   NODE_VERSION: 18.17.1
 
 jobs:
-  build:
+  build-and-test:
     name: Build and Test v1
     timeout-minutes: 15
     runs-on: ubuntu-latest
@@ -33,6 +33,31 @@ jobs:
 
       - name: Build
         run: yarn build
+
+  create-deployment-artifacts:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build App Artifacts
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{env.NODE_VERSION}}
+          cache: 'yarn'
+      - run: |
+          touch .env
+          echo APP_DOMAIN=https://vsf2.tm8.co.uk >> .env
+          echo RELEASE_VERSION=${GITHUB_REF} >> .env
+          echo GITHUB_SHA=${{ github.sha }} >> .env
+          echo VSF_MAGENTO_BASE_URL=https://tm-m2front.tm8.co.pk >> .env
+          echo VSF_MAGENTO_GRAPHQL_URL=https://tm-m2front.tm8.co.pk/graphql >> .env
+          echo NUXT_IMAGE_PROVIDER=ipx >> .env
+          yarn
+          yarn build
+          cp .env apps/web/.output/server/.env
+          cp .env apps/server/.env
+          tar -czf "${GITHUB_SHA}".tar.gz apps/web/.output
+          tar -czf "${GITHUB_SHA}"-vsf_server.tar.gz -C ./apps/server vsf_server
 
 #      - name: Test
 #        run: yarn test
@@ -56,6 +81,14 @@ jobs:
     needs: build # This job depends on the 'test' job
     steps:
       - name: Trigger Webhook
-        run: curl -X POST https://vsf2.tm8.co.uk/webhook/deploy
+        run: |
+          curl -X POST https://vsf2.tm8.co.uk/webhook/deploy \
+          -H "Content-Type: application/json" \
+          -d '{
+            "repo": "${{ github.repository }}",
+            "branch": "${{ github.ref }}",
+            "commit": "${{ github.sha }}",
+            "user": "${{ github.actor }}"
+          }'
 #        env:
 #          WEBHOOK_SECRET: ${{secrets.WEBHOOK_SECRET}}
