@@ -53,7 +53,8 @@ jobs:
           yarn
           yarn build
           ls -la # List files to debug
-          ls -la apps/web/.output # Debugging line to list contents of output directory
+          ls -la apps # List files server to debug
+          #ls -la apps/web/.output # Debugging line to list contents of output directory
           ls -la apps/server # Debugging line to list contents of server directory
           cp .env apps/web/.output/server/.env
           cp .env apps/server/.env
