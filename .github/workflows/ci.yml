@@ -61,7 +61,9 @@ jobs:
           mkdir temp
           cp -p -r apps/server temp/
           cp -p -r apps/web/.output temp/web # Renamed .output to web
-          tar -czf "${{ github.sha }}-combined.tar.gz" -C temp .
+          cd temp
+          tar -czf "../${{ github.sha }}-combined.tar.gz" *
+          #tar -czf "${{ github.sha }}-combined.tar.gz" -C temp .          
           #tar -czf "${{ github.sha }}-combined.tar.gz" -C apps web/.output -C ../apps server
       - name: Store apps-artifacts for distribution
         uses: actions/upload-artifact@v3
