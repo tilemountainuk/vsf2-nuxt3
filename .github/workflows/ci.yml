@@ -58,8 +58,7 @@ jobs:
           ls -la apps/server # Debugging line to list contents of server directory
           cp .env apps/web/.output/server/.env
           cp .env apps/server/.env
-          tar -czf "${GITHUB_SHA}-combined.tar.gz" -C apps server web/.output
-          ls -la # List files to debug
+          tar -czf "${{ github.sha }}-combined.tar.gz" -C apps web/.output -C ../apps server
       - name: Store apps-artifacts for distribution
         uses: actions/upload-artifact@v3
         with:
