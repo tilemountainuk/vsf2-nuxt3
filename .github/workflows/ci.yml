@@ -58,7 +58,19 @@ jobs:
           cp .env apps/server/.env
           tar -czf "${GITHUB_SHA}".tar.gz apps/web/.output || echo "Failed to create web archive"
           tar -czf "${GITHUB_SHA}"-vsf_server.tar.gz -C apps/server . || echo "Failed to create server archive"
-      
+      - name: Store app-artifacts for distribution
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-artifacts
+          path: ${{ github.sha }}.tar.gz
+
+      - name: Store magento server artifacts for distribution
+        uses: actions/upload-artifact@v3
+        with:
+          name: server-artifacts
+          path: ${{ github.sha }}-server.tar.gz
+
+
 
       #      - name: Test
 #        run: yarn test
