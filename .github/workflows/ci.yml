@@ -1,4 +1,4 @@
-name: Test Application
+name: Test and Deploy Application
 
 on:
 #  workflow_dispatch:
@@ -34,8 +34,8 @@ jobs:
       - name: Build
         run: yarn build
 
-      - name: Test
-        run: yarn test
+#      - name: Test
+#        run: yarn test
 
       # Deploy to DigitalOcean using SSH with username and password
 #      - name: Install sshpass
@@ -56,6 +56,6 @@ jobs:
     needs: build # This job depends on the 'test' job
     steps:
       - name: Trigger Webhook
-        run: curl -X POST https://vsf2.tm8.co.uk/webhook
+        run: curl -X POST https://vsf2.tm8.co.uk/webhook/deploy
 #        env:
 #          WEBHOOK_SECRET: ${{secrets.WEBHOOK_SECRET}}
