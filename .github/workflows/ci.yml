@@ -1,10 +1,14 @@
-name: CI
+name: Test Application
 
 on:
-  push:
-    branches: ["develop-ci"]
-  pull_request:
-    types: [opened, synchronize]
+  workflow_dispatch:
+#  push:
+#    branches: ["staging-cd-2"]
+#  pull_request:
+#    types: [opened, synchronize]
+
+env:
+  NODE_VERSION: 18.17.1
 
 jobs:
   build:
@@ -34,14 +38,23 @@ jobs:
         run: yarn test
 
       # Deploy to DigitalOcean using SSH with username and password
-      - name: Install sshpass
-        run: sudo apt-get install -y sshpass
+#      - name: Install sshpass
+#        run: sudo apt-get install -y sshpass
+#
+#      - name: Deploy to DigitalOcean Droplet via SSH (Username and Password)
+#        run: |
+#          sshpass -p "${{ secrets.SSH_PASSWORD }}" rsync -av --delete ./apps/web/.output/ www-data@${{ secrets.DO_IP }}:/var/www/html/vsf2_tiles247/
+#          sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh www-data@${{ secrets.DO_IP }} 'your post-deployment commands here'
+#        env:
+#          SSH_USERNAME: www-data
+#          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+#          DO_IP: ${{ secrets.DO_IP }}
 
-      - name: Deploy to DigitalOcean Droplet via SSH (Username and Password)
-        run: |
-          sshpass -p "${{ secrets.SSH_PASSWORD }}" rsync -av --delete ./apps/web/.output/ www-data@${{ secrets.DO_IP }}:/var/www/html/vsf2_tiles247/
-          sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh www-data@${{ secrets.DO_IP }} 'your post-deployment commands here'
-        env:
-          SSH_USERNAME: www-data
-          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
-          DO_IP: ${{ secrets.DO_IP }}
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test # This job depends on the 'test' job
+    steps:
+      - name: Trigger Webhook
+        run: curl -X POST https://vsf2.tm8.co.uk/webhook
+#        env:
+#          WEBHOOK_SECRET: ${{secrets.WEBHOOK_SECRET}}
