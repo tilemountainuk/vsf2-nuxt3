@@ -60,7 +60,7 @@ jobs:
           cp .env apps/server/.env
           mkdir temp
           cp -r apps/server temp/
-          cp -r apps/web/.output temp/
+          #cp -r apps/web/.output temp/
           tar -czf "${{ github.sha }}-combined.tar.gz" -C temp .
           #tar -czf "${{ github.sha }}-combined.tar.gz" -C apps web/.output -C ../apps server
       - name: Store apps-artifacts for distribution
