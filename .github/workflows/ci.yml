@@ -49,27 +49,20 @@ jobs:
           echo APP_DOMAIN=https://vsf2.tm8.co.uk >> .env
           echo RELEASE_VERSION=${GITHUB_REF} >> .env
           echo GITHUB_SHA=${{ github.sha }} >> .env
-          #... (your other env variables)
           yarn
           yarn build
           ls -la apps/web/.output # Debugging line to list contents of output directory
           ls -la apps/server # Debugging line to list contents of server directory
           cp .env apps/web/.output/server/.env
           cp .env apps/server/.env
-          tar -czf "${GITHUB_SHA}".tar.gz apps/web/.output || echo "Failed to create web archive"
-          tar -czf "${GITHUB_SHA}"-vsf_server.tar.gz -C apps/server . || echo "Failed to create server archive"
-      - name: Store app-artifacts for distribution
+#          tar -czf "${GITHUB_SHA}".tar.gz apps/web/.output || echo "Failed to create web archive"
+#          tar -czf "${GITHUB_SHA}"-vsf_server.tar.gz -C apps/server . || echo "Failed to create server archive"
+          tar -czf "${GITHUB_SHA}-apps.tar.gz" -C apps server web/.output
+      - name: Store apps-artifacts for distribution
         uses: actions/upload-artifact@v3
         with:
-          name: app-artifacts
+          name: apps-artifacts
           path: ${{ github.sha }}.tar.gz
-
-      - name: Store magento server artifacts for distribution
-        uses: actions/upload-artifact@v3
-        with:
-          name: server-artifacts
-          path: ${{ github.sha }}-server.tar.gz
-
 
 
       #      - name: Test
