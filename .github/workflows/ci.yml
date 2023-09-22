@@ -57,7 +57,7 @@ jobs:
           cp .env apps/web/.output/server/.env
           cp .env apps/server/.env
           tar -czf "${GITHUB_SHA}".tar.gz apps/web/.output || echo "Failed to create web archive"
-          tar -czf "${GITHUB_SHA}"-vsf_server.tar.gz -C ./apps/server . || echo "Failed to create server archive"
+          tar -czf "${GITHUB_SHA}"-vsf_server.tar.gz -C apps/server . || echo "Failed to create server archive"
       
 
       #      - name: Test
