@@ -55,8 +55,8 @@ jobs:
           ls -la apps/server # Debugging line to list contents of server directory
           cp .env apps/web/.output/server/.env
           cp .env apps/server/.env
-#          tar -czf "${GITHUB_SHA}".tar.gz apps/web/.output || echo "Failed to create web archive"
-#          tar -czf "${GITHUB_SHA}"-vsf_server.tar.gz -C apps/server . || echo "Failed to create server archive"
+          #tar -czf "${GITHUB_SHA}".tar.gz apps/web/.output || echo "Failed to create web archive"
+          #tar -czf "${GITHUB_SHA}"-vsf_server.tar.gz -C apps/server . || echo "Failed to create server archive"
           tar -czf "${GITHUB_SHA}-apps.tar.gz" -C apps server web/.output
       - name: Store apps-artifacts for distribution
         uses: actions/upload-artifact@v3
