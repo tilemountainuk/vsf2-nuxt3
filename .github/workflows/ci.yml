@@ -1,9 +1,9 @@
 name: Test Application
 
 on:
-  workflow_dispatch:
-#  push:
-#    branches: ["staging-cd-2"]
+#  workflow_dispatch:
+  push:
+    branches: ["staging-cd-2"]
 #  pull_request:
 #    types: [opened, synchronize]
 
