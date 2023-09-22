@@ -10,7 +10,7 @@
     "prepare": "is-ci || husky install",
     "build": "turbo run build --filter=web...",
     "build:analyze": "turbo run build:analyze",
-    "dev": "turbo run dev",
+    "dev": "turbo run dev --filter=tile-mountain --filter=server",
     "start": "turbo run start",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
