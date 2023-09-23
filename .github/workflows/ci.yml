@@ -102,6 +102,7 @@ jobs:
             "branch": "${{ github.ref }}",
             "commit": "${{ github.sha }}",
             "user": "${{ github.actor }}"
+            "token": "${{ secrets.TOKEN }}"
           }'
 #        env:
 #          WEBHOOK_SECRET: ${{secrets.WEBHOOK_SECRET}}
