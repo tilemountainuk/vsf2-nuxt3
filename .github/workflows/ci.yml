@@ -85,6 +85,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: create-deployment-artifacts # This job depends on the 'test' job
     steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
+        with:
+         name: apps-artifacts
       - name: Trigger Webhook
         run: |
           curl -X POST https://vsf2.tm8.co.uk/webhook/deploy \
