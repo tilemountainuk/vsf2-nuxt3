@@ -1,7 +1,11 @@
 {
   "display": "Server",
   "compilerOptions": {
-    "lib": ["DOM", "DOM.Iterable", "ES2019"],
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ES2019"
+    ],
     "composite": false,
     "declaration": false,
     "declarationMap": false,
