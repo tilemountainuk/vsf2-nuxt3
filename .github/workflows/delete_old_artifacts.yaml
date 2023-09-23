@@ -1,0 +1,30 @@
+name: Delete Old Artifacts
+
+on:
+  schedule:
+    - cron: '0 0 * * 0' # Runs every Sunday at 00:00
+  workflow_dispatch: # Enables manual triggering
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Delete old artifacts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub provides this automatically
+        run: |
+          curl -H "Authorization: token $GITHUB_TOKEN" \
+               -H "Accept: application/vnd.github.v3+json" \
+               "https://api.github.com/repos/${{ github.repository }}/actions/artifacts" > artifacts.json
+          
+          cat artifacts.json | jq -c '.artifacts[] | select(.created_at < "'$(date -d '7 days ago' --utc +%Y-%m-%dT%H:%M:%SZ')'")' | jq -r '.id' > old_artifacts.txt
+          
+          for artifact in $(cat old_artifacts.txt); do
+            curl -X DELETE \
+                 -H "Authorization: token $GITHUB_TOKEN" \
+                 -H "Accept: application/vnd.github.v3+json" \
+                 "https://api.github.com/repos/${{ github.repository }}/actions/artifacts/$artifact"
+          done
