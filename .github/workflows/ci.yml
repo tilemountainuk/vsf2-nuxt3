@@ -101,7 +101,7 @@ jobs:
             "repo": "${{ github.repository }}",
             "branch": "${{ github.ref }}",
             "commit": "${{ github.sha }}",
-            "user": "${{ github.actor }}"
+            "user": "${{ github.actor }}",
             "token": "${{ secrets.TOKEN }}"
           }'
 #        env:
