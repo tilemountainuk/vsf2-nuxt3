@@ -1,6 +1,7 @@
 <template>
   <component :is="tag" :class="className" data-testid="heading">
-    {{ title }}
+<!--    {{ title }}-->
+    Testing
   </component>
 </template>
 
