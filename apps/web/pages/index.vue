@@ -1,5 +1,6 @@
 <template>
   <div v-for="(component, index) in content" :key="`${component.fields.component}-${index}`">
+    Hellow World
     <RenderContent :content="component.fields.content" />
   </div>
 </template>
