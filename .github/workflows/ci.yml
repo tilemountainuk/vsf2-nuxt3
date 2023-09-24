@@ -1,9 +1,10 @@
 name: Test and Deploy Application
 
 on:
-#  workflow_dispatch:
   push:
-    branches: ["staging-cd-2"]
+    branches: ["master","staging","staging-cd-2"]
+  pull_request:
+    branches: [ "master", "staging" ]
 #  pull_request:
 #    types: [opened, synchronize]
 
