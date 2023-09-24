@@ -5,38 +5,13 @@ on:
     branches: ["master","staging","staging-cd-2"]
   pull_request:
     branches: [ "master", "staging" ]
-#  pull_request:
-#    types: [opened, synchronize]
 
 env:
   NODE_VERSION: 18.17.1
 
 jobs:
-#  build-and-test:
-#    name: Build and Test v1
-#    timeout-minutes: 15
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - name: Check out code
-#        uses: actions/checkout@v3
-#        with:
-#          fetch-depth: 2
-#
-#      - name: Setup Node.js environment
-#        uses: actions/setup-node@v3
-#        with:
-#          node-version: 18
-#          cache: 'yarn'
-#
-#      - name: Install dependencies
-#        run: yarn
-#
-#      - name: Build
-#        run: yarn build
-
   create-deployment-artifacts:
-#    needs: build-and-test
+    name: Create Deployment Artifacts
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -63,24 +38,6 @@ jobs:
         with:
           name: apps-artifacts
           path: ${{ github.sha }}-combined.tar.gz
-
-
-      #      - name: Test
-#        run: yarn test
-
-      # Deploy to DigitalOcean using SSH with username and password
-#      - name: Install sshpass
-#        run: sudo apt-get install -y sshpass
-#
-#      - name: Deploy to DigitalOcean Droplet via SSH (Username and Password)
-#        run: |
-#          sshpass -p "${{ secrets.SSH_PASSWORD }}" rsync -av --delete ./apps/web/.output/ www-data@${{ secrets.DO_IP }}:/var/www/html/vsf2_tiles247/
-#          sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh www-data@${{ secrets.DO_IP }} 'your post-deployment commands here'
-#        env:
-#          SSH_USERNAME: www-data
-#          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
-#          DO_IP: ${{ secrets.DO_IP }}
-
   deploy:
     name: Deploying with webhook
     runs-on: ubuntu-latest
@@ -101,5 +58,3 @@ jobs:
             "user": "${{ github.actor }}",
             "token": "${{ secrets.TOKEN }}"
           }'
-#        env:
-#          WEBHOOK_SECRET: ${{secrets.WEBHOOK_SECRET}}
