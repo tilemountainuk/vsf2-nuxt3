@@ -4,8 +4,13 @@ on:
   push:
     branches:
       - develop
+      - staging
+      - master
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
+    branches:
+      - master
+      - staging
 
 jobs:
   unit-tests:

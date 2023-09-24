@@ -26,7 +26,6 @@ coverage
 .DS_Store
 .idea
 *.pem
-.idea
 
 # debug
 npm-debug.log*

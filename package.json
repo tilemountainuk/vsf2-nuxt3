@@ -8,9 +8,10 @@
   ],
   "scripts": {
     "prepare": "is-ci || husky install",
-    "build": "turbo run build --filter=web...",
+    "build": "turbo run build",
     "build:analyze": "turbo run build:analyze",
     "dev": "turbo run dev",
+    "cdev": "yarn && yarn dev",
     "start": "turbo run start",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",

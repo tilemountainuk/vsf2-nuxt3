@@ -1,0 +1,60 @@
+name: Test and Deploy Application
+
+on:
+  push:
+    branches: ["master","staging","staging-cd-2"]
+  pull_request:
+    branches: [ "master", "staging" ]
+
+env:
+  NODE_VERSION: 18.17.1
+
+jobs:
+  create-deployment-artifacts:
+    name: Create Deployment Artifacts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build App Artifacts
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{env.NODE_VERSION}}
+          cache: 'yarn'
+      - run: |
+          touch .env
+          echo APP_DOMAIN=https://vsf2.tm8.co.uk >> .env
+          echo RELEASE_VERSION=${GITHUB_REF} >> .env
+          echo GITHUB_SHA=${{ github.sha }} >> .env
+          yarn
+          yarn build
+          mkdir temp
+          cp -p -r apps/server temp/server # Renamed dist to server
+          cp -p -r apps/web/.output temp/web # Renamed .output to web
+          cd temp
+          yarn
+          tar -czf "../${{ github.sha }}-combined.tar.gz" *
+      - name: Store apps-artifacts for distribution
+        uses: actions/upload-artifact@v3
+        with:
+          name: apps-artifacts
+          path: ${{ github.sha }}-combined.tar.gz
+  deploy:
+    name: Deploying with webhook
+    runs-on: ubuntu-latest
+    needs: create-deployment-artifacts # This job depends on the 'test' job
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
+        with:
+         name: apps-artifacts
+      - name: Trigger Webhook
+        run: |
+          curl -X POST https://vsf2.tm8.co.uk/webhook/deploy \
+          -H "Content-Type: application/json" \
+          -d '{
+            "repo": "${{ github.repository }}",
+            "branch": "${{ github.ref }}",
+            "commit": "${{ github.sha }}",
+            "user": "${{ github.actor }}",
+            "token": "${{ secrets.TOKEN }}"
+          }'
