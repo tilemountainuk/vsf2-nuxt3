@@ -6,6 +6,8 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
+    "tiles247": "nuxt dev themes/tiles247",
+    "tiles247:build": "nuxt build themes/tiles247",
     "start": "nuxt start",
     "generate": "nuxt generate",
     "lint": "nuxt typecheck && eslint --ext .vue,.js,.ts .",
@@ -19,6 +21,7 @@
     "test:cypress-dev": "cypress open --e2e"
   },
   "dependencies": {
+    "@vue-storefront/magento-sdk": "^2.0.0",
     "@vue-storefront/sdk": "^1.0.1",
     "@vue-storefront/storefront-boilerplate-sdk": "~0.2.0",
     "@vueuse/core": "^10.3.0",
@@ -44,7 +47,7 @@
     "cypress-real-events": "^1.10.0",
     "cypress-wait-until": "^2.0.0",
     "happy-dom": "^9.20.3",
-    "nuxt": "^3.6.5",
+    "nuxt": "^3.7.0",
     "nuxt-vitest": "^0.10.1",
     "sass": "^1.64.1",
     "vitest": "^0.33.0",
