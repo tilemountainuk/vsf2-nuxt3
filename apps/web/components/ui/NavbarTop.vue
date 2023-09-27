@@ -14,6 +14,7 @@
         <UiVsfLogo />
       </NuxtLink>
       <slot />
+   
     </div>
   </header>
 </template>
