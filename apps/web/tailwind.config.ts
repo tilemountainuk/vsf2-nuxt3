@@ -27,6 +27,15 @@ export default {
         xs: '376px',
         '2xs': '360px',
       },
+      fontSize: {
+        '11': '11px',
+        '13': '13px',
+        '15': '15px',
+        '17': '17px',
+      },
+      fontFamily: {
+        'arial': ['Arial', 'sans-serif'],
+      },
     },
   },
   plugins: [sfTypography, require('@savvywombat/tailwindcss-grid-areas')],
