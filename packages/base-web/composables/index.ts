@@ -1,1 +1,1 @@
-export { useCmsBlock } from './useCmsBlock/useCmsBlock'
+export { useCmsBlocks } from './useCmsBlock/useCmsBlocks'

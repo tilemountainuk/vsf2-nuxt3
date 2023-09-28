@@ -12,9 +12,9 @@
 [![YouTube Channel Subscribers](https://img.shields.io/youtube/channel/subscribers/UCkm1F3Cglty3CE1QwKQUhhg?style=social)](https://www.youtube.com/c/VueStorefront)
 [![Discord](https://img.shields.io/discord/770285988244750366?label=join%20discord&logo=Discord&logoColor=white)](https://discord.vuestorefront.io)
 
-## Getting Started with Vue Storefronts
+## Our Application is based on VueStorefront.
 
-To get started, see the following guides:
+To get to know more about VueStorefront, see the following guides:
 
 - [Introduction](https://docs.vuestorefront.io/v2/getting-started/introduction.html) to learn what is Vue Storefront.
 
@@ -61,17 +61,15 @@ $ yarn dev
 - [Vue Storefront Middleware](https://docs.vuestorefront.io/v2/architecture/server-middleware.html).
 - Maximize lighthouse score.
 
+## Customized Features
+
+- Fetch CMS Blocks from Magento
+- Device detection capabilities using [@nuxtjs/device](https://www.npmjs.com/package/@nuxtjs/device)
+- More features coming soon...
+
 ## Guide
 
 Refer to [Guide](GUIDE.md)
-
-## License
-
-Distributed under the MIT License. See [LICENSE](LICENSE.md) for more information.
-
-## Contributing
-
-Please see our [contributing.md](contributing.md) for more information.
 
 ## Resources
 
@@ -80,6 +78,3 @@ Please see our [contributing.md](contributing.md) for more information.
 - [Storefront UI 2 Documentation](https://docs.storefrontui.io/v2/)
 - [Community Chat](http://discord.vuestorefront.io)
 
-## Support
-
-If you have any questions about this integration we will be happy to answer them on `general-help` channel on [our Discord](http://discord.vuestorefront.io).

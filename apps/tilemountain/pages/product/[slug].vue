@@ -35,7 +35,7 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import type { Breadcrumb } from '~/components/ui/Breadcrumbs/types';
+import type { Breadcrumb } from '@base/components/ui/Breadcrumbs/types';
 
 definePageMeta({
   layout: false,

@@ -1,44 +1,19 @@
-import type { Ref } from 'vue';
-import type { Maybe } from '@vue-storefront/unified-data-model';
-import type { HeadingProps } from '~/components/Heading/types';
-import type { ProductSliderProps } from '~/components/ProductSlider/types';
-import type { CategoryCardProps } from '@base/components/ui/CategoryCard/types';
-import type { DisplayProps } from '@base/components/ui/Display/types';
-import type { HeroProps } from '@base/components/ui/Hero/types';
+export type CmsBlocksInputType = {
+  page?: string,
+  identifiers?: string | string[],
+  includeDefaults?: boolean
+}
 
-type EntryFields<TFields> = Array<{
-  fields: TFields;
-}>;
+export type CmsBlock = {
+  identifier: string;
+  id?: number;
+  title: string;
+  content: string;
+  [key: string]: any;
+}
 
-type WithComponentField<TProps, TComponent> = TProps & {
-  component: TComponent;
+// Define a type for appConfig.cmsBlocks
+export type AppConfigCMSBlocks = {
+  default: string[];
+  pages: Record<string, string[]>; // This allows any string index to be used
 };
-
-export type DynamicContentFields =
-  | WithComponentField<HeroProps, 'Hero'>
-  | WithComponentField<CategoryCardProps, 'Card'>
-  | WithComponentField<HeadingProps, 'Heading'>
-  | WithComponentField<DisplayProps, 'Display'>
-  | WithComponentField<ProductSliderProps, 'ProductSlider'>;
-
-export interface ContentDynamicPage {
-  component: 'Page';
-  content: EntryFields<DynamicContentFields>;
-  name: string;
-  url: string;
-}
-
-export interface UseContentState {
-  data: Maybe<EntryFields<ContentDynamicPage>>;
-  loading: boolean;
-}
-
-export type GetContent = () => Promise<Ref<Maybe<EntryFields<ContentDynamicPage>>>>;
-
-export interface UseContent {
-  data: Readonly<Ref<UseContentState['data']>>;
-  loading: Readonly<Ref<boolean>>;
-  getContent: GetContent;
-}
-
-export type UseContentReturn = (url: string) => UseContent;
