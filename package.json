@@ -4,15 +4,14 @@
   "private": true,
   "license": "MIT",
   "workspaces": [
-    "apps/*"
+    "apps/*",
+    "packages/*"
   ],
   "scripts": {
     "prepare": "is-ci || husky install",
     "build": "turbo run build",
     "build:analyze": "turbo run build:analyze",
     "dev": "turbo run dev",
-    "tiles247": "turbo run tiles247",
-    "tiles247:build": "turbo run tiles247:build",
     "cdev": "yarn && yarn dev",
     "start": "turbo run start",
     "lint": "turbo run lint",
