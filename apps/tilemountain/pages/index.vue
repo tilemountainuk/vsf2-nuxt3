@@ -1,19 +1,24 @@
 <template>
   is this mobile Page? :: {{ isMobile }}
-  <pre>
   {{ data }}
+  <HomeDelivery :homeDeliveryBlockData="homeDeliveryBlock"/>
+  <pre>
+<!--  {{ data }}-->
   </pre>
-  <div v-if="data && data?.cmsBlocks?.items">
-    <template v-for="cmsBlock in data.cmsBlocks.items">
-      <div v-if="cmsBlock" v-html="cmsBlock.content" />
-    </template>
-  </div>
+<!--  <div v-if="data && data?.cmsBlocks?.items">-->
+<!--    <template v-for="cmsBlock in data.cmsBlocks.items">-->
+<!--      <div v-if="cmsBlock" v-html="cmsBlock.content" />-->
+<!--    </template>-->
+<!--  </div>-->
 </template>
 
 <script setup lang="ts">
 // const { getContent, data: content } = useContent('home-page');
+import HomeDelivery from "~/components/blocks/HomeDelivery.vue";
+
 const { getCmsBlocks, data } = useCmsBlocks({ page: 'home' });
 const { isMobile } = useDevice()
+const homeDeliveryBlock = 'Fawad'
 
 //
 // userAgent: string

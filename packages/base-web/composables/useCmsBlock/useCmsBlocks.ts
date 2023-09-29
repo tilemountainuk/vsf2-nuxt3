@@ -44,14 +44,17 @@ export const useCmsBlocks = (payload: CmsBlocksInputType) => {
       // Add page-specific identifiers if page is defined in appConfig
       if (page && appConfig.cmsBlocks?.pages?.[page]) {
         cmsBlockIdentifiers = [...cmsBlockIdentifiers, ...appConfig.cmsBlocks.pages[page]];
+        console.log('cmsBlockIdentifiers1', cmsBlockIdentifiers, ...appConfig.cmsBlocks.pages[page]);
       }
 
       // Add identifiers passed as arguments
       if (identifiers) {
         if (typeof identifiers === 'string') {
           cmsBlockIdentifiers.push(identifiers);
+          console.log('cmsBlockIdentifiers1identifiers', identifiers);
         } else {
           cmsBlockIdentifiers = [...identifiers, ...cmsBlockIdentifiers];
+          console.log('cmsBlockIdentifierselse', identifiers, cmsBlockIdentifiers);
         }
       }
 
@@ -59,7 +62,9 @@ export const useCmsBlocks = (payload: CmsBlocksInputType) => {
       const { data, error } = await useAsyncData(() => useSdk().magento.cmsBlocks({
         identifiers: cmsBlockIdentifiers
       }))
+      console.log('dataIdentifier', data, useSdk().magento.cmsBlocks());
       if (data && data.value?.data) {
+        console.log('data.value12', data.value?.data)
         state.value.data = data.value.data;
       }
       return data;
