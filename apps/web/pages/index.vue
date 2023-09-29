@@ -2,6 +2,7 @@
   <div v-for="(component, index) in content" :key="`${component.fields.component}-${index}`">
     <RenderContent :content="component.fields.content" />
   </div>
+    <homeblocksFamiliarProducts/>
 </template>
 
 <script setup lang="ts">

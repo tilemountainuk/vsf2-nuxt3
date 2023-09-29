@@ -26,8 +26,30 @@ export default {
         sm: '640px',
         xs: '376px',
         '2xs': '360px',
+        xld: '1200px',
+        lgl: '992px',
+        mdt: '768px',
+        smm: '576px',
       },
     },
   },
-  plugins: [sfTypography, require('@savvywombat/tailwindcss-grid-areas')],
+  plugins: [
+    function ({ addComponents }) {
+      addComponents({
+        '.container': {
+          maxWidth: '100%',
+          
+          '@screen md': {
+            maxWidth: '752px',
+          },
+          '@screen lg': {
+            maxWidth: '960px',
+          },
+          '@screen xl': {
+            maxWidth: '1140px',
+          },
+        }
+      })
+    },
+    sfTypography, require('@savvywombat/tailwindcss-grid-areas')],
 } as Config;
