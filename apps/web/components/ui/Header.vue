@@ -252,7 +252,618 @@
             </RouterLink>
           </li>
         </ul>
+        <SfButton
+          variant="tertiary"
+          square
+          aria-label="Close menu"
+          class="block md:hidden mr-5 bg-transparent hover:bg-primary-800 hover:text-white active:bg-primary-900 active:text-white"
+          @click="openMenu([])"
+        >
+          <SfIconMenu class="text-white" />
+        </SfButton>
+        <ul>
+          <li role="none">
+            <transition
+              enter-active-class="transform transition duration-500 ease-in-out"
+              leave-active-class="transform transition duration-500 ease-in-out"
+              enter-from-class="-translate-x-full md:translate-x-0 md:opacity-0"
+              enter-to-class="translate-x-0 md:translate-x-0 md:opacity-100"
+              leave-from-class="translate-x-0 md:opacity-100"
+              leave-to-class="-translate-x-full md:translate-x-0 md:opacity-0"
+            >
+            <SfDrawer
+                ref="drawerRef"
+                v-model="isOpen"
+                placement="left"
+                class="md:hidden right-[50px] max-w-[376px] bg-white overflow-y-auto"
+              >
+                <nav>
+                  <div class="flex items-center justify-between p-4 border-b border-b-neutral-200 border-b-solid">
+                    <SfButton variant="tertiary" square aria-label="Close menu" class="ml-2" @click="close()">
+                      <SfIconClose class="text-neutral-500" />
+                    </SfButton>
+                  </div>
+                  <ul class="mt-2 mb-6">
+                    <li v-if="activeMenu.key !== 'root'">
+                      <SfListItem
+                        size="lg"
+                        tag="button"
+                        type="button"
+                        class="border-b border-b-neutral-200 border-b-solid"
+                        @click="goBack()"
+                      >
+                        <div class="flex items-center">
+                          <SfIconArrowBack class="text-neutral-500" />
+                          <p class="ml-5 font-medium text-[#434343]">{{ activeMenu.value.label }}</p>
+                        </div>
+                      </SfListItem>
+                    </li>
+                    <template v-for="node in activeMenu.children" :key="node.value.label">
+                      <li v-if="node.isLeaf">
+                        <SfListItem size="lg" tag="a" :href="node.value.link" class="first-of-type:mt-2">
+                          <div class="flex items-center">
+                            <p class="text-left text-[#434343]">{{ node.value.label }}</p>
+                            <SfCounter class="ml-2">{{ node.value.counter }}</SfCounter>
+                          </div>
+                        </SfListItem>
+                      </li>
+                      <li v-else>
+                        <SfListItem size="lg" tag="button" type="button" @click="goNext(node.key)">
+                          <div class="flex justify-between items-center">
+                            <div class="flex items-center">
+                              <p class="text-left text-[#434343]">{{ node.value.label }}</p>
+                              <SfCounter class="ml-2">{{ node.value.counter }}</SfCounter>
+                            </div>
+                            <SfIconChevronRight class="text-neutral-500" />
+                          </div>
+                        </SfListItem>
+                      </li>
+                    </template>
+                  </ul>
+                </nav>
+              </SfDrawer>
+              <!-- <SfDrawer
+                ref="drawerRef"
+                v-model="isOpen"
+                disable-click-away
+                placement="top"
+                class="grid max-w-[230px] grid-cols-1 md:gap-x-6 md:grid-cols-4 bg-white shadow-lg p-0 max-h-screen overflow-y-auto md:!absolute md:!top-[5rem] md:max-w-full md:p-6 mr-[50px] md:mr-0"
+              >
+                <div class="sticky top-0 flex items-center justify-between py-2 px-4 bg-primary-700 md:hidden w-full">
+                  <SfButton
+                    square
+                    variant="tertiary"
+                    aria-label="Close navigation menu"
+                    class="text-white ml-2"
+                    @click="close()"
+                    @keydown.enter.space="close()"
+                  >
+                    <SfIconClose />
+                  </SfButton>
+                </div>
+                <div class="[&:nth-child(2)]:pt-0 pt-6 md:pt-0">
+                  <ul>
+                    <li class="text-[#434343]">
+                      <SfListItem
+                        tag="a"
+                        size="sm"
+                        role="none"
+                        class="typography-text-sm md:typography-text-sm py-1 md:py-1.5 justify-center"
+                      >
+                        All Tiles
+                      </SfListItem>
+                    </li>
+                    <li class="text-[#434343]">
+                      <SfListItem
+                        tag="a"
+                        size="sm"
+                        role="none"
+                        class="typography-text-sm md:typography-text-sm py-4 md:py-1.5"
+                      >
+                        Bathroom
+                      </SfListItem>
+                    </li>
+                    <li class="text-[#434343]">
+                      <SfListItem
+                        tag="a"
+                        size="sm"
+                        role="none"
+                        class="typography-text-base md:typography-text-sm py-4 md:py-1.5"
+                      >
+                        Kitchen
+                      </SfListItem>
+                    </li>
+                    <li class="text-[#434343]">
+                      <SfListItem
+                        tag="a"
+                        size="sm"
+                        role="none"
+                        class="typography-text-base md:typography-text-sm py-4 md:py-1.5"
+                      >
+                        Floor
+                      </SfListItem>
+                    </li>
+                    <li class="text-[#434343]">
+                      <SfListItem
+                        tag="a"
+                        size="sm"
+                        role="none"
+                        class="typography-text-base md:typography-text-sm py-4 md:py-1.5"
+                      >
+                        Wall
+                      </SfListItem>
+                    </li>
+                    <li class="text-[#434343]">
+                      <SfListItem
+                        tag="a"
+                        size="sm"
+                        role="none"
+                        class="typography-text-base md:typography-text-sm py-4 md:py-1.5"
+                      >
+                        Luxury Vinyl
+                      </SfListItem>
+                    </li>
+                    <li class="text-[#434343]">
+                      <SfListItem
+                        tag="a"
+                        size="sm"
+                        role="none"
+                        class="typography-text-base md:typography-text-sm py-4 md:py-1.5"
+                      >
+                        Laminate
+                      </SfListItem>
+                    </li>
+                    <li class="text-[#434343]">
+                      <SfListItem
+                        tag="a"
+                        size="sm"
+                        role="none"
+                        class="typography-text-base md:typography-text-sm py-4 md:py-1.5"
+                      >
+                        Real Wood
+                      </SfListItem>
+                    </li>
+                    <li class="text-[#434343]">
+                      <SfListItem
+                        tag="a"
+                        size="sm"
+                        role="none"
+                        class="typography-text-base md:typography-text-sm py-4 md:py-1.5"
+                      >
+                        Outdoor
+                      </SfListItem>
+                    </li>
+                    <li class="text-[#434343]">
+                      <SfListItem
+                        tag="a"
+                        size="sm"
+                        role="none"
+                        class="typography-text-base md:typography-text-sm py-4 md:py-1.5"
+                      >
+                        New
+                      </SfListItem>
+                    </li>
+                    <li class="text-[#434343]">
+                      <SfListItem
+                        tag="a"
+                        size="sm"
+                        role="none"
+                        class="typography-text-base md:typography-text-sm py-4 md:py-1.5"
+                      >
+                        Adhesive
+                      </SfListItem>
+                    </li>
+                    <li class="text-[#434343]">
+                      <SfListItem
+                        tag="a"
+                        size="sm"
+                        role="none"
+                        class="typography-text-base md:typography-text-sm py-4 md:py-1.5"
+                      >
+                        Accessories
+                      </SfListItem>
+                    </li>
+                    <li class="text-[#434343]">
+                      <SfListItem
+                        tag="a"
+                        size="sm"
+                        role="none"
+                        class="typography-text-base md:typography-text-sm py-4 md:py-1.5"
+                      >
+                        Sale
+                      </SfListItem>
+                    </li>
+                    <li class="text-[#434343]">
+                      <SfListItem
+                        tag="a"
+                        size="sm"
+                        role="none"
+                        class="typography-text-base md:typography-text-sm py-4 md:py-1.5"
+                      >
+                        Style & Advice
+                      </SfListItem>
+                    </li>
+                  </ul>
+                </div>
+                <SfButton
+                  square
+                  size="sm"
+                  variant="tertiary"
+                  aria-label="Close navigation menu"
+                  class="hidden md:block md:absolute md:right-0 hover:bg-white active:bg-white"
+                  @click="close()"
+                >
+                  <SfIconClose class="text-neutral-500" />
+                </SfButton>
+              </SfDrawer> -->
+            </transition>
+          </li>
+        </ul>
       </div>
     </div>
   </section>
 </template>
+<script lang="ts" setup>
+import {
+  SfIconClose,
+  SfButton,
+  SfDrawer,
+  SfListItem,
+  SfIconMenu,
+  useDisclosure,
+  useTrapFocus,
+  SfIconChevronRight,
+  SfIconArrowBack,
+} from '@storefront-ui/vue';
+const findNode = (keys: string[], node: Node): Node => {
+  if (keys.length > 1) {
+    const [currentKey, ...restKeys] = keys;
+    return findNode(restKeys, node.children?.find((child) => child.key === currentKey) || node);
+  } else {
+    return node.children?.find((child) => child.key === keys[0]) || node;
+  }
+};
+
+const { close, open, isOpen } = useDisclosure();
+
+const drawerRef = ref();
+const megaMenuRef = ref();
+const activeNode = ref<string[]>([]);
+
+const activeMenu = computed(() => findNode(activeNode.value, content));
+
+const trapFocusOptions = {
+  activeState: isOpen,
+  arrowKeysUpDown: true,
+  initialFocus: 'container',
+} as const;
+useTrapFocus(
+  computed(() => megaMenuRef.value?.[0]),
+  trapFocusOptions,
+);
+useTrapFocus(drawerRef, trapFocusOptions);
+
+const openMenu = (menuType: string[]) => {
+  activeNode.value = menuType;
+  open();
+};
+
+const goBack = () => {
+  activeNode.value = activeNode.value.slice(0, activeNode.value.length - 1);
+};
+
+const goNext = (key: string) => {
+  activeNode.value = [...activeNode.value, key];
+};
+const content: Node = {
+  key: 'root',
+  value: { label: '', counter: 0 },
+  isLeaf: false,
+  children: [
+    {
+      key: 'WOMEN',
+      value: {
+        label: 'Women',
+        counter: 515,
+        banner: 'https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/glasses.png',
+        bannerTitle: 'The world in a new light',
+      },
+      isLeaf: false,
+      children: [
+        {
+          key: 'ALL_WOMEN',
+          value: { label: "All Women's", counter: 515, link: '#' },
+          isLeaf: true,
+        },
+        {
+          key: 'CATEGORIES',
+          value: { label: 'Categories', counter: 178 },
+          isLeaf: false,
+          children: [
+            {
+              key: 'ALL_CATEGORIES',
+              value: { label: 'All Categories', counter: 178, link: '#' },
+              isLeaf: true,
+            },
+            {
+              key: 'CLOTHING',
+              value: { label: 'Clothing', counter: 30, link: '#' },
+              isLeaf: true,
+            },
+            {
+              key: 'SHOES',
+              value: { label: 'Shoes', counter: 28, link: '#' },
+              isLeaf: true,
+            },
+            {
+              key: 'ACCESSORIES',
+              value: { label: 'Accessories', counter: 56, link: '#' },
+              isLeaf: true,
+            },
+            {
+              key: 'WEARABLES',
+              value: { label: 'Wearables', counter: 12, link: '#' },
+              isLeaf: true,
+            },
+            {
+              key: 'FOOD_DRINKS',
+              value: { label: 'Food & Drinks', counter: 52, link: '#' },
+              isLeaf: true,
+            },
+          ],
+        },
+        {
+          key: 'ACTIVITIES',
+          value: { label: 'Activities', counter: 239 },
+          isLeaf: false,
+          children: [
+            {
+              key: 'ALL_ACTIVITIES',
+              value: { label: 'All Activities', counter: 239, link: '#' },
+              isLeaf: true,
+            },
+            {
+              key: 'FITNESS',
+              value: { label: 'Fitness', counter: 83, link: '#' },
+              isLeaf: true,
+            },
+            {
+              key: 'PILATES',
+              value: { label: 'Pilates', counter: 65, link: '#' },
+              isLeaf: true,
+            },
+            {
+              key: 'TRAINING',
+              value: { label: 'Training', counter: 21, link: '#' },
+              isLeaf: true,
+            },
+            {
+              key: 'CARDIO_WORKOUT',
+              value: { label: 'Cardio Workout', counter: 50, link: '#' },
+              isLeaf: true,
+            },
+            {
+              key: 'YOGA',
+              value: { label: 'Yoga', counter: 20, link: '#' },
+              isLeaf: true,
+            },
+          ],
+        },
+        {
+          key: 'DEALS',
+          value: { label: 'Deals', counter: 98 },
+          isLeaf: false,
+          children: [
+            {
+              key: 'ALL_DEALS',
+              value: { label: 'All Deals', counter: 98, link: '#' },
+              isLeaf: true,
+            },
+            {
+              key: 'OUTLET',
+              value: { label: 'Outlet', counter: 98, link: '#' },
+              isLeaf: true,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      key: 'MEN',
+      value: {
+        label: 'Men',
+        counter: 364,
+        banner: 'https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/watch.png',
+        bannerTitle: 'New in designer watches',
+      },
+      isLeaf: false,
+      children: [
+        {
+          key: 'ALL_MEN',
+          value: { label: "All Men's", counter: 364, link: '#' },
+          isLeaf: true,
+        },
+        {
+          key: 'CATEGORIES',
+          value: { label: 'Categories', counter: 164 },
+          isLeaf: false,
+          children: [
+            {
+              key: 'ALL_CATEGORIES',
+              value: { label: 'All Categories', counter: 164, link: '#' },
+              isLeaf: true,
+            },
+            {
+              key: 'CLOTHING',
+              value: { label: 'Clothing', counter: 41, link: '#' },
+              isLeaf: true,
+            },
+            {
+              key: 'SHOES',
+              value: { label: 'Shoes', counter: 20, link: '#' },
+              isLeaf: true,
+            },
+            {
+              key: 'ACCESSORIES',
+              value: { label: 'Accessories', counter: 56, link: '#' },
+              isLeaf: true,
+            },
+            {
+              key: 'WEARABLES',
+              value: { label: 'Wearables', counter: 32, link: '#' },
+              isLeaf: true,
+            },
+            {
+              key: 'FOOD_DRINKS',
+              value: { label: 'Food & Drinks', counter: 15, link: '#' },
+              isLeaf: true,
+            },
+          ],
+        },
+        {
+          key: 'ACTIVITIES',
+          value: { label: 'Activities', counter: 132 },
+          isLeaf: false,
+          children: [
+            {
+              key: 'ALL_ACTIVITIES',
+              value: { label: 'All Activities', counter: 132, link: '#' },
+              isLeaf: true,
+            },
+            {
+              key: 'TRAINING',
+              value: { label: 'Training', counter: 21, link: '#' },
+              isLeaf: true,
+            },
+            {
+              key: 'WORKOUT',
+              value: { label: 'Workout', counter: 43, link: '#' },
+              isLeaf: true,
+            },
+            {
+              key: 'FOOTBALL',
+              value: { label: 'Football', counter: 30, link: '#' },
+              isLeaf: true,
+            },
+            {
+              key: 'FITNESS',
+              value: { label: 'Fitness', counter: 38, link: '#' },
+              isLeaf: true,
+            },
+          ],
+        },
+        {
+          key: 'DEALS',
+          value: { label: 'Deals', counter: 68 },
+          isLeaf: false,
+          children: [
+            {
+              key: 'ALL_DEALS',
+              value: { label: 'All Deals', counter: 68, link: '#' },
+              isLeaf: true,
+            },
+            {
+              key: 'OUTLET',
+              value: { label: 'Outlet', counter: 68, link: '#' },
+              isLeaf: true,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      key: 'KIDS',
+      value: {
+        label: 'Kids',
+        counter: 263,
+        banner: 'https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/toy.png',
+        bannerTitle: 'Unleash your imagination',
+      },
+      isLeaf: false,
+      children: [
+        {
+          key: 'ALL_KIDS',
+          value: { label: 'All Kids', counter: 263, link: '#' },
+          isLeaf: true,
+        },
+        {
+          key: 'CATEGORIES',
+          value: { label: 'Categories', counter: 192 },
+          isLeaf: false,
+          children: [
+            {
+              key: 'ALL_CATEGORIES',
+              value: { label: 'All Categories', counter: 192, link: '#' },
+              isLeaf: true,
+            },
+            {
+              key: 'CLOTHING',
+              value: { label: 'Clothing', counter: 29, link: '#' },
+              isLeaf: true,
+            },
+            {
+              key: 'SHOES',
+              value: { label: 'Shoes', counter: 60, link: '#' },
+              isLeaf: true,
+            },
+            {
+              key: 'ACCESSORIES',
+              value: { label: 'Accessories', counter: 48, link: '#' },
+              isLeaf: true,
+            },
+            {
+              key: 'WEARABLES',
+              value: { label: 'Wearables', counter: 22, link: '#' },
+              isLeaf: true,
+            },
+            {
+              key: 'FOOD_DRINKS',
+              value: { label: 'Food & Drinks', counter: 33, link: '#' },
+              isLeaf: true,
+            },
+          ],
+        },
+        {
+          key: 'ACTIVITIES',
+          value: { label: 'Activities', counter: 40 },
+          isLeaf: false,
+          children: [
+            {
+              key: 'ALL_ACTIVITIES',
+              value: { label: 'All Activities', counter: 40, link: '#' },
+              isLeaf: true,
+            },
+            {
+              key: 'FOOTBALL',
+              value: { label: 'Football', counter: 21, link: '#' },
+              isLeaf: true,
+            },
+            {
+              key: 'BASKETBALL',
+              value: { label: 'Basketball', counter: 19, link: '#' },
+              isLeaf: true,
+            },
+          ],
+        },
+        {
+          key: 'DEALS',
+          value: { label: 'Deals', counter: 31 },
+          isLeaf: false,
+          children: [
+            {
+              key: 'ALL_DEALS',
+              value: { label: 'All Deals', counter: 31, link: '#' },
+              isLeaf: true,
+            },
+            {
+              key: 'OUTLET',
+              value: { label: 'Outlet', counter: 31, link: '#' },
+              isLeaf: true,
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+</script>

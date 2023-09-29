@@ -73,9 +73,7 @@
       <SfIconSearch />
     </SfButton>
   </UiNavbarTop>
-  <!-- header  -->
-  <UiHeader />
-  <!-- header end -->
+
   <NarrowContainer v-if="breadcrumbs">
     <div class="p-4 md:px-0">
       <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />

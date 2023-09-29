@@ -1,7 +1,7 @@
 <template>
   <header
     :class="[
-      'h-14 md:h-20 flex z-50 md:sticky md:-top-5 md:pt-2.5 md:shadow-md',
+      'h-14 md:h-20 flex z-50 md:sticky md:-top-5 md:pt-2.5 md:shadow-md flex-col mb-[10rem]',
       { 'bg-primary-700 text-white': filled },
       { 'bg-white text-[#02C652] border-b border-neutral-200': !filled },
     ]"
@@ -14,8 +14,8 @@
         <UiVsfLogo />
       </NuxtLink>
       <slot />
-   
     </div>
+    <UiHeader />
   </header>
 </template>
 

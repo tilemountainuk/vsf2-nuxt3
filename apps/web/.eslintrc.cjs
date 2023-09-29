@@ -32,5 +32,7 @@ module.exports = {
     'unicorn/filename-case': 'off',
     'no-undef': 'off',
     'vue/no-setup-props-destructure': 'off',
+    'max-lines': ['error', { max: 100000 }]
+
   },
 };
