@@ -13,7 +13,7 @@ export default defineNuxtModule({
 
     const runtimeDir = fileURLToPath(new URL('./runtime', import.meta.url))
     // nuxt.options.build.transpile.push(runtimeDir)
-    addPlugin(resolve(runtimeDir, 'cms.plugin.ts'))
+    // addPlugin(resolve(runtimeDir, 'cms.plugin.ts'))
 
     // Auto register components
     // nuxt.hook('components:dirs', (dirs) => {
