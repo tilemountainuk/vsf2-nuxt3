@@ -4,7 +4,11 @@ import type { Config } from 'tailwindcss';
 
 export default {
   presets: [tailwindConfig],
-  content: ['./**/*.vue', '../../node_modules/@storefront-ui/vue/**/*.{js,mjs}'],
+  content: [
+    './**/*.vue',
+    '../../node_modules/@storefront-ui/vue/**/*.{js,mjs}',
+    '../../packages/base-web/**/*.vue'
+  ],
   theme: {
     extend: {
       gridTemplateAreas: {

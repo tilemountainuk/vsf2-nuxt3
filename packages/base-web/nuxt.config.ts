@@ -5,6 +5,9 @@ export default defineNuxtConfig({
   alias: {
     '@base': resolve(__dirname, './')
   },
+  components: [
+    { path: '@base/dynamic_pages', pathPrefix: false }
+  ],
   typescript: {
     typeCheck: true
   },
@@ -15,8 +18,12 @@ export default defineNuxtConfig({
   pinia: {
     autoImports: [
       // automatically imports `defineStore`
-      'defineStore' // import { defineStore } from 'pinia'
+      'defineStore', // import { defineStore } from 'pinia'
+      'acceptHMRUpdate'
     ]
+  },
+  imports: {
+    dirs: ['stores', '@base/stores']
   },
   device: {
     defaultUserAgent: 'Mozilla/5.0 (Linux; Android 5.1.1; Nexus 6 Build/LYZ28E) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.39 Mobile Safari/537.36',
@@ -40,6 +47,12 @@ export default defineNuxtConfig({
   },
   appConfig: {
     titleSuffix: 'Tile Mountain App'
+  },
+  runtimeConfig: {
+    public: {
+      rootDir: __dirname,
+      baseDir: __dirname
+    }
   },
   image: {
     screens: {

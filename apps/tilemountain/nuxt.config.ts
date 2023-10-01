@@ -1,35 +1,46 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { resolve } from 'path';
+
 export default defineNuxtConfig({
   extends: ['@tilemountain-web/base/nuxt.config.ts'],
   devtools: { enabled: true },
+  alias: {
+    '@theme': resolve(__dirname, './')
+  },
   typescript: {
-    typeCheck: true,
+    typeCheck: true
   },
   app: {
     head: {
       viewport: 'minimum-scale=1, initial-scale=1, width=device-width',
       htmlAttrs: {
-        lang: 'en',
+        lang: 'en'
       },
       meta: [
         { name: 'description', content: 'VSF x Nuxt3 (Boilerplate)' },
-        { name: 'theme-color', content: '#018937' },
+        { name: 'theme-color', content: '#018937' }
       ],
       link: [
         { rel: 'icon', href: '/favicon.ico' },
-        { rel: 'apple-touch-icon', href: '/icons/apple-touch-icon-180x180.png' },
-      ],
-    },
+        { rel: 'apple-touch-icon', href: '/icons/apple-touch-icon-180x180.png' }
+      ]
+    }
   },
   appConfig: {
-    titleSuffix: 'Vue Storefront Nuxt3 Boilerplate',
+    titleSuffix: 'Vue Storefront Nuxt3 Boilerplate'
+  },
+  runtimeConfig: {
+    public: {
+      rootDir: __dirname
+    }
   },
   imports: {
-    dirs: ['composables/**', 'utils/**']
+    dirs: ['stores','@base/stores', 'composables/**', 'utils/**']
   },
-  components:[
+  components: [
     '@base/components',
-    '~/components'
+    '~/components',
+    { path: '~/dynamic_pages', pathPrefix: false }
   ],
   css: ['~/assets/style.scss'],
   image: {
@@ -42,9 +53,9 @@ export default defineNuxtConfig({
       md: 768,
       sm: 640,
       xs: 376,
-      '2xs': 360,
+      '2xs': 360
     },
-    provider: process.env.NUXT_IMAGE_PROVIDER || 'ipx',
+    provider: process.env.NUXT_IMAGE_PROVIDER || 'ipx'
   },
   modules: [
     '@nuxtjs/tailwindcss',
@@ -53,9 +64,9 @@ export default defineNuxtConfig({
       {
         families: {
           'Red Hat Display': [400, 500, 700],
-          'Red Hat Text': [300, 400, 500, 700],
-        },
-      },
+          'Red Hat Text': [300, 400, 500, 700]
+        }
+      }
     ],
     [
       '@nuxtjs/i18n',
@@ -63,29 +74,29 @@ export default defineNuxtConfig({
         locales: [
           {
             code: 'en',
-            file: 'en.json',
-          },
+            file: 'en.json'
+          }
         ],
         lazy: true,
         langDir: 'lang',
         defaultLocale: 'en'
-      },
+      }
     ],
     '@nuxt/image',
     '@vite-pwa/nuxt',
     'nuxt-vitest',
-    'nuxt-lazy-hydrate',
+    'nuxt-lazy-hydrate'
   ],
   nitro: {
     prerender: {
-      crawlLinks: true,
+      crawlLinks: true
     },
-    compressPublicAssets: true,
+    compressPublicAssets: true
   },
   routeRules: {
     '/_ipx/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
     '/icons/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
-    '/favicon.ico': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
+    '/favicon.ico': { headers: { 'cache-control': `public, max-age=31536000, immutable` } }
   },
   pwa: {
     registerType: 'autoUpdate',
@@ -96,8 +107,8 @@ export default defineNuxtConfig({
       additionalManifestEntries: [
         {
           url: '/offline',
-          revision: Math.random().toString(32),
-        },
+          revision: Math.random().toString(32)
+        }
       ],
       navigationPreload: true,
       runtimeCaching: [
@@ -106,12 +117,12 @@ export default defineNuxtConfig({
           handler: 'NetworkOnly',
           options: {
             precacheFallback: {
-              fallbackURL: '/offline',
-            },
-          },
-        },
+              fallbackURL: '/offline'
+            }
+          }
+        }
       ],
-      cleanupOutdatedCaches: true,
+      cleanupOutdatedCaches: true
     },
     manifest: {
       name: 'VSF x Nuxt3 (Boilerplate)',
@@ -121,21 +132,21 @@ export default defineNuxtConfig({
         {
           src: 'icons/icon-192x192.png',
           sizes: '192x192',
-          type: 'image/png',
+          type: 'image/png'
         },
         {
           src: 'icons/icon-512x512.png',
           sizes: '512x512',
-          type: 'image/png',
+          type: 'image/png'
         },
         {
           src: 'icons/icon-512x512.maskable.png',
           sizes: '512x512',
           type: 'image/png',
-          purpose: 'maskable',
-        },
-      ],
+          purpose: 'maskable'
+        }
+      ]
     },
-    registerWebManifestInRouteRules: true,
-  },
+    registerWebManifestInRouteRules: true
+  }
 });
