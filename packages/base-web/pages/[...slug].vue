@@ -1,6 +1,4 @@
 <template>
-  <span class="text-6xl leading-extra-tight font-headings">{{ routeType }}</span>
-  <br />
   <component :is="type" v-bind="dynamicProps" />
 </template>
 
@@ -25,6 +23,8 @@ switch (routeType) {
     break;
   case 'CMS_PAGE':
     type.value = resolveComponent('cmsPage');
+    const identifier = useState<{ identifier: string }>('routeData')?.value?.identifier
+    dynamicProps.value = { identifier }
     break;
   default:
     type.value = resolveComponent('pageNotFound');

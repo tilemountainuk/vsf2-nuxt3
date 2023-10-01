@@ -2,8 +2,9 @@ import { RoutableInterface } from '@vue-storefront/magento-types';
 import { useSdk } from 'sdk';
 
 interface ExtendedRoutableInterface extends RoutableInterface {
-    sku: string | undefined;
+    sku?: string | undefined;
     uid?: string | undefined;
+    identifier?: string | undefined;
 }
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
@@ -15,7 +16,9 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
             type: route?.type,
             sku: route?.sku,
             uid: route?.uid,
+            identifier: route?.identifier
         };
+
         if (routeData.type == null) {
             return;
         }
