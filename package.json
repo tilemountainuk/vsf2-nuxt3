@@ -4,15 +4,14 @@
   "private": true,
   "license": "MIT",
   "workspaces": [
-    "apps/*"
+    "apps/*",
+    "packages/*"
   ],
   "scripts": {
     "prepare": "is-ci || husky install",
     "build": "turbo run build",
     "build:analyze": "turbo run build:analyze",
     "dev": "turbo run dev",
-    "tiles247": "turbo run tiles247",
-    "tiles247:build": "turbo run tiles247:build",
     "cdev": "yarn && yarn dev",
     "start": "turbo run start",
     "lint": "turbo run lint",
@@ -35,6 +34,7 @@
     "@commitlint/cli": "^13.2.1",
     "@commitlint/config-conventional": "^13.2.0",
     "@lhci/cli": "^0.12.0",
+    "@nuxtjs/tailwindcss": "^6.8.0",
     "@trivago/prettier-plugin-sort-imports": "^4.1.1",
     "@vue-storefront/eslint-config": "~2.0.0-rc.7",
     "babel-preset-node": "^5.1.1",

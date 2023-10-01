@@ -1,0 +1,11 @@
+{
+  "extends": "./.nuxt/tsconfig.json",
+  "compilerOptions": {
+    "types": ["vitest/globals", "@vite-pwa/nuxt", "@vue-storefront/sdk"]
+  },
+  "rootDirs": [
+    ".",
+    "@tilemountain-web/base/nuxt.config.ts"
+  ],
+  "exclude": ["node_modules", "mocks", "__tests__", "cypress.config.ts"]
+}

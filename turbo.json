@@ -32,18 +32,6 @@
     "dev": {
       "cache": false
     },
-    "tiles247": {
-      "cache": false
-    },
-    "tiles247:build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": [
-        "dist/**"
-      ],
-      "cache": false
-    },
     "test": {
       "outputs": []
     },

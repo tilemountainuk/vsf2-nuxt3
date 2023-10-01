@@ -1,0 +1,13 @@
+{
+  "name": "sdk",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "main": "index.ts",
+  "dependencies": {
+    "@vue-storefront/magento-sdk": "^2.0.0",
+    "@vue-storefront/sdk": "^1.1.2",
+    "@vue-storefront/storefront-boilerplate-sdk": "^0.2.0",
+    "@vueuse/core": "^10.4.1"
+  }
+}
