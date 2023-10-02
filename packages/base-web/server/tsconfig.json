@@ -1,0 +1,3 @@
+{
+  "extends": "../../apps/tilemountain/server/plugins/tsconfig.json"
+}

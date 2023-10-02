@@ -10,11 +10,13 @@
       <SfButton type="button" size="sm">Sample Category floor_tiles.html</SfButton>
     </router-link>
     &nbsp;
-
     <router-link to="/p/invisible-marble-gloss-floor-tile.html">
       <SfButton type="button" size="sm">Sample Product Page SKU: 452495</SfButton>
     </router-link>
 
+    <SfButton type="button" @click="triggerError" class="text-6xl" size="sm">
+      Test Error For Sentry
+    </SfButton>
   </div>
 
   <pre>
@@ -24,6 +26,7 @@
 
 <script setup lang="ts">
 import { SfButton } from '@storefront-ui/vue';
+import * as Sentry from "@sentry/vue";
 
 // import { useUserStore } from '@base/stores/user'
 //
@@ -34,8 +37,16 @@ useCmsStore()
 // useUserStore()
 // import { useUserStore } from '@base/stores/user';
 
+const triggerError = () => {
+  try {
+    const errorMsg = 'v3 This is a test error from try';
+    console.error(errorMsg);
+    throw new Error(errorMsg);
+  } catch (e) {
+    Sentry.captureException(e);
+  }
+}
 
-// const { getContent, data: content } = useContent('home-page');
 const { data } = useCmsBlocks({ page: 'home' });
 const { isMobile } = useDevice()
 

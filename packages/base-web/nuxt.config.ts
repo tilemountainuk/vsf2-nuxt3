@@ -51,7 +51,11 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       rootDir: __dirname,
-      baseDir: __dirname
+      baseDir: __dirname,
+      sentry: {
+        dsn: 'https://bf2e76654c1aea97be40b5692fe282f8@o1042830.ingest.sentry.io/4505976954159104',
+        environment: 'development',
+      }
     }
   },
   image: {
