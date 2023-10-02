@@ -2,7 +2,7 @@
   <section class="bg-[#24224d]">
     <div class="container 2xl:max-w-7xl mx-auto">
       <div class="menu">
-        <ul class="relative flex justify-around">
+        <ul class="relative hidden md:flex justify-around">
           <li class="group group-hover">
             <div
               class="flex items-center justify-center text-white text-11 lg:text-15 font-bold flex-auto hover:bg-[#0fa897] group-hover:bg-[#0fa897]"
@@ -261,7 +261,7 @@
         >
           <SfIconMenu class="text-white" />
         </SfButton>
-        <ul>
+        <ul class="mobile-menu block md:hidden">
           <li role="none">
             <transition
               enter-active-class="transform transition duration-500 ease-in-out"

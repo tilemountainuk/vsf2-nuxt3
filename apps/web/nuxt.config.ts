@@ -132,4 +132,9 @@ export default defineNuxtConfig({
     },
     registerWebManifestInRouteRules: true,
   },
+  components: [
+    // ~/components/HeaderIcon/Logo.vue => <HeaderLogo />
+    { path: '~/components/HeaderIcon', prefix: 'Header' },
+    '~/components',
+  ],
 });
