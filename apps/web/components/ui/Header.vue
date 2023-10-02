@@ -271,50 +271,44 @@
               leave-from-class="translate-x-0 md:opacity-100"
               leave-to-class="-translate-x-full md:translate-x-0 md:opacity-0"
             >
-            <SfDrawer
+              <SfDrawer
                 ref="drawerRef"
                 v-model="isOpen"
                 placement="left"
-                class="md:hidden right-[50px] max-w-[376px] bg-white overflow-y-auto"
+                class="md:hidden right-[50px] bg-white overflow-y-auto z-50 max-w-[230px] border-2 border-[#292758] bottom-auto"
               >
                 <nav>
-                  <div class="flex items-center justify-between p-4 border-b border-b-neutral-200 border-b-solid">
+                  <!-- <div class="flex items-center justify-between p-4 border-b border-b-neutral-200 border-b-solid">
                     <SfButton variant="tertiary" square aria-label="Close menu" class="ml-2" @click="close()">
                       <SfIconClose class="text-neutral-500" />
                     </SfButton>
-                  </div>
-                  <ul class="mt-2 mb-6">
-                    <li v-if="activeMenu.key !== 'root'">
-                      <SfListItem
-                        size="lg"
-                        tag="button"
-                        type="button"
-                        class="border-b border-b-neutral-200 border-b-solid"
-                        @click="goBack()"
-                      >
-                        <div class="flex items-center">
-                          <SfIconArrowBack class="text-neutral-500" />
-                          <p class="ml-5 font-medium text-[#434343]">{{ activeMenu.value.label }}</p>
+                  </div> -->
+                  <ul>
+                    <li v-if="activeMenu.key !== 'root'" class="py-[5px] bg-[#00a799]">
+                      <SfListItem size="base" tag="button" type="button" class="pl-[12px] py-1" @click="goBack()">
+                        <div class="flex items-center gap-[6px]">
+                          <NuxtImg src="/icons/arrow-forward.png" class="max-w-full h-auto" />
+                          <p class="text-white text-[13px] font-bold flex items-center">
+                            {{ activeMenu.value.label }}
+                          </p>
                         </div>
                       </SfListItem>
                     </li>
                     <template v-for="node in activeMenu.children" :key="node.value.label">
-                      <li v-if="node.isLeaf">
-                        <SfListItem size="lg" tag="a" :href="node.value.link" class="first-of-type:mt-2">
+                      <li v-if="node.isLeaf" class="border-b-[1px] border-[#f2f2f2] py-[3px]">
+                        <SfListItem size="sm" tag="a" class="pl-[25px]" :href="node.value.link">
                           <div class="flex items-center">
-                            <p class="text-left text-[#434343]">{{ node.value.label }}</p>
-                            <SfCounter class="ml-2">{{ node.value.counter }}</SfCounter>
+                            <p class="text-left text-[#434343] text-[11px] font-bold">{{ node.value.label }}</p>
                           </div>
                         </SfListItem>
                       </li>
-                      <li v-else>
-                        <SfListItem size="lg" tag="button" type="button" @click="goNext(node.key)">
+                      <li class="border-b-[1px] border-[#f2f2f2] py-[3px]" v-else>
+                        <SfListItem size="sm" tag="button" type="button" class="pl-[25px]" @click="goNext(node.key)">
                           <div class="flex justify-between items-center">
                             <div class="flex items-center">
-                              <p class="text-left text-[#434343]">{{ node.value.label }}</p>
-                              <SfCounter class="ml-2">{{ node.value.counter }}</SfCounter>
+                              <p class="text-left text-[#434343] text-[11px] font-bold">{{ node.value.label }}</p>
                             </div>
-                            <SfIconChevronRight class="text-neutral-500" />
+                            <NuxtImg src="/icons/right-arrow.png" class="max-w-full h-auto" />
                           </div>
                         </SfListItem>
                       </li>
@@ -322,180 +316,6 @@
                   </ul>
                 </nav>
               </SfDrawer>
-              <!-- <SfDrawer
-                ref="drawerRef"
-                v-model="isOpen"
-                disable-click-away
-                placement="top"
-                class="grid max-w-[230px] grid-cols-1 md:gap-x-6 md:grid-cols-4 bg-white shadow-lg p-0 max-h-screen overflow-y-auto md:!absolute md:!top-[5rem] md:max-w-full md:p-6 mr-[50px] md:mr-0"
-              >
-                <div class="sticky top-0 flex items-center justify-between py-2 px-4 bg-primary-700 md:hidden w-full">
-                  <SfButton
-                    square
-                    variant="tertiary"
-                    aria-label="Close navigation menu"
-                    class="text-white ml-2"
-                    @click="close()"
-                    @keydown.enter.space="close()"
-                  >
-                    <SfIconClose />
-                  </SfButton>
-                </div>
-                <div class="[&:nth-child(2)]:pt-0 pt-6 md:pt-0">
-                  <ul>
-                    <li class="text-[#434343]">
-                      <SfListItem
-                        tag="a"
-                        size="sm"
-                        role="none"
-                        class="typography-text-sm md:typography-text-sm py-1 md:py-1.5 justify-center"
-                      >
-                        All Tiles
-                      </SfListItem>
-                    </li>
-                    <li class="text-[#434343]">
-                      <SfListItem
-                        tag="a"
-                        size="sm"
-                        role="none"
-                        class="typography-text-sm md:typography-text-sm py-4 md:py-1.5"
-                      >
-                        Bathroom
-                      </SfListItem>
-                    </li>
-                    <li class="text-[#434343]">
-                      <SfListItem
-                        tag="a"
-                        size="sm"
-                        role="none"
-                        class="typography-text-base md:typography-text-sm py-4 md:py-1.5"
-                      >
-                        Kitchen
-                      </SfListItem>
-                    </li>
-                    <li class="text-[#434343]">
-                      <SfListItem
-                        tag="a"
-                        size="sm"
-                        role="none"
-                        class="typography-text-base md:typography-text-sm py-4 md:py-1.5"
-                      >
-                        Floor
-                      </SfListItem>
-                    </li>
-                    <li class="text-[#434343]">
-                      <SfListItem
-                        tag="a"
-                        size="sm"
-                        role="none"
-                        class="typography-text-base md:typography-text-sm py-4 md:py-1.5"
-                      >
-                        Wall
-                      </SfListItem>
-                    </li>
-                    <li class="text-[#434343]">
-                      <SfListItem
-                        tag="a"
-                        size="sm"
-                        role="none"
-                        class="typography-text-base md:typography-text-sm py-4 md:py-1.5"
-                      >
-                        Luxury Vinyl
-                      </SfListItem>
-                    </li>
-                    <li class="text-[#434343]">
-                      <SfListItem
-                        tag="a"
-                        size="sm"
-                        role="none"
-                        class="typography-text-base md:typography-text-sm py-4 md:py-1.5"
-                      >
-                        Laminate
-                      </SfListItem>
-                    </li>
-                    <li class="text-[#434343]">
-                      <SfListItem
-                        tag="a"
-                        size="sm"
-                        role="none"
-                        class="typography-text-base md:typography-text-sm py-4 md:py-1.5"
-                      >
-                        Real Wood
-                      </SfListItem>
-                    </li>
-                    <li class="text-[#434343]">
-                      <SfListItem
-                        tag="a"
-                        size="sm"
-                        role="none"
-                        class="typography-text-base md:typography-text-sm py-4 md:py-1.5"
-                      >
-                        Outdoor
-                      </SfListItem>
-                    </li>
-                    <li class="text-[#434343]">
-                      <SfListItem
-                        tag="a"
-                        size="sm"
-                        role="none"
-                        class="typography-text-base md:typography-text-sm py-4 md:py-1.5"
-                      >
-                        New
-                      </SfListItem>
-                    </li>
-                    <li class="text-[#434343]">
-                      <SfListItem
-                        tag="a"
-                        size="sm"
-                        role="none"
-                        class="typography-text-base md:typography-text-sm py-4 md:py-1.5"
-                      >
-                        Adhesive
-                      </SfListItem>
-                    </li>
-                    <li class="text-[#434343]">
-                      <SfListItem
-                        tag="a"
-                        size="sm"
-                        role="none"
-                        class="typography-text-base md:typography-text-sm py-4 md:py-1.5"
-                      >
-                        Accessories
-                      </SfListItem>
-                    </li>
-                    <li class="text-[#434343]">
-                      <SfListItem
-                        tag="a"
-                        size="sm"
-                        role="none"
-                        class="typography-text-base md:typography-text-sm py-4 md:py-1.5"
-                      >
-                        Sale
-                      </SfListItem>
-                    </li>
-                    <li class="text-[#434343]">
-                      <SfListItem
-                        tag="a"
-                        size="sm"
-                        role="none"
-                        class="typography-text-base md:typography-text-sm py-4 md:py-1.5"
-                      >
-                        Style & Advice
-                      </SfListItem>
-                    </li>
-                  </ul>
-                </div>
-                <SfButton
-                  square
-                  size="sm"
-                  variant="tertiary"
-                  aria-label="Close navigation menu"
-                  class="hidden md:block md:absolute md:right-0 hover:bg-white active:bg-white"
-                  @click="close()"
-                >
-                  <SfIconClose class="text-neutral-500" />
-                </SfButton>
-              </SfDrawer> -->
             </transition>
           </li>
         </ul>
@@ -504,17 +324,8 @@
   </section>
 </template>
 <script lang="ts" setup>
-import {
-  SfIconClose,
-  SfButton,
-  SfDrawer,
-  SfListItem,
-  SfIconMenu,
-  useDisclosure,
-  useTrapFocus,
-  SfIconChevronRight,
-  SfIconArrowBack,
-} from '@storefront-ui/vue';
+import { SfButton, SfDrawer, SfListItem, SfIconMenu, useDisclosure, useTrapFocus } from '@storefront-ui/vue';
+
 const findNode = (keys: string[], node: Node): Node => {
   if (keys.length > 1) {
     const [currentKey, ...restKeys] = keys;
