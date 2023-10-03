@@ -96,7 +96,7 @@
     <UiNavbarBottom />
   </NuxtLazyHydrate>
   <NuxtLazyHydrate when-visible>
-    <UiFooter />
+    <Footer />
   </NuxtLazyHydrate>
   <NuxtLazyHydrate when-idle>
     <SfModal
