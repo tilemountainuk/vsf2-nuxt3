@@ -29,6 +29,11 @@ export default {
         '2sm': '576px',
         xs: '376px',
         '2xs': '360px',
+        '1tab': { raw: '(max-width: 1199px)' },
+        tab: { raw: '(max-width: 991px)' },
+        mp: { raw: '(max-width: 767px)' },
+        '4xs': { raw: '(max-width: 480px)' },
+        small: { raw: '(max-width: 420px)' },
       },
       fontSize: {
         '11': '11px',
