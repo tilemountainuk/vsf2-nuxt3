@@ -25,39 +25,16 @@
 <script setup lang="ts">
 import { SfButton } from '@storefront-ui/vue';
 
-// import { useUserStore } from '@base/stores/user'
-//
-// const userStore = useUserStore()
-// import { useCmsStore } from '~/stores/cms';
-
-useCmsStore()
-// useUserStore()
-// import { useUserStore } from '@base/stores/user';
-
-
-// const { getContent, data: content } = useContent('home-page');
-const { data } = useCmsBlocks({ page: 'home' });
+const { data, getCmsBlocks } = useCmsBlocks();
+console.log('dataIs', data)
 const { isMobile } = useDevice()
 
-//
-// userAgent: string
-// isDesktop: boolean
-// isIos: boolean
-// isAndroid: boolean
-// isMobile: boolean
-// isMobileOrTablet: boolean
-// isDesktopOrTablet: boolean
-// isTablet: boolean
-// isWindows: boolean
-// isMacOS: boolean
-// isApple: boolean
-// isSafari: boolean
-// isFirefox: boolean
-// isEdge: boolean
-// isChrome: boolean
-// isSamsung: boolean
-// isCrawler: boolean
+const fetchedData = await getCmsBlocks({ identifiers: ['main_menu'] });
+console.log('fetchedData', fetchedData)
+
+const { cmsBlocks, cmsPages } = useCmsStore();
 
 
-// getCmsBlocks();
+console.log('cmsBlocks444', cmsBlocks, cmsPages)
+// getCmsBlocks({ identifiers: ['main_menu'] });
 </script>

@@ -12,35 +12,41 @@ import { AppConfigCMS, BlockItem } from '../../types/index';
  * const { data, loading, getCmsBlocks } = useCmsBlock<ContentFieldsType>('identifiers');
  */
 
-export const useCmsBlocks = (payload: CmsBlocksInputType, autoInit = true) => {
-  const { page = null, identifiers = null, includeDefaults = false } = payload;
+export const useCmsBlocks = () => {
   const appConfig = useAppConfig() as { cms: AppConfigCMS };
   const cmsBlockStore = useCmsBlockStore();
 
   // Use storeToRefs to make the state properties reactive
   const { items, loading, blocksData } = storeToRefs(cmsBlockStore);
 
-  const getCmsBlocks = async (identifiers: string[]) => cmsBlockStore.getBlocksData(identifiers)
-  const fetchInitialCmsBlocks = async () => {
+  const getCmsBlocks = async (payload: CmsBlocksInputType) => {
+    const { page = null, identifiers = null, includeDefaults = false } = payload;
     cmsBlockStore.setLoading(true);
-
+      // console.log('methodGetsHitOnPageLoad',payload);
     try {
       //Get the CMS blocks Configurations
       let cmsBlockPageMapping = appConfig.cms?.blocks;
 
+      // console.log('cmsBlock>>cmsBlockPageMapping', cmsBlockPageMapping)
+
       //If CMS Blocks not defined in config, and no identifiers has been requested then return;
       if (!cmsBlockPageMapping && !identifiers) {
+        // console.log('cmsBlock>>cmsBlockPageMapping', cmsBlockPageMapping)
         return;
       }
 
       // Initialize with defaults if required
       let cmsBlockIdentifiers = includeDefaults ? (cmsBlockPageMapping?.default ?? []) : [];
 
+      // console.log('cmsBlock>>cmsBlockIdentifiers', cmsBlockPageMapping)
+
       // Add page-specific identifiers if page is defined in appConfig
       if (page && cmsBlockPageMapping?.pages?.[page]) {
         cmsBlockIdentifiers.push(...cmsBlockPageMapping.pages[page]);
         // cmsBlockIdentifiers = [...cmsBlockIdentifiers, ...cmsBlockPageMapping.pages[page]];
       }
+
+      // console.log('weDoHaveAnIdentifier');
 
       // Add identifiers passed as arguments
       if (identifiers) {
@@ -53,6 +59,8 @@ export const useCmsBlocks = (payload: CmsBlocksInputType, autoInit = true) => {
         // }
       }
 
+      // console.log('weDoHaveAnIdentifier', cmsBlockIdentifiers);
+
       const { $generateUniqueKey } = useNuxtApp()
 
       // Generate unique key for this query
@@ -62,8 +70,12 @@ export const useCmsBlocks = (payload: CmsBlocksInputType, autoInit = true) => {
         includeDefaults: payload.includeDefaults
       });
 
+      // console.log('uniqueKey', uniqueKey);
+
       // Check if data already exists in store
       const cachedData = blocksData.value[uniqueKey];
+
+      // console.log('uniqueKey::CachedData', cachedData);
 
       if (cachedData) {
         //check if we have those cms blocks already in store.
@@ -76,9 +88,16 @@ export const useCmsBlocks = (payload: CmsBlocksInputType, autoInit = true) => {
       }
 
       //Fetching data.
-      const { data, error } = await useAsyncData<CmsBlocksResponse>(() => useSdk().magento.cmsBlocks({
+      // const responseTry = await useSdk().magento.cmsBlocks({
+      //   identifiers: cmsBlockIdentifiers
+      // });
+
+      // console.log('responseTry',responseTry);
+
+      const { data, error } = await useAsyncData<CmsBlocksResponse>('fetch-cms-blocks', () => useSdk().magento.cmsBlocks({
         identifiers: cmsBlockIdentifiers
       }))
+
       const fetchedCmsBlocks = data?.value?.data?.cmsBlocks?.items;
       if (fetchedCmsBlocks) {
         const mappedDataForState =
@@ -95,14 +114,12 @@ export const useCmsBlocks = (payload: CmsBlocksInputType, autoInit = true) => {
       }
       return data;
     } catch (error) {
+      console.log('There is an Error');
       throw new Error(error as string);
     } finally {
       cmsBlockStore.setLoading(false);
     }
   };
-  if (autoInit) {
-    fetchInitialCmsBlocks();
-  }
 
   return {
     getCmsBlocks,

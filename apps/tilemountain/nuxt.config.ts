@@ -77,7 +77,7 @@ export default defineNuxtConfig({
             file: 'en.json'
           }
         ],
-        lazy: true,
+        lazy: false,
         langDir: 'lang',
         defaultLocale: 'en'
       }
@@ -89,7 +89,7 @@ export default defineNuxtConfig({
   ],
   nitro: {
     prerender: {
-      crawlLinks: true
+      crawlLinks: false
     },
     compressPublicAssets: true
   },
