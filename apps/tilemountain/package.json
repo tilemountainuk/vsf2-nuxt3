@@ -21,7 +21,7 @@
   "dependencies": {
     "@tilemountain-web/base": "workspace:^",
     "@vue-storefront/magento-sdk": "^2.0.0",
-    "@vue-storefront/sdk": "^1.0.1",
+    "@vue-storefront/sdk": "^1.1.2",
     "@vue-storefront/storefront-boilerplate-sdk": "~0.2.0",
     "@vueuse/core": "^10.3.0",
     "c12": "^1.4.2",

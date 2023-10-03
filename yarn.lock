@@ -5070,7 +5070,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue-storefront/sdk@npm:^1.0.0, @vue-storefront/sdk@npm:^1.0.1, @vue-storefront/sdk@npm:^1.1.2, @vue-storefront/sdk@npm:~1.1.2":
+"@vue-storefront/sdk@npm:^1.0.0, @vue-storefront/sdk@npm:^1.1.2, @vue-storefront/sdk@npm:~1.1.2":
   version: 1.1.2
   resolution: "@vue-storefront/sdk@npm:1.1.2"
   dependencies:
@@ -16557,6 +16557,7 @@ __metadata:
     "@vue-storefront/sdk": ^1.1.2
     "@vue-storefront/storefront-boilerplate-sdk": ^0.2.0
     "@vueuse/core": ^10.4.1
+    tsup: ^7.2.0
   languageName: unknown
   linkType: soft
 
@@ -17817,7 +17818,7 @@ __metadata:
     "@vite-pwa/nuxt": ^0.1.0
     "@vitest/coverage-v8": ^0.33.0
     "@vue-storefront/magento-sdk": ^2.0.0
-    "@vue-storefront/sdk": ^1.0.1
+    "@vue-storefront/sdk": ^1.1.2
     "@vue-storefront/storefront-boilerplate-sdk": ~0.2.0
     "@vue-storefront/unified-data-model": ^0.6.0
     "@vue/test-utils": ^2.4.0
