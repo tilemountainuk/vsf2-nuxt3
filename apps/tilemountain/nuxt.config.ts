@@ -2,6 +2,7 @@
 import { resolve } from 'path';
 
 export default defineNuxtConfig({
+  debug: true,
   extends: ['@tilemountain-web/base/nuxt.config.ts'],
   devtools: { enabled: true },
   alias: {
@@ -77,7 +78,7 @@ export default defineNuxtConfig({
             file: 'en.json'
           }
         ],
-        lazy: true,
+        lazy: false,
         langDir: 'lang',
         defaultLocale: 'en'
       }
@@ -89,7 +90,7 @@ export default defineNuxtConfig({
   ],
   nitro: {
     prerender: {
-      crawlLinks: true
+      crawlLinks: false
     },
     compressPublicAssets: true
   },

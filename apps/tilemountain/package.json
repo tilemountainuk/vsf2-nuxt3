@@ -21,7 +21,7 @@
   "dependencies": {
     "@tilemountain-web/base": "workspace:^",
     "@vue-storefront/magento-sdk": "^2.0.0",
-    "@vue-storefront/sdk": "^1.0.1",
+    "@vue-storefront/sdk": "^1.1.2",
     "@vue-storefront/storefront-boilerplate-sdk": "~0.2.0",
     "@vueuse/core": "^10.3.0",
     "c12": "^1.4.2",
@@ -32,7 +32,7 @@
     "@nuxt/devtools": "latest",
     "@nuxt/image": "^1.0.0-rc.1",
     "@nuxtjs/google-fonts": "^3.0.1",
-    "@nuxtjs/i18n": "8.0.0-rc.3",
+    "@nuxtjs/i18n": "v8.0.0-rc.5",
     "@nuxtjs/tailwindcss": "^6.8.0",
     "@savvywombat/tailwindcss-grid-areas": "^3.1.0",
     "@storefront-ui/typography": "^2.3.1",

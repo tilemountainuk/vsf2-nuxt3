@@ -19,7 +19,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
             identifier: route?.identifier
         };
 
-        if (routeData.type == null) {
+        if (!routeData.type) {
             return;
         }
 
@@ -29,6 +29,8 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
             routeState.value = routeData;
         }
     } catch (error) {
-        throw new Error(error as string);
+        // throw new Error(error as string);
+        console.log('Could not fetch Magento route, falling back to static route.');
+        return;
     }
 });

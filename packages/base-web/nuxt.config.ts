@@ -2,6 +2,7 @@
 import { resolve } from 'path'
 
 export default defineNuxtConfig({
+  debug: true,
   alias: {
     '@base': resolve(__dirname, './')
   },
@@ -13,7 +14,21 @@ export default defineNuxtConfig({
   },
   modules: [
     '@nuxtjs/device',
-    '@pinia/nuxt'
+    '@pinia/nuxt',
+    [
+      '@nuxtjs/i18n',
+      {
+        locales: [
+          {
+            code: 'en',
+            file: 'en.json'
+          }
+        ],
+        lazy: false,
+        langDir: 'lang',
+        defaultLocale: 'en'
+      }
+    ]
   ],
   pinia: {
     autoImports: [
