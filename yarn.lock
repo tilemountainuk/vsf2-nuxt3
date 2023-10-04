@@ -3207,7 +3207,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxt/kit@npm:3.7.4, @nuxt/kit@npm:^3.3.2, @nuxt/kit@npm:^3.5.0, @nuxt/kit@npm:^3.5.3, @nuxt/kit@npm:^3.6.5, @nuxt/kit@npm:^3.7.0, @nuxt/kit@npm:^3.7.3":
+"@nuxt/kit@npm:3.7.4, @nuxt/kit@npm:^3.3.2, @nuxt/kit@npm:^3.5.0, @nuxt/kit@npm:^3.5.3, @nuxt/kit@npm:^3.6.3, @nuxt/kit@npm:^3.6.5, @nuxt/kit@npm:^3.7.0, @nuxt/kit@npm:^3.7.3":
   version: 3.7.4
   resolution: "@nuxt/kit@npm:3.7.4"
   dependencies:
@@ -4094,6 +4094,7 @@ __metadata:
     sdk: "workspace:^"
     vitest: ^0.34.6
     vue-tsc: ^1.8.15
+    vue3-carousel-nuxt: ^1.1.0
   languageName: unknown
   linkType: soft
 
@@ -19653,6 +19654,25 @@ __metadata:
   bin:
     vue-tsc: bin/vue-tsc.js
   checksum: fc11349fb498ba6ced65a589f7dfd3db9f95a77308cf15c20ee7c595b634314d468d362101ee6144274556d6b891d038033d35b41dd602e623d904bd16d6b622
+  languageName: node
+  linkType: hard
+
+"vue3-carousel-nuxt@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "vue3-carousel-nuxt@npm:1.1.0"
+  dependencies:
+    "@nuxt/kit": ^3.6.3
+    vue3-carousel: ^0.3.1
+  checksum: 07a94b50814cf69e1445252317ee58ffb85bcd63f3d59f72c330b24d62b4af9ad9c51a180332368922ee63c562ff4ce255238649e6f538832ab3143fb3828170
+  languageName: node
+  linkType: hard
+
+"vue3-carousel@npm:^0.3.1":
+  version: 0.3.1
+  resolution: "vue3-carousel@npm:0.3.1"
+  peerDependencies:
+    vue: ^3.2.0
+  checksum: 804a074b79003bff40a2dc72e9eb9c5e808527410d2dc2c0c09681cc07872ee40269fc592b08e246eee45ada6646f667cb997cdd1b277cbca6bc7c83700382cb
   languageName: node
   linkType: hard
 

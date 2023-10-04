@@ -1,7 +1,6 @@
 <template>
   <div>
     STYLE AND ADVICE IS LOADED <br />
-    Original Data : {{ data }} <br />
     After Parsing : {{ blockData }}
   </div>
 </template>
@@ -13,22 +12,43 @@ interface parseDataContent {
 }
 interface ReturnParseData {
   title: string;
+  title2: string;
   subtitle: string;
-  stars: string;
-  logo: string;
+  button: string;
+  link: string;
+  image: string;
 }
 const props = defineProps<{
   data: parseDataContent;
 }>();
-const parseData = (data: string) => {
+const parseData = (data: string): ReturnParseData => {
   const root = parse(data);
-  let ratingBlockData: ReturnParseData = {
+  const adviceBlockData: ReturnParseData = {
     title: '',
+    title2: '',
     subtitle: '',
-    stars: '',
-    logo: '',
+    button: '',
+    link: '',
+    image: '',
   };
-  return ratingBlockData;
+
+  if (root) {
+    const titleElement = root.querySelector('h3');
+    const title2Element = root.querySelector('h1');
+    const subtitleElement = root.querySelector('p');
+    const buttonElement = root.querySelector('button');
+    const linkElement = root.querySelector('a');
+    const imageElement = root.querySelector('img');
+
+    adviceBlockData.title = titleElement?.rawText || '';
+    adviceBlockData.title2 = title2Element?.rawText || '';
+    adviceBlockData.subtitle = subtitleElement?.rawText || '';
+    adviceBlockData.button = buttonElement?.rawText || '';
+    adviceBlockData.link = linkElement?.getAttribute('href') || '';
+    adviceBlockData.image = imageElement?.getAttribute('src') || '';
+  }
+
+  return adviceBlockData;
 };
 const blockData = computed(() => parseData(props.data.content));
 </script>

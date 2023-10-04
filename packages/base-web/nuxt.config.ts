@@ -27,7 +27,8 @@ export default defineNuxtConfig({
         langDir: 'lang',
         defaultLocale: 'en'
       }
-    ]
+    ],
+    'vue3-carousel-nuxt'
   ],
   pinia: {
     autoImports: [
