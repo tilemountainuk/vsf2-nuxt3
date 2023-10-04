@@ -4,11 +4,7 @@ import type { Config } from 'tailwindcss';
 
 export default {
   presets: [tailwindConfig],
-  content: [
-    './**/*.vue',
-    '../../node_modules/@storefront-ui/vue/**/*.{js,mjs}',
-    '../../packages/base-web/**/*.vue'
-  ],
+  content: ['./**/*.vue', '../../node_modules/@storefront-ui/vue/**/*.{js,mjs}'],
   theme: {
     extend: {
       gridTemplateAreas: {
@@ -25,11 +21,28 @@ export default {
         '3xl': '1536px',
         '2xl': '1366px',
         xl: '1280px',
+        '1xl': '1200px',
         lg: '1024px',
+        '2md': '992px',
         md: '768px',
         sm: '640px',
+        '2sm': '576px',
         xs: '376px',
         '2xs': '360px',
+        '1tab': { raw: '(max-width: 1199px)' },
+        tab: { raw: '(max-width: 991px)' },
+        mp: { raw: '(max-width: 767px)' },
+        '4xs': { raw: '(max-width: 480px)' },
+        small: { raw: '(max-width: 420px)' },
+      },
+      fontSize: {
+        '11': '11px',
+        '13': '13px',
+        '15': '15px',
+        '17': '17px',
+      },
+      fontFamily: {
+        'arial': ['Arial', 'sans-serif'],
       },
     },
   },

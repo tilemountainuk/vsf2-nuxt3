@@ -1,89 +1,6 @@
 <template>
-  <UiNavbarTop filled>
-    <SfButton
-      class="!px-2 mr-auto hidden lg:flex text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900"
-      variant="tertiary"
-      :tag="NuxtLink"
-      :to="paths.category"
-    >
-      <template #suffix>
-        <SfIconExpandMore class="hidden lg:block" />
-      </template>
-      <span class="hidden lg:flex whitespace-nowrap">{{ $t('allProductsLinkText') }}</span>
-    </SfButton>
-    <NuxtLazyHydrate when-visible>
-      <UiSearch class="hidden md:block flex-1" />
-    </NuxtLazyHydrate>
-    <nav class="hidden md:flex md:flex-row md:flex-nowrap">
-      <NuxtLazyHydrate when-visible>
-        <SfButton
-          class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
-          :tag="NuxtLink"
-          :to="paths.cart"
-          :aria-label="$t('numberInCart', cartLineItemsCount)"
-          variant="tertiary"
-          square
-        >
-          <template #prefix>
-            <SfIconShoppingCart />
-            <SfBadge
-              :content="cartLineItemsCount"
-              class="outline outline-primary-700 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-900 flex justify-center"
-              data-testid="cart-badge"
-            />
-          </template>
-        </SfButton>
-      </NuxtLazyHydrate>
-      <NuxtLazyHydrate when-visible>
-        <SfDropdown v-model="isAccountDropdownOpen" placement="bottom-end">
-          <template #trigger>
-            <SfButton
-              variant="tertiary"
-              class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md"
-              :class="{ 'bg-primary-900': isAccountDropdownOpen }"
-              @click="accountDropdownToggle()"
-              data-testid="account-dropdown-button"
-            >
-              <template #prefix><SfIconPerson /></template>
-              {{ account?.firstName }}
-            </SfButton>
-          </template>
-          <ul class="rounded bg-white shadow-md border border-neutral-100 text-neutral-900 min-w-[152px] py-2">
-            <li v-for="{ label, link } in accountDropdown" :key="label">
-              <template v-if="label === 'account.logout'">
-                <UiDivider class="my-2" />
-                <SfListItem
-                  tag="button"
-                  class="text-left"
-                  @click="accountDropdownToggle()"
-                  data-testid="account-dropdown-list-item"
-                  >{{ $t(label) }}
-                </SfListItem>
-              </template>
-              <SfListItem
-                v-else
-                :tag="NuxtLink"
-                :to="link"
-                :class="{ 'bg-neutral-200': $route.path === link }"
-                data-testid="account-dropdown-list-item"
-              >
-                {{ $t(label) }}
-              </SfListItem>
-            </li>
-          </ul>
-        </SfDropdown>
-      </NuxtLazyHydrate>
-    </nav>
-    <SfButton
-      variant="tertiary"
-      class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md md:hidden"
-      square
-      @click="searchModalOpen"
-      :aria-label="$t('openSearchModalButtonLabel')"
-    >
-      <SfIconSearch />
-    </SfButton>
-  </UiNavbarTop>
+  <HeaderBlocksTopHeader />
+  <HeaderBlocksHeader v-if="!isMobile" />
   <NarrowContainer v-if="breadcrumbs">
     <div class="p-4 md:px-0">
       <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
@@ -92,11 +9,9 @@
   <main>
     <slot />
   </main>
-  <NuxtLazyHydrate when-idle>
-    <UiNavbarBottom />
-  </NuxtLazyHydrate>
   <NuxtLazyHydrate when-visible>
-    <UiFooter />
+    <FooterBlocksMobileFooter v-if="isMobile" />
+    <FooterBlocksMainFooter v-else />
   </NuxtLazyHydrate>
   <NuxtLazyHydrate when-idle>
     <SfModal
@@ -145,6 +60,7 @@ const { fetchCustomer, data: account } = useCustomer();
 fetchCard();
 fetchCustomer();
 usePageTitle();
+const { isMobile } = useDevice()
 
 const cartLineItemsCount = computed(
   () => cart.value?.lineItems.reduce((total, { quantity }) => total + quantity, 0) ?? 0,
