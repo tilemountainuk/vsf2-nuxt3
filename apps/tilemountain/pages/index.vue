@@ -14,11 +14,15 @@
     <router-link to="/p/invisible-marble-gloss-floor-tile.html">
       <SfButton type="button" size="sm">Sample Product Page SKU: 452495</SfButton>
     </router-link>
-
   </div>
 
   <pre>
-  {{ data }}
+  {{ USPBarDataAllComputed }}
+  {{ FamiliarBrandDataAllComputed }}
+  {{ StyleAdviceDataAllComputed }}
+  <USPBar :data="USPBarDataAllComputed[0].block" />
+  <FamiliarBrands :data="FamiliarBrandDataAllComputed[0].block" />
+  <StyleAdvice :data="StyleAdviceDataAllComputed[0].block" />
   </pre>
 </template>
 
@@ -26,15 +30,18 @@
 import { SfButton } from '@storefront-ui/vue';
 
 const { data, getCmsBlocks } = useCmsBlocks();
-console.log('dataIs', data)
-const { isMobile } = useDevice()
+const { isMobile } = useDevice();
 
-const fetchedData = await getCmsBlocks({ identifiers: ['main_menu'] });
-console.log('fetchedData', fetchedData)
+await getCmsBlocks({ page: 'home' });
 
 const { cmsBlocks, cmsPages } = useCmsStore();
-
-
-console.log('cmsBlocks444', cmsBlocks, cmsPages)
 // getCmsBlocks({ identifiers: ['main_menu'] });
+
+const USPBarDataAllComputed = computed(() => data.value.filter((uspBlock) => uspBlock.identifier === 'home-Delivery'));
+const FamiliarBrandDataAllComputed = computed(() =>
+  data.value.filter((uspBlock) => uspBlock.identifier === 'Familiar-Brands'),
+);
+const StyleAdviceDataAllComputed = computed(() =>
+  data.value.filter((uspBlock) => uspBlock.identifier === 'style_advice'),
+);
 </script>

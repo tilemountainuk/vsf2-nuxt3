@@ -40,7 +40,8 @@ export default defineNuxtConfig({
   components: [
     '@base/components',
     '~/components',
-    { path: '~/dynamic_pages', pathPrefix: false }
+    { path: '~/dynamic_pages', pathPrefix: false },
+    { path: '~/components/HomeBlocks', pathPrefix: false }
   ],
   css: ['~/assets/style.scss'],
   image: {
