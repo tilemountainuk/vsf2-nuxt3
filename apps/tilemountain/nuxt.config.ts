@@ -2,7 +2,7 @@
 import { resolve } from 'path';
 
 export default defineNuxtConfig({
-  debug: true,
+  debug: false,
   extends: ['@tilemountain-web/base/nuxt.config.ts'],
   devtools: { enabled: true },
   alias: {
@@ -41,7 +41,8 @@ export default defineNuxtConfig({
   components: [
     '@base/components',
     '~/components',
-    { path: '~/dynamic_pages', pathPrefix: false }
+    { path: '~/dynamic_pages', pathPrefix: false },
+    { path: '~/components/HomeBlocks', pathPrefix: false }
   ],
   css: ['~/assets/style.scss'],
   image: {

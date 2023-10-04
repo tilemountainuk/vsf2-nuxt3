@@ -16,9 +16,10 @@
     </router-link>
 
   </div>
-
   <pre>
-  {{ data }}
+  <USPBar v-if="USPBarDataAllComputed" :data="USPBarDataAllComputed[0].block" />
+  <FamiliarBrands v-if="FamiliarBrandDataAllComputed" :data="FamiliarBrandDataAllComputed[0].block" />
+  <StyleAdvice v-if="StyleAdviceDataAllComputed" :data="StyleAdviceDataAllComputed[0].block" />
   </pre>
 </template>
 
@@ -26,15 +27,23 @@
 import { SfButton } from '@storefront-ui/vue';
 
 const { data, getCmsBlocks } = useCmsBlocks();
-console.log('dataIs', data)
+await getCmsBlocks({ page: 'home' });
+// console.log('dataIs', data)
 const { isMobile } = useDevice()
 
-const fetchedData = await getCmsBlocks({ identifiers: ['main_menu'] });
-console.log('fetchedData', fetchedData)
+// const fetchedData = await getCmsBlocks({ identifiers: ['main_menu'] });
+// console.log('fetchedData', fetchedData)
 
 const { cmsBlocks, cmsPages } = useCmsStore();
 
 
 console.log('cmsBlocks444', cmsBlocks, cmsPages)
 // getCmsBlocks({ identifiers: ['main_menu'] });
+const USPBarDataAllComputed = computed(() => data.value.filter((uspBlock) => uspBlock.identifier === 'home-Delivery'));
+const FamiliarBrandDataAllComputed = computed(() =>
+    data.value.filter((uspBlock) => uspBlock.identifier === 'Familiar-Brands'),
+);
+const StyleAdviceDataAllComputed = computed(() =>
+    data.value.filter((uspBlock) => uspBlock.identifier === 'style_advice'),
+);
 </script>
