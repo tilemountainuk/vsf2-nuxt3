@@ -2,6 +2,7 @@
 import { resolve } from 'path';
 
 export default defineNuxtConfig({
+  debug: true,
   extends: ['@tilemountain-web/base/nuxt.config.ts'],
   devtools: { enabled: true },
   alias: {

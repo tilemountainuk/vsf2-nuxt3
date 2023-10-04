@@ -2,6 +2,7 @@
 import { resolve } from 'path'
 
 export default defineNuxtConfig({
+  debug: true,
   alias: {
     '@base': resolve(__dirname, './')
   },
