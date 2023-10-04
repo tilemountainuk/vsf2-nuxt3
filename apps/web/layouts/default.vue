@@ -92,9 +92,6 @@
   <main>
     <slot />
   </main>
-  <NuxtLazyHydrate when-idle>
-    <UiNavbarBottom />
-  </NuxtLazyHydrate>
   <NuxtLazyHydrate when-visible>
     <UiFooter />
   </NuxtLazyHydrate>
