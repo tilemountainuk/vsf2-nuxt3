@@ -69,6 +69,7 @@ export default defineNuxtConfig({
     '@vite-pwa/nuxt',
     'nuxt-vitest',
     'nuxt-lazy-hydrate',
+    'vue3-carousel-nuxt',
   ],
   nitro: {
     prerender: {
