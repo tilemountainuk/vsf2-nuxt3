@@ -1,5 +1,5 @@
 <template>
-  <div class="px15 container box-border ml-auto mr-auto max-w-full 2xl:max-w-7xl mp:pr-0 mp:pl-0 pl-[15px] pr-[15px]">
+  <div class="container 2xl:max-w-7xl mx-auto">
     <div
       class="between-xs relative z-10 bg-white middle-xs header-main box-border flex flex-initial flex-row flex-wrap -mr-2 -ml-2 justify-between items-center ml-2 tab:-ml-[6px] mp:m-0"
     >
@@ -8,7 +8,7 @@
       >
         <div class="logo-desktop pt-1 mp:pt-1 mp:pl-5 small:pt:0 4xs:pt-0">
           <a href="/" aria-current="page" title="Home Page" class="inline-flex">
-            <HeaderLogo class="mp:w-[138px] mp:h-full 4xs:w-[94px] 4xs:min-h[45px] 4xs:relative 4xs:top-[5px]" />
+            <HeaderIconLogo class="mp:w-[138px] mp:h-full 4xs:w-[94px] 4xs:min-h[45px] 4xs:relative 4xs:top-[5px]" />
           </a>
         </div>
       </div>
@@ -53,7 +53,7 @@
               class="hidden mp:flex mp:absolute mp:top-[2px] mp:right-[0px] mp:h-[36px] mp:w-[40px] mp:bg-tranparent border-[#bdbdbd] mp:border-l-2 mp:justify-center mp:items-center"
             >
               <span class="w-[24px] h-[24px]">
-                <HeaderSearch />
+                <HeaderIconSearch />
               </span>
             </div>
             <!---->
@@ -84,7 +84,7 @@
                 class="bg-transparent border-0 cursor-pointer pt-[12px] pr-[34px] pb-[12px] pl-[12px] mp:p-0 1tab:pt-[8px] 1tab:pr-[16px] 1tab:pb-[12px] 1tab:pl-[12px] tab:p-[6px] mp:w-[14vw]"
               >
                 <NuxtLink to="/i/contact-us" class="p-0">
-                  <HeaderShowroomIcon class="mt-[25px] mb-auto mx-auto mp:mx-0" />
+                  <HeaderIconShowroomIcon class="mt-[25px] mb-auto mx-auto mp:mx-0" />
                   <p class="text-[13.33px] m-0 md:pt-[6px] hidden md:text-[#29275b] md:block">Showrooms</p>
                 </NuxtLink>
               </div>
@@ -95,14 +95,14 @@
                   class="mp:w-[14vw] mp:pr-[0] mp:justify-start inline-flex relative pr-[13px] outline-0 tab:pr-[6px] mp:p0"
                 >
                   <NuxtLink to="#" class="pt-[16px]">
-                    <HeaderAccountIcon class="mt-[8px]" />
+                    <HeaderIconAccountIcon class="mt-[8px]" />
                   </NuxtLink>
                 </div>
               </div>
               <button
                 class="mp:min-w-0 mp:w-auto relative bg-transparent border-0 inline-flex cursor-pointer w-auto -mr-[6px] flex pl-0 items-center 1tab:h-full 1tab:w-full 1tab:mx-w-[53px] 1tab:p-0 1tab:m-0 1tab:min-w-full tab:h-full tab:w-full tab:mx-w-fit tab:p-0 tab:m-0 mp:mb-0 mp:ml-0 mp:mr-0 mp:-mt-[10px] mp:min-h-[83px] 4xs:max-w-fit"
               >
-                <HeaderCartIcon class="mp:h-full mp:w-[30px]" />
+                <HeaderIconCartIcon class="mp:h-full mp:w-[30px]" />
                 <span
                   class="text-[13.33px] text-white font-bold top-[32px] left-[15px] w-[18px] h-[18px] rounded-[50%] flex justify-center items-center bg-[#ed108c] 1tab:top-[28px] 1tab:left-[12px] 1tab:w-[16px] 1tab:h-[16px] 1tab:text-[10px] tab:top-[27px] tab:left-[9px] tab:w-[14px] tab:h-[14px] tab:text-[9px] mp:top-[20px] mp:left-[20px] mp:w-[22px] mp:h-[22px] mp:text-[14px] 4xs:top-[24px] 4xs:left-[12px] 4xs:w-[16px] 4xs:h-[16px] 4xs:text-[10px] absolute flex justify-center text-center items-center mp:mt-0 mp:mb-0 mp:-mr-[15px] mp:-ml-[15px] border-box py0 px2 h6 lh16 weight-700 cl-white"
                   >0</span
