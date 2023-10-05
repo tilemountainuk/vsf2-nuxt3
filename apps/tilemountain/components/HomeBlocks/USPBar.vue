@@ -1,11 +1,7 @@
 <template>
-  <div>
-    USP BAR IS LOADED <br />
-    After Parsing : {{ blockData }}
-  </div>
   <div class="bg-[#F5F4F4]">
     <div class="container mx-auto py-[11px] pr-[70px] mobile-only:py-[13px] Tab-only:py-[16px] pl-[44px]">
-      <Carousel :breakpoints="breakpoints">
+      <Carousel  :items-to-show="3" :touch-drag="false" :mouse-drag="false">
         <Slide v-for="(slide, index) in blockData" :key="index">
           <div class="carousel__item flex justify-between">
             <img class="h-[24px] Tab-only:h-[18px]" :src="slide.img" alt="" />
@@ -65,27 +61,4 @@ const parseData = (data: string): ReturnParseData[] => {
 };
 
 const blockData = computed(() => parseData(props.data.content));
-
-const breakpoints = {
-  320: {
-    itemsToShow: 1,
-    snapAlign: 'center',
-    wrapAround: true,
-    autoplay: '2000',
-  },
-  // 700px and up
-  768: {
-    itemsToShow: 3,
-    snapAlign: 'center',
-    mouseDrag: false,
-    touchDrag: false,
-  },
-  // 1024 and up
-  1024: {
-    itemsToShow: 3,
-    snapAlign: 'start',
-    mouseDrag: false,
-    touchDrag: false,
-  },
-};
 </script>

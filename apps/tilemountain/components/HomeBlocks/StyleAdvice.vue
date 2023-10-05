@@ -1,6 +1,5 @@
 <template>
   <div>
-    STYLE AND ADVICE IS LOADED <br />
     After Parsing : {{ blockData }}
   </div>
 </template>

@@ -15,9 +15,9 @@
       <SfButton type="button" size="sm">Sample Product Page SKU: 452495</SfButton>
     </router-link>
   </div>
-  <USPBar v-if="USPBarDataAllComputed" :data="USPBarDataAllComputed[0].block" />
-  <FamiliarBrands v-if="FamiliarBrandDataAllComputed" :data="FamiliarBrandDataAllComputed[0].block" />
-  <StyleAdvice v-if="StyleAdviceDataAllComputed" :data="StyleAdviceDataAllComputed[0].block" />
+  <USPBar v-if="USPBarDataAllComputed && USPBarDataAllComputed.length > 0" :data="USPBarDataAllComputed[0].block" />
+  <FamiliarBrands v-if="FamiliarBrandDataAllComputed && FamiliarBrandDataAllComputed.length > 0" :data="FamiliarBrandDataAllComputed[0].block" />
+  <StyleAdvice v-if="StyleAdviceDataAllComputed && StyleAdviceDataAllComputed.length > 0" :data="StyleAdviceDataAllComputed[0].block" />
 </template>
 
 <script setup lang="ts">
