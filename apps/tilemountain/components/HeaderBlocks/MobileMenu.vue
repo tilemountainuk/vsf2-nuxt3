@@ -1,9 +1,9 @@
 <!-- eslint-disable max-lines -->
 <template>
-  <div>
+  <div class="absolute top-[124px] 4xs:top-[96px] w-[230px]">
     <div v-if="isOpen" class="md:hidden fixed inset-0 bg-neutral-500 bg-opacity-50" @click="close()" />
     <div
-      class="mobile-menu block md:hidden bg-white overflow-y-auto z-50 max-w-[230px] border-2 border-[#292758] relative top-[-2px]"
+      class="mobile-menu block md:hidden bg-white overflow-y-auto z-50 border-2 border-[#292758] relative top-[-2px]"
       v-if="isOpen"
     >
       <nav>

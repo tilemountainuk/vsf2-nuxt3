@@ -1,10 +1,10 @@
 <template>
-  <div class="container 2xl:max-w-7xl mx-auto">
+  <div class="container mp:max-w-full 2xl:max-w-7xl mx-auto flex relative">
     <div
-      class="between-xs relative z-10 bg-white middle-xs header-main box-border flex flex-initial flex-row flex-wrap -mr-2 -ml-2 justify-between items-center ml-2 tab:-ml-[6px] mp:m-0"
+      class="between-xs relative z-10 bg-white middle-xs header-main box-border flex flex-initial flex-row flex-wrap -mr-2 justify-between items-center ml-2 tab:-ml-[6px] mp:m-0"
     >
       <div
-        class="col-md-2 col-xs-4 md:box-border md:pr-2 md:pl-2 md:flex-[0_0_auto] md:basis-2/12 md:max-w-[16.66666667%] basis-2/6 max-w-[33.33333333%]"
+        class="md:box-border md:pr-2 md:pl-2 md:flex-[0_0_auto] md:basis-2/12 md:max-w-[16.66666667%] basis-2/6 max-w-[33.33333333%]"
       >
         <div class="logo-desktop pt-1 mp:pt-1 mp:pl-5 small:pt:0 4xs:pt-0">
           <a href="/" aria-current="page" title="Home Page" class="inline-flex">
@@ -19,7 +19,7 @@
           <div class="mp:w-full mp:bg-white mp:relative mp:m-0 tab:ml-px">
             <div class="visible relative mr-0 mt-2 mp:mt-1 1tab:mt-1">
               <div
-                class="container xl:w-[1280px] px15 box-border ml-auto mr-auto pr-2 pl-2 max-w-full md:w-[752px] 2md:w-[976px] mp:pr-0 mp:pl-0"
+                class="container xl:w-[1280px] mp:max-w-full px15 box-border ml-auto mr-auto pr-2 pl-2 max-w-full md:w-[752px] 2md:w-[976px] mp:pr-0 mp:pl-0"
               >
                 <div class="row box-border flex flex-initial flex-row flex-wrap -mr-2 -ml-2">
                   <div
