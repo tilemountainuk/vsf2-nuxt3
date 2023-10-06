@@ -1,13 +1,13 @@
 <template>
     <div class="text-[16px] font-[Roboto, sans-serif] font-[400] bg-[#fff] p-[0] md:bg-[#f1f1f1] md:pt-[1%]">
-      <div class="container mx-auto  px-[8px]">
+      <div class=" container 2xl:max-w-7xl mx-auto px-[8px]">
         <div class="flex flex-row flex-wrap mx-[-8px]">
-          <div class="mb-[10px] mt-[4px] px-[14px] basis-full max-w-full smn:mb-[10px] smm:mt-[2px] smm:pr-[8px] smm:pl-[8px] smm:basis-[50%] smm:max-w-[50%] mdt:relative  mdt:pt-0 mdt:pr-[10px] mdt:pb-[8px] mdt:pl-[10px] mdt:basis-[33.33%] mdt:max-w-[33.33%] lgl:basis-[33.33%] lgl:max-w-[33.33%] "  v-for="tile in tiles" :key="'tile' + tile.id">
+          <div class="  px-[14px] mt-[4px] mb-[10px] basis-full max-w-full sm:px-[14px] md:my-[0px] z-0 relative md:pt-0 md:px-[10px] md:pb-[24px] md:basis-[33.33%] md:max-w-[33.33%] "  v-for="tile in tiles" :key="'tile' + tile.id">
             <NuxtLink to="/" class="decoration-[#4f4f4f] no-underline relative">
-              <div class="relative">
-                <img :src="tile.tileImg" alt="tile" class="w-full" />
-                <div class="absolute bottom-0 bg-[rgba(207,206,202,0.7)] w-full font-[Arial] block text-[#29275b] text-[20px] py-[25px] text-center font-[700]">
-                  <h3 class="text-[16px] lgl:text-[17.2px] mdt:text-[14px] xld:text-[22px] px-[6px] leading-[1.4]">
+              <div class="relative pb-[109%]">
+                <NuxtImg :src="tile.tileImg" alt="tile" class=" object-contain transform -translate-x-1/2 -translate-y-1/2 absolute mb-[-4px] w-[100%] top-[50%] left-[50%] " />
+                <div class="absolute bottom-0 bg-[rgba(207,206,202,0.7)] w-full  block text-[#29275b] text-[20px] pt-[4px] pb-[10px]  text-center font-[700]">
+                  <h3 class="text-[16px] lg:text-[17.2px] md:text-[14px] xl:text-[22px] p-[6px] xl:px-[6px] xl:py-[0px] xl:my-[22px] leading-[1.4]">
                     {{ tile.title }}
                   </h3>
                 </div>
