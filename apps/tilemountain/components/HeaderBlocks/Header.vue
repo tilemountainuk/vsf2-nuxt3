@@ -1,5 +1,11 @@
 <template>
-  <section class="bg-[#24224d]">
+  <section
+    class="bg-[#24224d] w-full "
+    :class="{
+      'md:fixed z-50 md:top-0': scrollPosition > 95,
+      'relative': scrollPosition < 95
+    }"
+  >
     <div class="container 2xl:max-w-7xl mx-auto">
       <div class="menu">
         <ul class="relative hidden md:flex justify-around">
@@ -256,3 +262,15 @@
     </div>
   </section>
 </template>
+<script lang="ts" setup>
+onMounted( () => {
+  window.addEventListener('scroll', updateScroll)
+})
+const scrollPosition = ref(null)
+const updateScroll = () => {
+  scrollPosition.value = window.scrollY
+};
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', updateScroll);
+});
+</script>

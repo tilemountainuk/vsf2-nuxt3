@@ -1,5 +1,5 @@
 <template>
-  <Body class="font-arial" :class="bodyClass" />
+  <Body class="font-arial overflow-x-hidden" :class="bodyClass" />
   <VitePwaManifest />
   <NuxtLayout>
     <NuxtPage />
