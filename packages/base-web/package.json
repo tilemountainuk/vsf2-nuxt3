@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.4.11",
+    "node-html-parser": "^6.1.10",
     "pinia": "^2.1.6",
     "sdk": "workspace:^"
   }

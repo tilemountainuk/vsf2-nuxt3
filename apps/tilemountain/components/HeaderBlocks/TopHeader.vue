@@ -26,15 +26,6 @@
                     class="col-md-12 md:basis-full md:box-border md:pr-2 md:pl-2 md:flex-[0_0_auto] md:max-w-full mp:pl-1 mp:pr-1 || basis-full max-w-full justify-end text-end col-md-12 col-xs-12 end-xs"
                   >
                     <div class="search-input-group relative border-0 justify-end flex mp:m-0 mp:w-full">
-                      <SfButton
-                        variant="tertiary"
-                        square
-                        aria-label="Close menu"
-                        class="block md:hidden mr-0 mp:border-y-2 border-[#bdbdbd] rounded-none py-1 px-2 active:!bg-[#292758] group group-active focus-visible:outline-0"
-                        @click="openMenu([])"
-                      >
-                        <SfIconMenu class="text-[#29275b] group-active:text-white" />
-                      </SfButton>
                       <form class="new-searchformTag w-full relative mp:flex">
                         <input
                           autocomplete="off"
@@ -117,17 +108,82 @@
         </div>
       </div>
     </div>
-    <HeaderBlocksMobileMenu ref="HeaderBlocksMobileMenuRef" />
+    <HeaderBlocksMobileMenu :menu-content="MenuData" />
   </div>
 </template>
 <script lang="ts" setup>
-import { SfButton, SfIconMenu } from '@storefront-ui/vue';
+import { parse } from 'node-html-parser';
 
-const HeaderBlocksMobileMenuRef = ref(null);
+interface ParseDataContent {
+  content: string;
+}
 
-const openMenu = (param) => {
-  if (HeaderBlocksMobileMenuRef.value) {
-    HeaderBlocksMobileMenuRef.value.openMenu(param);
-  }
+interface MenuItem {
+  label?: string;
+  counter?: number;
+  link?: string;
+}
+
+interface TreeNode {
+  key?: string;
+  value?: MenuItem;
+  children?: TreeNode[];
+  isLeaf?: boolean;
+}
+
+const createTreeNode = (key: string, label: string, link: string, Leaf: boolean): TreeNode => {
+  return {
+    key,
+    value: { label, link },
+    children: [],
+    isLeaf: Leaf,
+  };
 };
+
+const props = defineProps<{
+  data: ParseDataContent;
+}>();
+const parseData = (data: string): TreeNode => {
+  const root = parse(data);
+  const menuItemListArray: TreeNode = createTreeNode('root', '', '', false);
+
+  if (!root) {
+    return menuItemListArray;
+  }
+
+  const menuContentHtml = root.querySelectorAll('.sb-menu');
+  menuContentHtml.forEach((menuItem) => {
+    const topLevelLink = menuItem.querySelector('a.sb-forward');
+    if (topLevelLink) {
+      const topLevelKey = topLevelLink.rawText || '';
+      const topLevelLabel = topLevelLink.rawText || '';
+      const topLevelLinkValue = topLevelLink.attributes['href'] || '';
+      const menuItemNode: TreeNode = createTreeNode(topLevelKey, topLevelLabel, topLevelLinkValue, false);
+      if (menuItem.querySelector('.nav-panel-dropdown')) {
+        const subMenuBlocks = menuItem.querySelectorAll('.sb-height-dropdown-menu');
+        subMenuBlocks.forEach((subMenuBlock) => {
+          const subMenuLink = subMenuBlock?.querySelector('.subcag-title')?.rawText || '';
+          const innerMenuItemNode: TreeNode = createTreeNode(subMenuLink, subMenuLink, '', false);
+          const bulletUl = subMenuBlock.querySelector('ul.bullet');
+          const bulletLiElements = bulletUl?.querySelectorAll('li');
+          bulletLiElements?.forEach((bulletLi) => {
+            const bulletLink = bulletLi.querySelector('a');
+            if (bulletLink) {
+              const bulletLinkKey = bulletLink.rawText || '';
+              const bulletLinkLabel = bulletLink.rawText || '';
+              const bulletLinkValue = bulletLink.attributes['href'] || '';
+
+              innerMenuItemNode.children?.push(createTreeNode(bulletLinkKey, bulletLinkLabel, bulletLinkValue, true));
+            }
+          });
+          menuItemNode.children?.push(innerMenuItemNode);
+        });
+      }
+
+      menuItemListArray.children?.push(menuItemNode);
+    }
+  });
+  return menuItemListArray;
+};
+const MenuData = computed(() => parseData(props.data.content));
 </script>

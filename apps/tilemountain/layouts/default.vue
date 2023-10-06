@@ -1,6 +1,6 @@
 <template>
   <header class="h-14 md:h-20 flex z-50 md:sticky md:-top-5 md:pt-2.5 flex-col mb-[10rem]" data-testid="navbar-top">
-    <HeaderBlocksTopHeader />
+    <HeaderBlocksTopHeader v-if="MenuDataAllComputed" :data="MenuDataAllComputed[0].block" />
     <HeaderBlocksHeader v-if="!isMobile" />
   </header>
   <NarrowContainer v-if="breadcrumbs">
@@ -37,19 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  SfBadge,
-  SfButton,
-  SfIconExpandMore,
-  SfIconShoppingCart,
-  SfIconClose,
-  SfIconSearch,
-  SfIconPerson,
-  SfDropdown,
-  SfListItem,
-  SfModal,
-  useDisclosure,
-} from '@storefront-ui/vue';
+import { SfButton, SfIconClose, SfModal, useDisclosure } from '@storefront-ui/vue';
 import { DefaultLayoutProps } from '~/layouts/types';
 
 defineProps<DefaultLayoutProps>();
@@ -62,7 +50,7 @@ const { fetchCustomer, data: account } = useCustomer();
 fetchCard();
 fetchCustomer();
 usePageTitle();
-const { isMobile } = useDevice()
+const { isMobile } = useDevice();
 
 const cartLineItemsCount = computed(
   () => cart.value?.lineItems.reduce((total, { quantity }) => total + quantity, 0) ?? 0,
@@ -86,4 +74,9 @@ const accountDropdown = [
   },
 ];
 const NuxtLink = resolveComponent('NuxtLink');
+const { data: blocksData, getCmsBlocks } = useCmsBlocks();
+await getCmsBlocks({ identifiers: ['main_menu'] });
+const MenuDataAllComputed = computed(() =>
+  blocksData.value.filter((menuBlock) => menuBlock.identifier === 'main_menu'),
+);
 </script>

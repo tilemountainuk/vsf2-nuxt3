@@ -1,5 +1,18 @@
 <!-- eslint-disable max-lines -->
 <template>
+  <div
+    class="md:hidden flex absolute top-[85px] z-[99] 4xs:top-[55px] 4xs:h-[39px] h-[37px] border-r-2 border-[#c0bfc3]"
+  >
+    <SfButton
+      variant="tertiary"
+      square
+      aria-label="Close menu"
+      class="block md:hidden mr-0 mp:border-0 border-[#bdbdbd] rounded-none py-1 px-2 active:!bg-[#292758] group group-active focus-visible:outline-0"
+      @click="toggle()"
+    >
+      <SfIconMenu class="text-[#29275b] group-active:text-white" />
+    </SfButton>
+  </div>
   <div class="absolute top-[124px] 4xs:top-[96px] w-[230px]">
     <div v-if="isOpen" class="md:hidden fixed inset-0 bg-neutral-500 bg-opacity-50" @click="close()" />
     <div
@@ -22,7 +35,7 @@
             <li v-if="node.isLeaf" class="border-b-[1px] border-[#f2f2f2] py-[3px]">
               <SfListItem size="sm" tag="a" class="pl-[25px]" :href="node.value.link">
                 <div class="flex items-center">
-                  <p class="text-left text-[#434343] text-[11px] font-bold">{{ node.value.label }}</p>
+                  <p class="custom">{{ node.value.label }}</p>
                 </div>
               </SfListItem>
             </li>
@@ -43,8 +56,23 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { SfListItem, useDisclosure } from '@storefront-ui/vue';
+import { SfListItem, useDisclosure, SfButton, SfIconMenu } from '@storefront-ui/vue';
 
+type Node = {
+  key: string;
+  value: {
+    label: string;
+    counter: number;
+    link?: string;
+    banner?: string;
+    bannerTitle?: string;
+  };
+  children?: Node[];
+  isLeaf: boolean;
+};
+const props = defineProps<{
+  menuContent: Node;
+}>();
 const findNode = (keys: string[], node: Node): Node => {
   if (keys.length > 1) {
     const [currentKey, ...restKeys] = keys;
@@ -54,27 +82,19 @@ const findNode = (keys: string[], node: Node): Node => {
   }
 };
 
-const { close, open, isOpen } = useDisclosure();
+const { close, toggle, isOpen } = useDisclosure();
 
 const activeNode = ref<string[]>([]);
 
-const activeMenu = computed(() => findNode(activeNode.value, content));
-
-const openMenu = (menuType: string[]) => {
-  activeNode.value = menuType;
-  open();
-};
+const activeMenu = computed(() => findNode(activeNode.value, props.menuContent));
 
 const goBack = () => {
-  activeNode.value = activeNode.value.slice(0, activeNode.value.length - 1);
+  activeNode.value = activeNode.value.slice(0, -1);
 };
 
 const goNext = (key: string) => {
   activeNode.value = [...activeNode.value, key];
 };
-defineExpose({
-  openMenu,
-});
 
 const content: Node = {
   key: 'root',
@@ -388,3 +408,8 @@ const content: Node = {
   ],
 };
 </script>
+<style>
+.custon {
+  @apply text-left text-[#434343] text-[11px] font-bold;
+}
+</style>
