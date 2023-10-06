@@ -50,6 +50,7 @@ export default defineNuxtConfig({
           'Red Hat Text': [300, 400, 500, 700],
         },
       },
+      'vue3-carousel-nuxt',
     ],
     [
       '@nuxtjs/i18n',

@@ -26,7 +26,8 @@
   },
   "dependencies": {
     "cross-env": "^7.0.3",
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "vue3-carousel-nuxt": "^1.1.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^13.2.1",

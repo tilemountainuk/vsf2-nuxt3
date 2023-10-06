@@ -10,3 +10,27 @@
     @apply hidden /* for Chrome, Safari, and Opera */;
   }
 }
+li.carousel__pagination-item button.carousel__pagination-button::after {
+  z-index: 1 !important;
+  display: block;
+  content: '';
+  width: 11px !important;
+  height: 11px !important;
+  border-radius: 50% !important;
+  background-color: #ffffff !important;
+  position: absolute;
+  bottom: 32px;
+  margin-left: 28px;
+}
+li.carousel__pagination-item button.carousel__pagination-button.carousel__pagination-button--active::after
+{
+background-color:#e10081 !important;
+}
+.carousel__pagination-button
+{
+margin-right: 24px !important;
+}
+.carousel__icon
+{
+display: none;
+}
