@@ -1,15 +1,25 @@
 <template>
   <div class="bg-[#F5F4F4]">
-    <div class="container mx-auto py-[11px] pr-[70px] mobile-only:py-[13px] Tab-only:py-[16px] pl-[44px]">
-      <Carousel  :items-to-show="3" :touch-drag="false" :mouse-drag="false">
+    <div class="container 2xl:max-w-7xl mx-auto pt-[14px] pb-[8px] lg:pl-[52px] pr-[0px]">
+      <Carousel
+          :items-to-show="3"
+          :mouse-drag="false"
+          :touch-drag="false"
+          :autoplay="2000"
+      >
         <Slide v-for="(slide, index) in blockData" :key="index">
-          <div class="carousel__item flex justify-between">
-            <img class="h-[24px] Tab-only:h-[18px]" :src="slide.img" alt="" />
-            <p
-              class="text-[14px] mobile-only:text-[12px] Lap-only:text-[14px] font-[Arial] font-bold text-[#4a4a4a] ml-[7px] mt-[4px] mb-[0rem] Lap-only:pr-[20px] Tab-only:text-[11px] Tab-only:ml-[6px] Tab-only:mt-[1px] Tab-only:pr-[16px]"
-            >
-              {{ slide.title }}
-            </p>
+          <div class="carousel__item inline ml-[12px]">
+            <NuxtLink to="" class="flex items-center">
+              <div class="float-left">
+                <NuxtImg class="h-[18px] lg:w-[28px] lg:h-[24px]" :src="slide.img" alt=""/>
+              </div>
+
+              <p
+                  class="text-[12px] lg:text-[14px] font-[Arial] font-bold text-[#4a4a4a] ml-[7px] lg:mt-[4px] mt-[2px] md:text-[11px]"
+              >
+                {{ slide.title }}
+              </p>
+            </NuxtLink>
           </div>
         </Slide>
       </Carousel>
@@ -33,7 +43,6 @@ interface ReturnParseData {
 const props = defineProps<{
   data: ParseDataContent;
 }>();
-
 const parseData = (data: string): ReturnParseData[] => {
   const root = parse(data);
   const uspArray: ReturnParseData[] = [];
@@ -62,3 +71,4 @@ const parseData = (data: string): ReturnParseData[] => {
 
 const blockData = computed(() => parseData(props.data.content));
 </script>
+

@@ -10,3 +10,18 @@
     @apply hidden /* for Chrome, Safari, and Opera */;
   }
 }
+@media only screen and (max-width: 767px) {
+  .carousel__slide {
+    width: 100% !important;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  .carousel__slide {
+    width: 30% !important;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .carousel__slide {
+    width: 29% !important;
+  }
+}
