@@ -41,7 +41,9 @@ export default defineNuxtConfig({
   components: [
     '@base/components',
     '~/components',
-    { path: '~/dynamic_pages', pathPrefix: false }
+    { path: '~/dynamic_pages', pathPrefix: false },
+    // ~/components/TM/Logo.vue => <TMLogo />
+    { path: '~/components/TM', prefix: 'TM' },
   ],
   css: ['~/assets/style.scss'],
   image: {
