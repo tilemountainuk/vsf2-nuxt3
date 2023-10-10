@@ -266,6 +266,7 @@
 onMounted( () => {
   window.addEventListener('scroll', updateScroll)
 })
+import { parse } from 'node-html-parser'
 const scrollPosition = ref(null)
 const updateScroll = () => {
   scrollPosition.value = window.scrollY
@@ -273,4 +274,65 @@ const updateScroll = () => {
 onBeforeUnmount(() => {
   window.removeEventListener('scroll', updateScroll);
 });
+const props = defineProps<{
+  headerMenuData: string;
+}>();
+
+interface MenuItem {
+  link: string
+  title: string
+}
+console.log('headerMenuData12', props.headerMenuData)
+const parseData = (data: string) => {
+  const root = parse(data);
+  const MenuListItems: MenuItem[] = []
+
+  if (root) {
+    const mbclasses = root.querySelectorAll('.sb-menu');
+
+    mbclasses.forEach((mbclass) => {
+      const linkElement = mbclass.querySelector('a.sb-forward');
+      const link = linkElement ? linkElement.attributes['href'] : '#';
+      const title = linkElement ? linkElement.rawText : 'UnDefined';
+
+      const imgLinkElement = mbclass.querySelector('.dropdown-menu-right-img a');
+      const imgLink = imgLinkElement ? imgLinkElement.attributes['href'] : '#';
+
+      const navPanelDropdown = mbclass.querySelector('.nav-panel-dropdown');
+      let navPanelDropdownElements = {};
+      let subMenuImg:MenuItem
+
+      if (navPanelDropdown) {
+        const submenublockselements = mbclass.querySelectorAll('.sb-height-dropdown-menu');
+
+        if (submenublockselements.length) {
+          const allsubmenublocks = Array.from(submenublockselements).map((submenublockelement) => {
+            return {
+              notOnDesktop: submenublockelement.classList.contains('notondesktop') ? 'hideondesktop' : '',
+              main_title: submenublockelement.querySelector('.subcag-title')?.rawText || 'UnDefined',
+              sub_child: Array.from(submenublockelement.querySelectorAll('ul.bullet li')).map((bulletulli) => ({
+                BoldClass: bulletulli.classList.contains('Bold') ? 'BoldText' : '',
+                link: (bulletulli.querySelector('a')?.attributes['href']) || '#',
+                title: (bulletulli.querySelector('a')?.rawText) || 'UnDefined',
+              })),
+            };
+          });
+
+          if (mbclass.querySelector('img')) {
+             subMenuImg = mbclass.querySelector('img')?.attributes['src'];
+          }
+          allsubmenublocks.flatMap(item => item.sub_links)
+          console.log('allsubmenublocks1', allsubmenublocks)
+          navPanelDropdownElements = allsubmenublocks;
+        }
+      }
+
+      MenuListItems.push({ link, title, imgLink, children: navPanelDropdownElements, subMenuImg });
+    });
+  }
+
+  console.log('MenuListItems', MenuListItems);
+  return MenuListItems;
+}
+const blockData = computed(() => parseData(props.headerMenuData));
 </script>

@@ -1,7 +1,7 @@
 <template>
   <header class="flex flex-col" data-testid="navbar-top">
     <HeaderBlocksTopHeader />
-    <HeaderBlocksHeader v-if="!isMobile" />
+    <HeaderBlocksHeader :headerMenuData="headerMenuDataComputed[0].block.content" v-if="!isMobile" />
   </header>
   <NarrowContainer v-if="breadcrumbs">
     <div class="p-4 md:px-0">
@@ -86,4 +86,7 @@ const accountDropdown = [
   },
 ];
 const NuxtLink = resolveComponent('NuxtLink');
+const { data, getCmsBlocks } = useCmsBlocks();
+await getCmsBlocks({ identifiers: ['main_menu'] });
+const headerMenuDataComputed = computed(() => data.value.filter((headerMenu) => headerMenu.identifier === 'main_menu'));
 </script>

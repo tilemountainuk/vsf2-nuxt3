@@ -16,10 +16,6 @@
     </router-link>
 
   </div>
-
-  <pre>
-  {{ data }}
-  </pre>
 </template>
 
 <script setup lang="ts">
