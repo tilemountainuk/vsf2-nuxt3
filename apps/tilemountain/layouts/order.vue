@@ -5,5 +5,5 @@
       <slot />
     </NarrowContainer>
   </main>
-  <UiFooter />
+  <!-- <UiFooter /> -->
 </template>

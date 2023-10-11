@@ -31,7 +31,7 @@
       </div>
     </NarrowContainer>
   </main>
-  <UiFooter />
+  <!-- <UiFooter /> -->
 </template>
 
 <script setup lang="ts">
