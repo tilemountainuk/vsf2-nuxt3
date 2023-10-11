@@ -1,9 +1,7 @@
 <template>
-  <div class="w-full h-full">
-    <header ref="referenceRef" class="relative">
-      <div
-        class="container flex justify-between items-center flex-wrap md:flex-nowrap px-4 md:px-10 py-2 md:py-5 w-full h-full border-0 bg-white border-neutral-200 md:h-20 md:z-10"
-      >
+  <div>
+    <header ref="referenceRef" class="relative bg-[#F4F4F5]">
+      <div class="container h-20 flex justify-between items-center flex-wrap gap-10 md:flex-nowrap md:z-10">
         <div class="flex items-center">
           <UISFButton
             variant="tertiary"
@@ -17,27 +15,31 @@
           <NuxtLink
             :to="paths.home"
             aria-label="Sf Homepage"
-            class="h-6 md:h-7 -mt-1.5 flex shrink-0 w-8 h-8 lg:w-[12.5rem] lg:h-[1.75rem] items-center mr-auto text-white md:mr-10 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
+            class="flex items-center"
           >
             <TMLogo />
           </NuxtLink>
         </div>
         <TMSearch class="hidden md:flex flex-[100%] ml-10" />
-        <nav class="flex flex-nowrap justify-end items-center md:ml-10 gap-x-1">
+        <nav class="flex flex-nowrap justify-end items-center gap-x-1">
           <UISFButton
             v-for="actionItem in actionItems"
             :key="actionItem.ariaLabel"
             :aria-label="actionItem.ariaLabel"
-            class="text-primary-700 bg-transparent hover:bg-primary-700 hover:text-white active:bg-primary-700 active:text-white"
+            class="text-primary-700 bg-transparent hover:bg-primary-700 hover:text-white active:bg-primary-700 active:text-white relative"
             variant="tertiary"
             square
+            :tag="actionItem?.role ? actionItem?.role : undefined"
+            :to="actionItem?.to !== '' ? actionItem?.to : undefined"
           >
             <template #prefix>
               <Component :is="actionItem.icon" />
             </template>
-            <p v-if="actionItem.role === 'login'" class="hidden lg:inline-flex whitespace-nowrap mr-2">
-              {{ actionItem.label }}
-            </p>
+            <template v-if="actionItem.type ==='cart'">
+              <div class="absolute -top-0.5 right-0 rounded-[999px] border-2 border-[#0284C7] px-1 py-[2px] flex items-start justify-center">
+                <span class="text-[#0284C7] text-[8px] leading-[100%]">99+</span>
+              </div>
+            </template>
           </UISFButton>
         </nav>
         <TMSearch class="flex md:hidden flex-[100%] my-2" />
@@ -55,7 +57,7 @@
             }
           "
           >
-            <li class="py-3 hover:!bg-secondary px-1 flex-auto" v-for="(menuNode, index) in coontent.children" :key="menuNode.key">
+            <li class="py-2.5 hover:!bg-secondary px-1 flex-auto rounded-md text-center" v-for="(menuNode, index) in coontent.children" :key="menuNode.key">
               <UISFButton
                   ref="triggerRefs"
                   variant="tertiary"
@@ -63,49 +65,45 @@
                   @mouseenter="openMenu([menuNode.key])"
                   @click="openMenu([menuNode.key])"
               >
-                <span class="text-11 lg:text-15 font-bold">{{ menuNode.value.label }}</span>
+                <span class="text-[10px] 2md:text-xs lg:!text-sm xl:!text-base font-medium" v-html="menuNode.value.label"></span>
               </UISFButton>
 
               <div
-                :key="activeMenu.key"
-                ref="megaMenuRef"
-                :style="style"
-                class="hidden container md:flex bg-secondary p-1 right-0 h-[370px]"
-                tabindex="0"
-                @mouseleave="close()"
-                @keydown.esc="focusTrigger(index)"
+                  v-if="isOpen && activeNode.length === 1 && activeNode[0] === menuNode.key"
+                  :key="activeMenu.key"
+                  ref="megaMenuRef"
+                  :style="style"
+                  class="hidden container md:flex gap-4 bg-white mt-[1px] px-8 py-4 left-0 right-0 outline-none"
+                  tabindex="0"
+                  @mouseleave="close()"
+                  @keydown.esc="focusTrigger(index)"
               >
-                <div class="w-full lg:w-5/6 flex flex-wrap relative pb-16">
-                  <template v-for="node in activeMenu.children" :key="node.key">
-                    <template v-if="node.isLeaf">
-                      <UISFListItem tag="a" size="sm" :href="node.value.link" class="typography-text-sm mb-2">
-                        {{ node.value.label }}
-                      </UISFListItem>
-                    </template>
-                    <div class="bg-white pt-9 pb-6 pl-2.5 border-r-[3px] border-border flex-auto" v-else>
-                      <p class="text-default text-17 py0 font-bold whitespace-nowrap">
-                        {{ node.value.label }}
-                      </p>
-                      <ul class="mt-5">
-                        <li v-for="child in node.children" :key="child.key">
-                          <UISFListItem tag="a" size="sm" :href="child.value.link" class="text-13 py-0 px-0 text-black">
-                            {{ child.value.label }}
-                          </UISFListItem>
-                        </li>
-                      </ul>
-                    </div>
+                <template v-for="node in activeMenu.children" :key="node.key">
+                  <template v-if="node.isLeaf">
+                    <SfListItem tag="a" size="sm" :href="node.value.link" class="typography-text-sm mb-2">
+                      {{ node.value.label }}
+                    </SfListItem>
+                    <div class="col-start-2 col-end-5" />
                   </template>
-                  <div class="absolute bottom-0 right-0">
-                    <NuxtImg src="/images/menu-logo.png" width="121" height="49" />
+                  <div class="flex items-start flex-col flex-auto" v-else>
+                    <div class=" border-b border-b-[#E4E4E7] border-b-solid w-full px-4 py-1.5">
+                      <p class="text-xs 2md:text-sm font-medium text-menu text-left" v-html="node.value.label"></p>
+                    </div>
+                    <ul class="mt-2">
+                      <li v-for="child in node.children" :key="child.key">
+                        <UISFListItem tag="a" size="sm" :href="child.value.link" class="text-xs 2md:text-sm py-1.5 text-left pl-4 pr-1">
+                          {{ child.value.label }}
+                        </UISFListItem>
+                      </li>
+                    </ul>
                   </div>
-                </div>
-                <div class="flex items-center justify-center w-1/6">
-                  <NuxtImg src="/images/menu-img.jpg" class="w-full h-full object-cover" />
-
-<!--                  <img :src="bannerNode.value.banner" :alt="bannerNode.value.bannerTitle" class="object-contain" />-->
-<!--                  <p class="px-4 mt-4 mb-4 font-medium text-center typography-text-base">-->
-<!--                    {{ bannerNode.value.bannerTitle }}-->
-<!--                  </p>-->
+                </template>
+                <div class="hidden 2md:flex flex-col items-center justify-center overflow-hidden rounded-md border-neutral-300 max-w-[245px] w-full"
+                >
+                  <img :src="bannerNode.value.banner" :alt="bannerNode.value.bannerTitle" class="object-contain" />
+                  <p class="px-4 mt-4 mb-4 font-medium text-center typography-text-base">
+                    {{ bannerNode.value.bannerTitle }}
+                  </p>
                 </div>
               </div>
             </li>
@@ -201,6 +199,7 @@ import {
 } from '@storefront-ui/vue';
 import { unrefElement } from '@vueuse/core';
 import { parse } from 'node-html-parser';
+import {TMLocation, TMPhoneIcon} from "#components";
 
 interface ParseDataContent {
   content: string;
@@ -320,22 +319,34 @@ const focusTrigger = (index: number) => {
 
 const actionItems = [
   {
-    icon: SfIconShoppingCart,
+    icon: TMPhoneIcon,
     label: '',
-    ariaLabel: 'Cart',
-    role: 'button',
+    ariaLabel: 'Phone',
+    role: resolveComponent('NuxtLink'),
+    to: '/i/contact-us',
+    type:'phone'
   },
   {
-    icon: SfIconFavorite,
+    icon: TMLocation,
     label: '',
-    ariaLabel: 'Wishlist',
-    role: 'button',
+    ariaLabel: 'Show Rooms',
+    role: resolveComponent('NuxtLink'),
+    to: '/i/showrooms_info',
+    type:'showrooms'
   },
   {
     icon: SfIconPerson,
     label: 'Log in',
     ariaLabel: 'Log in',
     role: 'login',
+    type:'login'
   },
+  {
+    icon: SfIconShoppingCart,
+    label: '',
+    ariaLabel: 'Cart',
+    role: 'button',
+    type:'cart'
+  }
 ];
 </script>

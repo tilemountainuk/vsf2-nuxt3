@@ -4,13 +4,12 @@
       <SfInput
         ref="inputRef"
         v-model="inputModel"
-        wrapper-class="w-full !ring-0 active:!ring-0 hover:!ring-0 focus-within:!ring-0 border-y border-l border-neutral-200 rounded-r-none hover:border-primary-800 active:border-primary-700 active:border-y-2 active:border-l-2 focus-within:border-y-2 focus-within:border-l-2 focus-within:border-primary-700"
+        wrapper-class="w-full pr-2 !ring-0 active:!ring-0 hover:!ring-0 focus-within:!ring-0 border-y border-l border-r border-neutral-200 hover:border-primary-800 active:border-primary-700 active:border-y-2 active:border-l-2 focus-within:border-y-2 focus-within:border-l-2 focus-within:border-primary-700"
         aria-label="Search"
-        placeholder="Search 'MacBook' or 'iPhone'..."
+        placeholder="Search"
         @focus="open"
         @keydown="handleInputKeyDown"
       >
-        <template #prefix><SfIconSearch /></template>
         <template #suffix>
           <button
             v-if="inputModel"
@@ -19,12 +18,14 @@
             class="flex rounded-md focus-visible:outline focus-visible:outline-offset"
             @click="reset"
           >
-            <SfIconCancel /></button
-        ></template>
+            <SfIconCancel />
+          </button>
+          <button type="submit" aria-label="Search for a specific phrase on the page" class="bg-transparent hover:bg-primary-700 hover:text-white active:bg-primary-700">
+            <SfIconSearch class="text-[#71717A]" />
+          </button>
+        </template>
       </SfInput>
-      <SfButton type="submit" square aria-label="Search for a specific phrase on the page" class="rounded-l-none"
-        ><SfIconSearch
-      /></SfButton>
+
     </div>
     <div v-if="isOpen" ref="floatingRef" :style="style" class="left-0 right-0 z-[1]">
       <div

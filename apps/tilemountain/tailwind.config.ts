@@ -11,7 +11,8 @@ export default {
         primary: '#24224d',
         secondary: '#0fa897',
         default: '#2a285a',
-        border: '#c1c1c1'
+        border: '#c1c1c1',
+        menu: '#18181B',
       },
       gridTemplateAreas: {
         'product-page': ['left-top right', 'left-bottom right'],
