@@ -1,7 +1,7 @@
 <template>
   <div>
     <header ref="referenceRef" class="relative bg-[#F4F4F5]">
-      <div class="container h-20 flex justify-between items-center flex-wrap gap-10 md:flex-nowrap md:z-10">
+      <div class="container md:h-20 flex justify-between items-center flex-wrap gap-10 md:flex-nowrap md:z-10">
         <div class="flex items-center">
           <UISFButton
             variant="tertiary"
@@ -17,7 +17,7 @@
             aria-label="Sf Homepage"
             class="flex items-center"
           >
-            <TMLogo />
+            <TMLogo class="w-[56px] h-[25px] md:w-auto md:h-auto"/>
           </NuxtLink>
         </div>
         <TMSearch class="hidden md:flex flex-[100%] ml-10" />
@@ -46,6 +46,7 @@
       </div>
       <!-- Desktop dropdown -->
       <div class="bg-primary">
+<!--        <div v-if="isOpen" class="fixed inset-0 bg-neutral-500 bg-opacity-50"></div>-->
         <nav class="container" ref="floatingRef">
           <ul
             class="hidden md:flex justify-around"
@@ -67,7 +68,6 @@
               >
                 <span class="text-[10px] 2md:text-xs lg:!text-sm xl:!text-base font-medium" v-html="menuNode.value.label"></span>
               </UISFButton>
-
               <div
                   v-if="isOpen && activeNode.length === 1 && activeNode[0] === menuNode.key"
                   :key="activeMenu.key"
@@ -111,7 +111,6 @@
         </nav>
       </div>
       <!-- Mobile drawer -->
-      <div v-if="isOpen" class="md:hidden fixed inset-0 bg-neutral-500 bg-opacity-50" />
       <SfDrawer
         ref="drawerRef"
         v-model="isOpen"
@@ -150,7 +149,7 @@
                 </UISFListItem>
               </li>
               <li v-else>
-                <UISFListItem size="lg" tag="button" type="button" @click="goNext(node.key)">
+                <UISFListItem size="lg" tag="button" type="button" @click="goNext(node.key)">d
                   <div class="flex justify-between items-center">
                     <div class="flex items-center">
                       <p class="text-left">{{ node.value.label }}</p>

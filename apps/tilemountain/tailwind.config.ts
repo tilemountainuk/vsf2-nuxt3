@@ -13,6 +13,8 @@ export default {
         default: '#2a285a',
         border: '#c1c1c1',
         menu: '#18181B',
+        footer: '#E4E4E7',
+        'footer-heading': '#1E3A8A',
       },
       gridTemplateAreas: {
         'product-page': ['left-top right', 'left-bottom right'],

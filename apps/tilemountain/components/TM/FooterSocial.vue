@@ -1,6 +1,5 @@
 <template>
-  <div class="ml-4 text-lg font-medium leading-7 text-neutral-900 font-body">Follow Us</div>
-  <div class="flex justify-center py-2 gap-x-4 md:self-start">
+  <div class="flex justify-center py-2 gap-x-6 md:self-start px-2">
     <a
       v-for="{ label, link, icon } in socialMediaNew"
       :key="label"
@@ -9,6 +8,7 @@
       target="_blank"
       rel="noopener"
       v-html="icon"
+      class="text-white fill-white"
     >
     </a>
   </div>
