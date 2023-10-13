@@ -6,41 +6,70 @@ import config from './middleware.config';
 // const app = express();
 (async () => {
   const app = await createServer({ integrations: config.integrations });
+  const CORS_MIDDLEWARE_NAME = "corsMiddleware";
+  const PORT = process.env.SERVER_PORT || 4000;
+  // const allowedHosts = [
+  //   ".*divante.pl",
+  //   ".*vuestorefront.io",
+  //   ".*bathroom.com",
+  //   ".*tiles247.co.pk",
+  //   ".*tilemountain.co.uk",
+  //   ".*tm8.co.uk",
+  //   ".*vercel.app",
+  //   "localhost"
+  // ];
+  //
+  // app.use(cors({
+  //   origin: function (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) {
+  //     if (!origin) return callback(null, true); // allow requests with no origin
+  //
+  //     const isAllowed = allowedHosts.some((host) => {
+  //       const regex = new RegExp(host, 'i'); // case-insensitive
+  //       return regex.test(origin);
+  //     });
+  //
+  //     if (isAllowed) {
+  //       return callback(null, true);
+  //     } else {
+  //       const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+  //       return callback(new Error(msg), false);
+  //     }
+  //   }
+  // }));
+
+  app.get('/', (req, res) => {
+    res.send('Welcome to the simple Express server!');
+  });
 
   const allowedHosts = [
-    ".*divante.pl",
-    ".*vuestorefront.io",
-    ".*bathroom.com",
-    ".*tiles247.co.pk",
     ".*tilemountain.co.uk",
     ".*tm8.co.uk",
     ".*vercel.app",
     "localhost"
   ];
 
-  app.use(cors({
-    origin: function (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) {
-      if (!origin) return callback(null, true); // allow requests with no origin
+  // const allowedPatterns = allowedHosts.map(host => new RegExp(host));
+  const allowedPatterns = allowedHosts.map((host) => new RegExp(host, "i"));
 
-      const isAllowed = allowedHosts.some((host) => {
-        const regex = new RegExp(host, 'i'); // case-insensitive
-        return regex.test(origin);
-      });
+  const corsMiddleware = app._router.stack.find(
+    (middleware: any) => middleware.name === CORS_MIDDLEWARE_NAME
+  );
 
-      if (isAllowed) {
+  corsMiddleware.handle = cors({
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true);
+
+      if (allowedPatterns.some((pattern) => pattern.test(origin))) {
         return callback(null, true);
       } else {
-        const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-        return callback(new Error(msg), false);
+        return callback(new Error('Not allowed by CORS'));
       }
-    }
-  }));
-
-  app.get('/', (req, res) => {
-    res.send('Welcome to the simple Express server!');
+    },
+    credentials: true,
   });
 
-  const PORT = process.env.SERVER_PORT || 4000;
+
+
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
