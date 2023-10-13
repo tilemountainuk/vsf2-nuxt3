@@ -7,7 +7,7 @@ export const useSdk = createSharedComposable(() => {
   const sdkConfig = {
     commerce: buildModule<SdkModule>(sdkModule),
     magento: buildModule<MagentoModuleType>(magentoModule, {
-      apiUrl: 'https://vsf2-nuxt3-web.vercel.app/magento'
+      apiUrl: 'https://vsf2-nuxt3-server.vercel.app/magento'
     }),
   };
 
