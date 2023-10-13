@@ -25,7 +25,7 @@
       "@types/express"
     ],
     "rootDir": ".",
-    "outDir": "lib"
+    "outDir": "dist"
   },
   "include": ["**/*.ts"],
   "exclude": ["dist", "lib", "node_modules", ".turbo"]
