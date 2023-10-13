@@ -1,16 +1,16 @@
 <template>
   <div>
-    <header ref="referenceRef" class="relative bg-[#F4F4F5]">
-      <div class="container md:h-20 flex justify-between items-center flex-wrap gap-10 md:flex-nowrap md:z-10">
-        <div class="flex items-center">
+    <header ref="referenceRef" class="relative bg-menuBackground">
+      <div class="container md:h-20 flex justify-between items-center gap-2 md:gap-10 md:flex-nowrap py-2 px-4 md:py-2 md:px-4 md:z-10">
+        <div class="flex gap-4 md:gap-0 items-center">
           <UISFButton
             variant="tertiary"
             square
             aria-label="Close menu"
-            class="block md:hidden mr-5 bg-white hover:primary-700 hover:text-white active:bg-white active:text-white"
+            class="block md:hidden bg-menuBackground hover:primary-700 hover:text-white active:bg-white active:text-white"
             @click="openMenu([])"
           >
-            <SfIconMenu class="text-primary-700" />
+            <SfIconMenu />
           </UISFButton>
           <NuxtLink
             :to="paths.home"
@@ -111,51 +111,48 @@
         </nav>
       </div>
       <!-- Mobile drawer -->
+      <div v-if="isOpen" class="md:hidden fixed inset-0 bg-neutral-500 bg-opacity-50" />
       <SfDrawer
         ref="drawerRef"
         v-model="isOpen"
         placement="left"
-        class="md:hidden right-[50px] max-w-[376px] bg-white overflow-y-auto"
+        class="md:hidden right-[50px] max-w-[304px] bg-mobile-menu overflow-y-auto"
       >
         <nav>
-          <div class="flex items-center justify-between p-4 border-b border-b-neutral-200 border-b-solid">
-            <p class="typography-text-base font-medium">Browse products</p>
-            <UISFButton variant="tertiary" square aria-label="Close menu" class="ml-2" @click="close()">
-              <SfIconClose class="text-neutral-500" />
+          <div class="flex items-center justify-between p-4 border-b border-b-neutral-200 border-b-solid" :class="{ 'bg-mobileMenuBackground': activeMenu.key !== 'root' }">
+            <div class="flex items-center gap-4">
+              <div class="flex items-center" v-if="activeMenu.key !== 'root'" @click="goBack()">
+                <SfIconArrowBack class="text-white" />
+              </div>
+              <NuxtLink v-if="activeMenu.key !== 'root'" :to="activeMenu.value.link" @click="close()">
+                <span class="text-lg font-bold text-white">{{menuTitle}}</span>
+              </NuxtLink>
+              <p class="text-lg font-bold text-white" v-else>{{ menuTitle }}</p>
+            </div>
+            <UISFButton variant="tertiary" square aria-label="Close menu" class="pr-0" @click="close()">
+              <TMIconsMenuClose />
             </UISFButton>
           </div>
-          <ul class="mt-2 mb-6">
-            <li v-if="activeMenu.key !== 'root'">
-              <UISFListItem
-                size="lg"
-                tag="button"
-                type="button"
-                class="border-b border-b-neutral-200 border-b-solid"
-                @click="goBack()"
-              >
-                <div class="flex items-center">
-                  <SfIconArrowBack class="text-neutral-500" />
-                  <p class="ml-5 font-medium">{{ activeMenu.value.label }}</p>
-                </div>
-              </UISFListItem>
-            </li>
+          <ul class="mt-2 mb-6 px-4">
             <template v-for="node in activeMenu.children" :key="node.value.label">
-              <li v-if="node.isLeaf">
-                <UISFListItem size="lg" tag="a" :href="node.value.link" class="first-of-type:mt-2">
+              <li class="py-4" v-if="node.isLeaf">
+                <UISFListItem size="lg" :tag="resolvedComponents" :to="node.value.link" @click="close()" class="first-of-type:mt-2">
                   <div class="flex items-center">
-                    <p class="text-left">{{ node.value.label }}</p>
+                    <p class="text-left text-white">{{ node.value.label }}</p>
                     <SfCounter class="ml-2">{{ node.value.counter }}</SfCounter>
                   </div>
                 </UISFListItem>
               </li>
-              <li v-else>
-                <UISFListItem size="lg" tag="button" type="button" @click="goNext(node.key)">d
-                  <div class="flex justify-between items-center">
-                    <div class="flex items-center">
-                      <p class="text-left">{{ node.value.label }}</p>
-                      <SfCounter class="ml-2">{{ node.value.counter }}</SfCounter>
+              <li class="py-4" v-else>
+                <UISFListItem size="lg">
+                  <div class="flex items-center">
+                    <div class="flex items-center flex-auto">
+                      <NuxtLink :to="node.value.link" @click="close()">
+                        <span class="text-left text-white text-sm font-medium">{{ node.value.label }}</span>
+                        <SfCounter class="ml-2">{{ node.value.counter }}</SfCounter>
+                      </NuxtLink>
                     </div>
-                    <SfIconChevronRight class="text-neutral-500" />
+                    <TMIconsChevronRight @click="goNext(node.key)" />
                   </div>
                 </UISFListItem>
               </li>
@@ -182,13 +179,9 @@
 import { ref, computed } from 'vue';
 import {
   SfIconShoppingCart,
-  SfIconFavorite,
   SfIconPerson,
-  SfIconClose,
-  SfButton,
   SfDrawer,
   SfListItem,
-  SfIconChevronRight,
   SfIconMenu,
   SfCounter,
   SfIconArrowBack,
@@ -286,7 +279,16 @@ const triggerRefs = ref();
 const activeNode = ref<string[]>([]);
 
 const activeMenu = computed(() => findNode(activeNode.value, coontent));
+const menuTitle = computed(() => {
+  console.log('>>>activeMenu.value.key', activeMenu.value.key, activeMenu.value)
+  if(activeMenu.value.key === 'root') {
+    return 'Categories'
+  }else {
+    return activeMenu.value.value.label
+  }
+});
 const bannerNode = computed(() => findNode(activeNode.value.slice(0, 1), coontent));
+const resolvedComponents = computed(() => resolveComponent('NuxtLink'));
 
 const trapFocusOptions = {
   activeState: isOpen,
