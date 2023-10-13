@@ -1,13 +1,17 @@
+import express from 'express';
 import { createServer } from '@vue-storefront/middleware';
-import consola from 'consola';
-import config from '../middleware.config';
-
+import '@vue-storefront/magento-api/server/index.js';
+import config from './middleware.config';
+// const app = express();
 (async () => {
   const app = await createServer({ integrations: config.integrations });
-  const host = process.argv[2] ?? '0.0.0.0';
-  const port = Number(process.argv[3]) || 4000;
 
-  app.listen(port, host, () => {
-    consola.success(`API server listening on http://${host}:${port}`);
+  app.get('/', (req, res) => {
+    res.send('Welcome to the simple Express server!');
+  });
+
+  const PORT = process.env.SERVER_PORT || 4000;
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
   });
 })();

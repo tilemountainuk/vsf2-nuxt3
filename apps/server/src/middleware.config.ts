@@ -1,3 +1,4 @@
+import '@vue-storefront/magento-api/server/index.js';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -12,6 +13,7 @@ const cookieNames = {
 };
 
 const config = {
+  server_mode: process.env.SERVER_MODE || 'standard',
   integrations: {
     /* VSF integration config */
     magento: {
