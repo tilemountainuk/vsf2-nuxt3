@@ -4932,6 +4932,7 @@ __metadata:
     rollup: ^2.79.0
     turbo: 1.10.12
     typescript: 5.1.6
+    vue3-carousel: ^0.3.1
     wait-on: ^7.0.1
   languageName: unknown
   linkType: soft
@@ -19641,6 +19642,15 @@ __metadata:
   bin:
     vue-tsc: bin/vue-tsc.js
   checksum: fc11349fb498ba6ced65a589f7dfd3db9f95a77308cf15c20ee7c595b634314d468d362101ee6144274556d6b891d038033d35b41dd602e623d904bd16d6b622
+  languageName: node
+  linkType: hard
+
+"vue3-carousel@npm:^0.3.1":
+  version: 0.3.1
+  resolution: "vue3-carousel@npm:0.3.1"
+  peerDependencies:
+    vue: ^3.2.0
+  checksum: 804a074b79003bff40a2dc72e9eb9c5e808527410d2dc2c0c09681cc07872ee40269fc592b08e246eee45ada6646f667cb997cdd1b277cbca6bc7c83700382cb
   languageName: node
   linkType: hard
 

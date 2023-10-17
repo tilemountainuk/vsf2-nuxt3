@@ -1,5 +1,8 @@
 <template>
-  <div>This is data</div>
+  <TMHomeBanner/>
+  <div class="container">
+    <TMUSPBar />
+  </div>
 </template>
 
 <script setup lang="ts">
