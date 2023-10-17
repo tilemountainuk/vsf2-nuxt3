@@ -1,178 +1,176 @@
 <template>
-  <div>
-    <header ref="referenceRef" class="relative bg-menuBackground">
-      <div class="container md:h-20 flex justify-between items-center gap-2 md:gap-10 md:flex-nowrap py-2 px-4 md:py-2 md:px-4 md:z-10">
-        <div class="flex gap-4 md:gap-0 items-center">
-          <UISFButton
-            variant="tertiary"
-            square
-            aria-label="Close menu"
-            class="block md:hidden bg-menuBackground hover:primary-700 hover:text-white active:bg-white active:text-white"
-            @click="openMenu([])"
-          >
-            <SfIconMenu />
-          </UISFButton>
-          <NuxtLink
-            :to="paths.home"
-            aria-label="Sf Homepage"
-            class="flex items-center"
-          >
-            <TMLogo class="w-[56px] h-[25px] md:w-auto md:h-auto"/>
-          </NuxtLink>
-        </div>
-        <TMSearch class="hidden md:flex flex-[100%] ml-10" />
-        <nav class="flex flex-nowrap justify-end items-center gap-x-1">
-          <UISFButton
-            v-for="actionItem in actionItems"
-            :key="actionItem.ariaLabel"
-            :aria-label="actionItem.ariaLabel"
-            class="text-primary-700 bg-transparent hover:bg-primary-700 hover:text-white active:bg-primary-700 active:text-white relative"
-            variant="tertiary"
-            square
-            :tag="actionItem?.role ? actionItem?.role : undefined"
-            :to="actionItem?.to !== '' ? actionItem?.to : undefined"
-          >
-            <template #prefix>
-              <Component :is="actionItem.icon" />
-            </template>
-            <template v-if="actionItem.type ==='cart'">
-              <div class="absolute -top-0.5 right-0 rounded-[999px] border-2 border-[#0284C7] px-1 py-[2px] flex items-start justify-center">
-                <span class="text-[#0284C7] text-[8px] leading-[100%]">99+</span>
-              </div>
-            </template>
-          </UISFButton>
-        </nav>
-        <TMSearch class="flex md:hidden flex-[100%] my-2" />
+  <header ref="referenceRef" class="relative bg-menuBackground">
+    <div class="container md:h-20 flex justify-between items-center gap-2 md:gap-10 flex-wrap md:flex-nowrap py-2 px-4 md:py-2 md:px-4 md:z-10">
+      <div class="flex gap-4 md:gap-0 items-center">
+        <UISFButton
+          variant="tertiary"
+          square
+          aria-label="Close menu"
+          class="block md:hidden bg-menuBackground hover:primary-700 hover:text-white active:bg-white active:text-white"
+          @click="openMenu([])"
+        >
+          <SfIconMenu />
+        </UISFButton>
+        <NuxtLink
+          :to="paths.home"
+          aria-label="Sf Homepage"
+          class="flex items-center"
+        >
+          <TMLogo class="w-[56px] h-[25px] md:w-auto md:h-auto"/>
+        </NuxtLink>
       </div>
-      <!-- Desktop dropdown -->
-      <div class="bg-primary">
-<!--        <div v-if="isOpen" class="fixed inset-0 bg-neutral-500 bg-opacity-50"></div>-->
-        <nav class="container" ref="floatingRef">
-          <ul
-            class="hidden md:flex justify-around"
-            @blur="
-            (event) => {
-              if (!(event.currentTarget as Element).contains(event.relatedTarget as Element)) {
-                close();
-              }
-            }
-          "
-          >
-            <li class="py-2.5 hover:!bg-secondary px-1 flex-auto rounded-md text-center" v-for="(menuNode, index) in coontent.children" :key="menuNode.key">
-              <UISFButton
-                  ref="triggerRefs"
-                  variant="tertiary"
-                  class="group text-white hover:!bg-secondary active:!bg-secondary"
-                  @mouseenter="openMenu([menuNode.key])"
-                  @click="openMenu([menuNode.key])"
-              >
-                <span class="text-[10px] 2md:text-xs lg:!text-sm xl:!text-base font-medium" v-html="menuNode.value.label"></span>
-              </UISFButton>
-              <div
-                  v-if="isOpen && activeNode.length === 1 && activeNode[0] === menuNode.key"
-                  :key="activeMenu.key"
-                  ref="megaMenuRef"
-                  :style="style"
-                  class="hidden container md:flex gap-4 bg-white mt-[1px] px-8 py-4 left-0 right-0 outline-none"
-                  tabindex="0"
-                  @mouseleave="close()"
-                  @keydown.esc="focusTrigger(index)"
-              >
-                <template v-for="node in activeMenu.children" :key="node.key">
-                  <template v-if="node.isLeaf">
-                    <SfListItem tag="a" size="sm" :href="node.value.link" class="typography-text-sm mb-2">
-                      {{ node.value.label }}
-                    </SfListItem>
-                    <div class="col-start-2 col-end-5" />
-                  </template>
-                  <div class="flex items-start flex-col flex-auto" v-else>
-                    <div class=" border-b border-b-[#E4E4E7] border-b-solid w-full px-4 py-1.5">
-                      <p class="text-xs 2md:text-sm font-medium text-menu text-left" v-html="node.value.label"></p>
-                    </div>
-                    <ul class="mt-2">
-                      <li v-for="child in node.children" :key="child.key">
-                        <UISFListItem tag="a" size="sm" :href="child.value.link" class="text-xs 2md:text-sm py-1.5 text-left pl-4 pr-1">
-                          {{ child.value.label }}
-                        </UISFListItem>
-                      </li>
-                    </ul>
-                  </div>
-                </template>
-                <div class="hidden 2md:flex flex-col items-center justify-center overflow-hidden rounded-md border-neutral-300 max-w-[245px] w-full"
-                >
-                  <img :src="bannerNode.value.banner" :alt="bannerNode.value.bannerTitle" class="object-contain" />
-                  <p class="px-4 mt-4 mb-4 font-medium text-center typography-text-base">
-                    {{ bannerNode.value.bannerTitle }}
-                  </p>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </nav>
-      </div>
-      <!-- Mobile drawer -->
-      <div v-if="isOpen" class="md:hidden fixed inset-0 bg-neutral-500 bg-opacity-50" />
-      <SfDrawer
-        ref="drawerRef"
-        v-model="isOpen"
-        placement="left"
-        class="md:hidden right-[50px] max-w-[304px] bg-mobile-menu overflow-y-auto"
-      >
-        <nav>
-          <div class="flex items-center justify-between p-4 border-b border-b-neutral-200 border-b-solid" :class="{ 'bg-mobileMenuBackground': activeMenu.key !== 'root' }">
-            <div class="flex items-center gap-4">
-              <div class="flex items-center" v-if="activeMenu.key !== 'root'" @click="goBack()">
-                <SfIconArrowBack class="text-white" />
-              </div>
-              <NuxtLink v-if="activeMenu.key !== 'root'" :to="activeMenu.value.link" @click="close()">
-                <span class="text-lg font-bold text-white">{{menuTitle}}</span>
-              </NuxtLink>
-              <p class="text-lg font-bold text-white" v-else>{{ menuTitle }}</p>
+      <TMSearch class="hidden md:flex flex-[100%] ml-10" />
+      <nav class="flex flex-nowrap justify-end items-center gap-x-1">
+        <UISFButton
+          v-for="actionItem in actionItems"
+          :key="actionItem.ariaLabel"
+          :aria-label="actionItem.ariaLabel"
+          class="text-primary-700 bg-transparent hover:bg-primary-700 hover:text-white active:bg-primary-700 active:text-white relative"
+          variant="tertiary"
+          square
+          :tag="actionItem?.role ? actionItem?.role : undefined"
+          :to="actionItem?.to !== '' ? actionItem?.to : undefined"
+        >
+          <template #prefix>
+            <Component :is="actionItem.icon" />
+          </template>
+          <template v-if="actionItem.type ==='cart'">
+            <div class="absolute -top-0.5 right-0 rounded-[999px] border-2 border-[#0284C7] px-1 py-[2px] flex items-start justify-center">
+              <span class="text-[#0284C7] text-[8px] leading-[100%]">99+</span>
             </div>
-            <UISFButton variant="tertiary" square aria-label="Close menu" class="pr-0" @click="close()">
-              <TMIconsMenuClose />
+          </template>
+        </UISFButton>
+      </nav>
+      <TMSearch class="flex md:hidden flex-[100%] my-2" />
+    </div>
+    <!-- Desktop dropdown -->
+    <div class="bg-primary">
+<!--        <div v-if="isOpen" class="fixed inset-0 bg-neutral-500 bg-opacity-50"></div>-->
+      <nav class="container" ref="floatingRef">
+        <ul
+          class="hidden md:flex justify-around"
+          @blur="
+          (event) => {
+            if (!(event.currentTarget as Element).contains(event.relatedTarget as Element)) {
+              close();
+            }
+          }
+        "
+        >
+          <li class="py-2.5 hover:!bg-secondary px-1 flex-auto rounded-md text-center" v-for="(menuNode, index) in coontent.children" :key="menuNode.key">
+            <UISFButton
+                ref="triggerRefs"
+                variant="tertiary"
+                class="group text-white hover:!bg-secondary active:!bg-secondary"
+                @mouseenter="openMenu([menuNode.key])"
+                @click="openMenu([menuNode.key])"
+            >
+              <span class="text-[10px] 2md:text-xs lg:!text-sm xl:!text-base font-medium" v-html="menuNode.value.label"></span>
             </UISFButton>
-          </div>
-          <ul class="mt-2 mb-6 px-4">
-            <template v-for="node in activeMenu.children" :key="node.value.label">
-              <li class="py-4" v-if="node.isLeaf">
-                <UISFListItem size="lg" :tag="resolvedComponents" :to="node.value.link" @click="close()" class="first-of-type:mt-2">
-                  <div class="flex items-center">
-                    <p class="text-left text-white">{{ node.value.label }}</p>
-                    <SfCounter class="ml-2">{{ node.value.counter }}</SfCounter>
+            <div
+                v-if="isOpen && activeNode.length === 1 && activeNode[0] === menuNode.key"
+                :key="activeMenu.key"
+                ref="megaMenuRef"
+                :style="style"
+                class="hidden container md:flex gap-4 bg-white mt-[1px] px-8 py-4 left-0 right-0 outline-none"
+                tabindex="0"
+                @mouseleave="close()"
+                @keydown.esc="focusTrigger(index)"
+            >
+              <template v-for="node in activeMenu.children" :key="node.key">
+                <template v-if="node.isLeaf">
+                  <SfListItem tag="a" size="sm" :href="node.value.link" class="typography-text-sm mb-2">
+                    {{ node.value.label }}
+                  </SfListItem>
+                  <div class="col-start-2 col-end-5" />
+                </template>
+                <div class="flex items-start flex-col flex-auto" v-else>
+                  <div class=" border-b border-b-[#E4E4E7] border-b-solid w-full px-4 py-1.5">
+                    <p class="text-xs 2md:text-sm font-medium text-menu text-left" v-html="node.value.label"></p>
                   </div>
-                </UISFListItem>
-              </li>
-              <li class="py-4" v-else>
-                <UISFListItem size="lg">
-                  <div class="flex items-center">
-                    <div class="flex items-center flex-auto">
-                      <NuxtLink :to="node.value.link" @click="close()">
-                        <span class="text-left text-white text-sm font-medium">{{ node.value.label }}</span>
-                        <SfCounter class="ml-2">{{ node.value.counter }}</SfCounter>
-                      </NuxtLink>
-                    </div>
-                    <TMIconsChevronRight @click="goNext(node.key)" />
-                  </div>
-                </UISFListItem>
-              </li>
-            </template>
-          </ul>
-          <div
-            v-if="bannerNode.value.banner"
-            class="flex items-center overflow-hidden bg-neutral-100 border-neutral-300 grow"
-          >
-            <img
-              :src="bannerNode.value.banner"
-              :alt="bannerNode.value.bannerTitle"
-              class="object-contain w-[50%] basis-6/12"
-            />
-            <p class="basis-6/12 p-6 font-medium typography-text-base">{{ bannerNode.value.bannerTitle }}</p>
+                  <ul class="mt-2">
+                    <li v-for="child in node.children" :key="child.key">
+                      <UISFListItem tag="a" size="sm" :href="child.value.link" class="text-xs 2md:text-sm py-1.5 text-left pl-4 pr-1">
+                        {{ child.value.label }}
+                      </UISFListItem>
+                    </li>
+                  </ul>
+                </div>
+              </template>
+              <div class="hidden 2md:flex flex-col items-center justify-center overflow-hidden rounded-md border-neutral-300 max-w-[245px] w-full"
+              >
+                <img :src="bannerNode.value.banner" :alt="bannerNode.value.bannerTitle" class="object-contain" />
+                <p class="px-4 mt-4 mb-4 font-medium text-center typography-text-base">
+                  {{ bannerNode.value.bannerTitle }}
+                </p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <!-- Mobile drawer -->
+    <div v-if="isOpen" class="md:hidden fixed inset-0 bg-neutral-500 bg-opacity-50" />
+    <SfDrawer
+      ref="drawerRef"
+      v-model="isOpen"
+      placement="left"
+      class="md:hidden right-[50px] max-w-[304px] bg-mobile-menu overflow-y-auto"
+    >
+      <nav>
+        <div class="flex items-center justify-between p-4 border-b border-b-neutral-200 border-b-solid" :class="{ 'bg-mobileMenuBackground': activeMenu.key !== 'root' }">
+          <div class="flex items-center gap-4">
+            <div class="flex items-center" v-if="activeMenu.key !== 'root'" @click="goBack()">
+              <SfIconArrowBack class="text-white" />
+            </div>
+            <NuxtLink v-if="activeMenu.key !== 'root'" :to="activeMenu.value.link" @click="close()">
+              <span class="text-lg font-bold text-white">{{menuTitle}}</span>
+            </NuxtLink>
+            <p class="text-lg font-bold text-white" v-else>{{ menuTitle }}</p>
           </div>
-        </nav>
-      </SfDrawer>
-    </header>
-  </div>
+          <UISFButton variant="tertiary" square aria-label="Close menu" class="pr-0" @click="close()">
+            <TMIconsMenuClose />
+          </UISFButton>
+        </div>
+        <ul class="mt-2 mb-6 px-4">
+          <template v-for="node in activeMenu.children" :key="node.value.label">
+            <li class="py-4" v-if="node.isLeaf">
+              <UISFListItem size="lg" :tag="resolvedComponents" :to="node.value.link" @click="close()" class="first-of-type:mt-2">
+                <div class="flex items-center">
+                  <p class="text-left text-white">{{ node.value.label }}</p>
+                  <SfCounter class="ml-2">{{ node.value.counter }}</SfCounter>
+                </div>
+              </UISFListItem>
+            </li>
+            <li class="py-4" v-else>
+              <UISFListItem size="lg">
+                <div class="flex items-center">
+                  <div class="flex items-center flex-auto">
+                    <NuxtLink :to="node.value.link" @click="close()">
+                      <span class="text-left text-white text-sm font-medium">{{ node.value.label }}</span>
+                      <SfCounter class="ml-2">{{ node.value.counter }}</SfCounter>
+                    </NuxtLink>
+                  </div>
+                  <TMIconsChevronRight @click="goNext(node.key)" />
+                </div>
+              </UISFListItem>
+            </li>
+          </template>
+        </ul>
+        <div
+          v-if="bannerNode.value.banner"
+          class="flex items-center overflow-hidden bg-neutral-100 border-neutral-300 grow"
+        >
+          <img
+            :src="bannerNode.value.banner"
+            :alt="bannerNode.value.bannerTitle"
+            class="object-contain w-[50%] basis-6/12"
+          />
+          <p class="basis-6/12 p-6 font-medium typography-text-base">{{ bannerNode.value.bannerTitle }}</p>
+        </div>
+      </nav>
+    </SfDrawer>
+  </header>
 </template>
 
 <script lang="ts" setup>
