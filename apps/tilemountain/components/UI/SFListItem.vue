@@ -29,7 +29,7 @@ defineProps({
   },
   childrenTag: {
     type: String,
-    default: 'span',
+    default: 'div',
   },
 });
 </script>

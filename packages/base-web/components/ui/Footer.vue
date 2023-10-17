@@ -1,18 +1,18 @@
 <template>
-  <footer class="pt-10 bg-neutral-100 mb-[58px] md:mb-0" data-testid="footer">
+  <footer class="pt-10 bg-footer mb-[58px] md:mb-0" data-testid="footer">
     <div
-      class="grid justify-center grid-cols-[1fr_1fr] md:grid-cols-[repeat(4,1fr)] px-4 md:px-6 pb-10 max-w-screen-3xl mx-auto"
+      class="flex justify-center container flex-col md:flex-row pb-10 pl-4 gap-4 md:gap-0 md:pl-0"
       data-testid="section-top"
     >
-      <div v-for="{ key, subcategories } in FooterLinks" :key="key" class="min-w-[25%] xs:min-w-[50%] flex flex-col">
-        <div class="ml-4 text-lg font-medium leading-7 text-neutral-900 font-body">
+      <div v-for="{ key, subcategories } in FooterLinks" :key="key" class="flex-1 flex flex-col">
+        <div class="text-lg font-medium leading-7 text-footer-heading">
           {{ key }}
         </div>
-        <ul>
+        <ul class="pt-2">
           <SfListItem
             v-for="{ key: subcategoryKey, link } in subcategories"
             :key="subcategoryKey"
-            class="py-2 !bg-transparent typography-text-sm font-body"
+            class="py-2 pl-0 !bg-transparent typography-text-sm font-body"
           >
             <SfLink
               :tag="NuxtLink"
@@ -25,8 +25,21 @@
           </SfListItem>
         </ul>
       </div>
-      <div class="min-w-[25%] xs:min-w-[50%] flex flex-col">
-        <TMFooterSocial v-if="SocialMediaIcons" :data="SocialMediaIcons"/>
+    </div>
+    <div class="bg-primary">
+      <div class="container flex flex-col justify-between items-center py-10 2md:py-4 2md:flex-row gap-4 2md:gap-0">
+        <TMFooterSocial v-if="SocialMediaIcons" class="w-full 2md:w-auto" :data="SocialMediaIcons"/>
+        <div class="flex items-center gap-3 py-3 md:py-0">
+          <span class="fill-white"><TMLocation type='bottom' /></span>
+          <span class="text-white font-medium">Find Your Local Store</span>
+        </div>
+        <div class="flex items-center gap-4">
+          <div><TMIconsVisa/></div>
+          <div><TMIconsMaestro/></div>
+          <div><TMIconsAM/></div>
+          <div><TMIconsMastercard/></div>
+          <div><TMIconsVisa/></div>
+        </div>
       </div>
     </div>
   </footer>
