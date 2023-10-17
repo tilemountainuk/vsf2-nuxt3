@@ -111,10 +111,18 @@
     </div>
     <!-- Mobile drawer -->
     <div v-if="isOpen" class="md:hidden fixed inset-0 bg-neutral-500 bg-opacity-50" />
-    <SfDrawer
+    <transition
+        enter-active-class="transition duration-500 ease-in-out"
+        leave-active-class="transition duration-500 ease-in-out"
+        :enter-from-class="placement === 'left' ? '-translate-x-full' : 'translate-x-full'"
+        :enter-to-class="placement === 'left' ? 'translate-x-0' : 'translate-x-0'"
+        :leave-from-class="placement === 'left' ? 'translate-x-0' : 'translate-x-0'"
+        :leave-to-class="placement === 'left' ? '-translate-x-full' : 'translate-x-full'"
+    >
+      <SfDrawer
       ref="drawerRef"
       v-model="isOpen"
-      placement="left"
+      :placement="placement"
       class="md:hidden right-[50px] max-w-[304px] bg-mobile-menu overflow-y-auto"
     >
       <nav>
@@ -170,6 +178,8 @@
         </div>
       </nav>
     </SfDrawer>
+    </transition>
+
   </header>
 </template>
 
@@ -183,6 +193,7 @@ import {
   SfIconMenu,
   SfCounter,
   SfIconArrowBack,
+  SfDrawerPlacement,
   useDisclosure,
   useTrapFocus,
   useDropdown,
@@ -209,6 +220,8 @@ type Node = {
   children?: Node[];
   isLeaf: boolean;
 };
+const placement = ref<`${SfDrawerPlacement}`>('left');
+
 const createTreeNode = (key: string, label: string, link: string, Leaf: boolean): Node => {
   return {
     key,
