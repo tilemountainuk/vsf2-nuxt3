@@ -68,7 +68,7 @@
               <span class="text-[10px] 2md:text-xs lg:!text-sm xl:!text-base font-medium" v-html="menuNode.value.label"></span>
             </UISFButton>
             <div
-                v-if="isOpen && activeNode.length === 1 && activeNode[0] === menuNode.key && activeMenu.children.length > 0"
+                v-if="isOpen && activeNode.length === 1 && activeNode[0] === menuNode.key && activeMenu && activeMenu.children && activeMenu.children.length > 0"
                 :key="activeMenu.key"
                 ref="megaMenuRef"
                 :style="style"

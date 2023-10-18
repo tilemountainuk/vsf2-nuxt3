@@ -4,7 +4,7 @@
         v-for="actionItem in actionItems"
         :key="actionItem.ariaLabel"
         :aria-label="actionItem.ariaLabel"
-        class="text-primary-700 bg-transparent hover:bg-primary-700 hover:text-white active:bg-primary-700 active:text-white relative"
+        class="text-primary-700 bg-transparent hover:bg-primary-700 active:bg-primary-700 relative"
         variant="tertiary"
         square
         :tag="actionItem?.role ? actionItem?.role : undefined"
@@ -47,7 +47,7 @@ const actionItems = [
     icon: SfIconPerson,
     label: 'Log in',
     ariaLabel: 'Log in',
-    role: 'login',
+    role: 'button',
     type:'login'
   },
   {
