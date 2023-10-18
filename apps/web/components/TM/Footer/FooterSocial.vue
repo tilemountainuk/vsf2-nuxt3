@@ -55,8 +55,6 @@ const parseData = (data: string): SocialMedia[] => {
   return socialLinksListArray;
 };
 const socialMediaNew = computed(() => parseData(props.data));
-console.log('>>>socialMediaNew', socialMediaNew)
-console.log('>>>props.data', props.data)
 </script>
 <style scoped>
 :deep(svg) {
