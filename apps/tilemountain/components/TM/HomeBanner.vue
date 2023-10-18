@@ -1,15 +1,13 @@
 <template>
   <div class="banner-carousel">
-    <Carousel class="mb-2">
-      <Slide v-for="slide in homeBannersDesktop" :key="slide.id" v-if="!isMobile">
-        <img :src="slide.imagePath" :alt="slide.description"/>
+    <Carousel class="mb-2" :autoplay='20000' :transition='1000' :wrap-around='true' :touchDrag='false'>
+      <Slide v-for="slide in homeBanners" :key="slide.id" v-if="homeBanners" @click="navigateToLink(slide.url)">
+        <img :src="slide.imagePath" :alt="slide.description" class="w-full cursor-pointer"/>
       </Slide>
-      <Slide v-for="slide in homeBannersMobile" :key="slide.id" v-else>
-        <img :src="slide.imagePath" :alt="slide.description"/>
-      </Slide>
+
       <template #addons>
         <div class="navigation-buttons">
-          <Navigation/>
+          <Navigation />
         </div>
       </template>
     </Carousel>
@@ -28,38 +26,43 @@ const bannersData = reactive({
     {
       id: 1,
       imagePath: '/images/homeBanner/banner-1.png',
-      description: 'Image 1'
+      description: 'Image 1',
+      url: '/floor-tiles.html'
     },
     {
       id: 2,
       imagePath: '/images/homeBanner/banner-2.png',
-      description: 'Image 2'
+      description: 'Image 2',
+      url: '/kitchen-tiles.html'
     },
   ],
   bannersMobile: [
     {
       id: 1,
       imagePath: '/images/homeBanner/bannersMobile/banner-Mobile-1.png',
-      description: 'Image 1'
+      description: 'Image 1',
+      url: '/floor-tiles.html'
     },
     {
       id: 2,
       imagePath: '/images/homeBanner/bannersMobile/banner-Mobile-2.png',
-      description: 'Image 2'
+      description: 'Image 2',
+      url: '/kitchen-tiles.html'
     },
   ],
 });
 
-const homeBannersDesktop = computed(() => {
-  console.log('>>> Computed Working', bannersData.bannersDesktop)
-  console.log('>>> Computed Banners Length', bannersData.bannersDesktop.length)
+const homeBanners = computed(() => {
+  if(isMobile) {
+    return bannersData.bannersMobile && bannersData.bannersMobile?.length > 0 ? bannersData.bannersMobile : null
+  }
   return bannersData.bannersDesktop && bannersData.bannersDesktop?.length > 0 ? bannersData.bannersDesktop : null
 })
-const homeBannersMobile = computed(() => {
-  console.log('>>> Computed Working', bannersData.bannersMobile)
-  console.log('>>> Computed Banners Length', bannersData.bannersMobile.length)
-  return bannersData.bannersMobile && bannersData.bannersMobile?.length > 0 ? bannersData.bannersMobile : null
-})
+
+const navigateToLink = (url: string) => {
+  const router = useRouter();
+  router.push(url)
+}
 
 
 </script>
@@ -75,10 +78,12 @@ const homeBannersMobile = computed(() => {
     }
   }
   button.carousel__prev, .carousel__prev--disabled {
-    @apply left-2/4 opacity-100 rounded-full h-12 w-12 bg-[#172554] bg-center bg-[url('/images/homeBanner/bannerIcon/right.png')] bg-no-repeat;
+    @apply left-2/4 opacity-100 rounded-full h-12 w-12 bg-[#172554] bg-center bg-[url('/images/homeBanner/bannerIcon/right.png')] bg-no-repeat
+    mp:bg-transparent mp:top-6 mp:h-3 mp:w-3;
   }
   button.carousel__next, .carousel__next--disabled {
-    @apply right-2/4 opacity-100 rounded-full h-12 w-12 bg-[#172554] bg-center bg-[url('/images/homeBanner/bannerIcon/left.png')] bg-no-repeat;
+    @apply right-2/4 opacity-100 rounded-full h-12 w-12 bg-[#172554] bg-center bg-[url('/images/homeBanner/bannerIcon/left.png')] bg-no-repeat
+    mp:bg-transparent mp:top-6 mp:h-3 mp:w-3;
   }
 }
 </style>
