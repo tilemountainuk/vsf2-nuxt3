@@ -1,48 +1,53 @@
 <template>
   <div>
     <div class="pt-12 mp:p-0">
-      <span class="text-4xl font-bold text-primary mp:hidden"> Frequently Asked Questions </span>
+      <span class="mp:hidden text-4xl tab:text-3xl font-bold text-primary"> Frequently Asked Questions </span>
     </div>
     <div class="mt-8 mb-[93px] mp:ml-4 mp:mr-4">
       <div class="flex flex-col gap-y-6 divide-y text-neutral-900">
         <SfAccordionItem
-          v-for="{ id, summary, details } in accordionItems"
+          v-for="({ id, summary, details }, index) in accordionItems"
           :key="id"
-          :model-value="isOpen(id)"
-          @update:model-value="toggle(id, $event)"
+          :model-value="isTransitioning || opened[index]"
+          @update:model-value="
+            (isOpen) => {
+              isTransitioning = true;
+              opened[index] = isOpen;
+            }
+          "
         >
           <template #summary>
             <div class="flex justify-between p-4 font-medium bg-neutral-100">
               <p class="mp:w-64">{{ summary }}</p>
               <SfIconChevronLeft
-                :class="['text-neutral-500', { 'rotate-90': isOpen(id), '-rotate-90': !isOpen(id) }]"
+                :class="['text-neutral-500', { 'rotate-90': opened[index], '-rotate-90': !opened[index] }]"
               />
             </div>
           </template>
-          <div class="p-4 bg-neutral-100">
-            <p class="mp:w-64">{{ details }}</p>
-          </div>
+          <Transition
+            enter-from-class="grid grid-rows-[0fr]"
+            enter-to-class="grid grid-rows-[1fr]"
+            leave-from-class="grid grid-rows-[1fr]"
+            leave-to-class="grid grid-rows-[0fr]"
+            @after-leave="isTransitioning = false"
+            @after-enter="isTransitioning = false"
+          >
+            <div v-if="opened[index]" class="p-4 bg-neutral-100">
+              <p class="mp:w-64">{{ details }}</p>
+            </div>
+          </Transition>
         </SfAccordionItem>
       </div>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue';
+<script lang="ts" setup>
 import { SfAccordionItem, SfIconChevronLeft } from '@storefront-ui/vue';
+import { ref } from 'vue';
 
-const opened = ref<string | null>(null);
-
-const isOpen = (id: string) => id === opened.value;
-
-const toggle = (id: string, open: boolean) => {
-  if (open) {
-    opened.value = id;
-  } else if (isOpen(id)) {
-    opened.value = null;
-  }
-};
+const opened = ref<boolean[]>([]);
+const isTransitioning = ref(false);
 
 const accordionItems = [
   {
