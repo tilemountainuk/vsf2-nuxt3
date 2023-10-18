@@ -1,5 +1,5 @@
 <template>
-  <UiNavbarTop />
+  <UiNavbarTop :data="{ content: '' }" />
   <main>
     <NarrowContainer>
       <slot />

@@ -7,8 +7,29 @@ export default {
   content: ['./**/*.vue', '../../node_modules/@storefront-ui/vue/**/*.{js,mjs}'],
   theme: {
     extend: {
+      colors: {
+        primary: '#24224d',
+        secondary: '#0fa897',
+        default: '#2a285a',
+        border: '#c1c1c1',
+        menu: '#18181B',
+        'mobile-menu': '#172554',
+        menuBackground: '#F4F4F5',
+        mobileMenuBackground: '#0D9488',
+        footer: '#E4E4E7',
+        'footer-heading': '#1E3A8A',
+      },
       gridTemplateAreas: {
         'product-page': ['left-top right', 'left-bottom right'],
+      },
+      container: {
+        center: true,
+        width: '100%',
+        screens: {
+          md: '752px',
+          '2md': '976px',
+          '1xl': '1280px'
+        },
       },
       gridTemplateColumns: {
         'product-page': 'minmax(56%, 500px) auto',
@@ -21,11 +42,28 @@ export default {
         '3xl': '1536px',
         '2xl': '1366px',
         xl: '1280px',
+        '1xl': '1200px',
         lg: '1024px',
+        '2md': '992px',
         md: '768px',
         sm: '640px',
+        '2sm': '576px',
         xs: '376px',
         '2xs': '360px',
+        '1tab': { raw: '(max-width: 1199px)' },
+        tab: { raw: '(max-width: 991px)' },
+        mp: { raw: '(max-width: 767px)' },
+        '4xs': { raw: '(max-width: 480px)' },
+        small: { raw: '(max-width: 420px)' },
+      },
+      fontSize: {
+        '11': '11px',
+        '13': '13px',
+        '15': '15px',
+        '17': '17px',
+      },
+      fontFamily: {
+        'arial': ['Arial', 'sans-serif'],
       },
     },
   },

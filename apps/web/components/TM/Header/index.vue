@@ -20,33 +20,12 @@
         </NuxtLink>
       </div>
       <TMSearch class="hidden md:flex flex-[100%] ml-10" />
-      <nav class="flex flex-nowrap justify-end items-center gap-x-1">
-        <UISFButton
-            v-for="actionItem in actionItems"
-            :key="actionItem.ariaLabel"
-            :aria-label="actionItem.ariaLabel"
-            class="text-primary-700 bg-transparent hover:bg-primary-700 hover:text-white active:bg-primary-700 active:text-white relative"
-            variant="tertiary"
-            square
-            :tag="actionItem?.role ? actionItem?.role : undefined"
-            :to="actionItem?.to !== '' ? actionItem?.to : undefined"
-        >
-          <template #prefix>
-            <Component :is="actionItem.icon" />
-          </template>
-          <template v-if="actionItem.type ==='cart'">
-            <div class="absolute -top-0.5 right-0 rounded-[999px] border-2 border-[#0284C7] px-1 py-[2px] flex items-start justify-center">
-              <span class="text-[#0284C7] text-[8px] leading-[100%]">99+</span>
-            </div>
-          </template>
-        </UISFButton>
-      </nav>
+      <TMHeaderTopHeaderNav />
       <TMSearch class="flex md:hidden flex-[100%] my-2" />
     </div>
     <!-- Desktop dropdown -->
     <div class="bg-primary w-full" :class="{'md:fixed z-50 md:top-0': scrollPosition > 95,'relative': scrollPosition < 95}">
-      <!--        <div v-if="isOpen" class="fixed inset-0 bg-neutral-500 bg-opacity-50"></div>-->
-      <nav class="container" ref="floatingRef">
+      <nav class="container relative" ref="floatingRef">
         <ul
             class="hidden md:flex justify-around"
             @blur="
@@ -68,11 +47,10 @@
               <span class="text-[10px] 2md:text-xs lg:!text-sm xl:!text-base font-medium" v-html="menuNode.value.label"></span>
             </UISFButton>
             <div
-                v-if="isOpen && activeNode.length === 1 && activeNode[0] === menuNode.key && activeMenu && activeMenu.children && activeMenu.children.length > 0"
+                v-if="isOpen && activeNode.length === 1 && activeNode[0] === menuNode.key && activeMenuChildrenLength > 0"
                 :key="activeMenu.key"
                 ref="megaMenuRef"
-                :style="style"
-                class="hidden container md:flex gap-4 bg-white mt-[1px] px-8 py-4 left-0 right-0 outline-none z-50"
+                class="hidden container md:flex gap-4 bg-white mt-[1px] px-8 py-4 left-0 right-0 outline-none absolute top-[99%] z-50"
                 tabindex="0"
                 @mouseleave="close()"
                 @keydown.esc="focusTrigger(index)"
@@ -97,8 +75,7 @@
                   </ul>
                 </div>
               </template>
-              <div class="hidden 2md:flex flex-col items-center justify-center overflow-hidden rounded-md border-neutral-300 max-w-[245px] w-full"
-              >
+              <div class="hidden 2md:flex flex-col items-center justify-center overflow-hidden rounded-md border-neutral-300 max-w-[245px] w-full">
                 <img :src="bannerNode.value.banner" :alt="bannerNode.value.bannerTitle" class="object-contain" />
                 <p class="px-4 mt-4 mb-4 font-medium text-center typography-text-base">
                   {{ bannerNode.value.bannerTitle }}
@@ -198,15 +175,12 @@ import {
   useDropdown,
 } from '@storefront-ui/vue';
 import { unrefElement } from '@vueuse/core';
-import {TMIconsLocation, TMIconsPhoneIcon} from "#components";
 import { parse } from 'node-html-parser';
 
 interface ParseDataContent {
   content: string;
 }
-const props = defineProps<{
-  data: ParseDataContent;
-}>();
+
 type Node = {
   key: string;
   value: {
@@ -3538,6 +3512,9 @@ const triggerRefs = ref();
 const activeNode = ref<string[]>([]);
 
 const activeMenu = computed(() => findNode(activeNode.value, coontent));
+const activeMenuChildrenLength = computed(() => {
+  return activeMenu.value?.children?.length || 0;
+});
 const menuTitle = computed(() => {
   if(activeMenu.value.key === 'root') {
     return 'Categories'
@@ -3554,8 +3531,8 @@ const trapFocusOptions = {
   initialFocus: 'container',
 } as const;
 useTrapFocus(
-    computed(() => megaMenuRef.value?.[0]),
-    trapFocusOptions,
+  computed(() => megaMenuRef.value?.[0]),
+  trapFocusOptions,
 );
 useTrapFocus(drawerRef, trapFocusOptions);
 
@@ -3576,38 +3553,6 @@ const focusTrigger = (index: number) => {
   unrefElement(triggerRefs.value[index]).focus();
 };
 
-const actionItems = [
-  {
-    icon: TMIconsPhoneIcon,
-    label: '',
-    ariaLabel: 'Phone',
-    role: resolveComponent('NuxtLink'),
-    to: '/i/contact-us',
-    type:'phone'
-  },
-  {
-    icon: TMIconsLocation,
-    label: '',
-    ariaLabel: 'Show Rooms',
-    role: resolveComponent('NuxtLink'),
-    to: '/i/showrooms_info',
-    type:'showrooms'
-  },
-  {
-    icon: SfIconPerson,
-    label: 'Log in',
-    ariaLabel: 'Log in',
-    role: 'login',
-    type:'login'
-  },
-  {
-    icon: SfIconShoppingCart,
-    label: '',
-    ariaLabel: 'Cart',
-    role: 'button',
-    type:'cart'
-  }
-];
 
 onMounted( () => {
   window.addEventListener('scroll', updateScroll)

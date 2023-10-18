@@ -1,5 +1,5 @@
 <template>
-  <UiNavbarTop />
+  <UiNavbarTop :data="{ content: '' }" />
   <main data-testid="checkout-layout">
     <NarrowContainer>
       <div class="px-4 md:px-0 mb-20">
