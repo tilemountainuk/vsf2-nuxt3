@@ -26,7 +26,8 @@
   },
   "dependencies": {
     "cross-env": "^7.0.3",
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "node-html-parser": "^6.1.10"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.0",
