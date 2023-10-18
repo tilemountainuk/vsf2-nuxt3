@@ -25,7 +25,13 @@
           <SfButton size="lg" :tag="NuxtLink" :to="primaryButtonLink">
             {{ primaryButtonText }}
           </SfButton>
-          <SfButton size="lg" :tag="NuxtLink" :to="secondaryButtonLink" class="bg-white" variant="secondary">
+          <SfButton
+            size="lg"
+            :tag="NuxtLink"
+            to="/p/alaskan-calacatta-white-marble-effect-gloss-ceramic-wall-tile"
+            class="bg-white"
+            variant="secondary"
+          >
             {{ secondaryButtonText }}
           </SfButton>
         </div>

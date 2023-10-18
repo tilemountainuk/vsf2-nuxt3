@@ -69,6 +69,8 @@ export default defineNuxtConfig({
     '@vite-pwa/nuxt',
     'nuxt-vitest',
     'nuxt-lazy-hydrate',
+    '@pinia/nuxt',
+    '@pinia-plugin-persistedstate/nuxt',
   ],
   nitro: {
     prerender: {
