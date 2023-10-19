@@ -1,6 +1,6 @@
 <template>
   <div class="banner-carousel">
-    <Carousel class="mb-2" :autoplay='20000' :transition='1000' :wrap-around='true' :touchDrag='false'>
+    <Carousel class="mb-2" :autoplay='10000' :transition='1000' :wrap-around='true' :touchDrag='false'>
       <Slide v-for="slide in homeBanners" :key="slide.id" v-if="homeBanners" @click="navigateToLink(slide.url)">
         <img :src="slide.imagePath" :alt="slide.description" class="w-full cursor-pointer"/>
       </Slide>
@@ -19,7 +19,7 @@ import {reactive, computed} from 'vue';
 import 'vue3-carousel/dist/carousel.css'
 import {Carousel, Navigation, Pagination, Slide} from 'vue3-carousel'
 
-const { isMobile } = useDevice()
+const { isMobile } = useBreakpoints();
 
 const bannersData = reactive({
   bannersDesktop: [
@@ -53,7 +53,8 @@ const bannersData = reactive({
 });
 
 const homeBanners = computed(() => {
-  if(isMobile) {
+  console.log('isMobile', isMobile.value)
+  if(isMobile.value) {
     return bannersData.bannersMobile && bannersData.bannersMobile?.length > 0 ? bannersData.bannersMobile : null
   }
   return bannersData.bannersDesktop && bannersData.bannersDesktop?.length > 0 ? bannersData.bannersDesktop : null
@@ -78,11 +79,11 @@ const navigateToLink = (url: string) => {
     }
   }
   button.carousel__prev, .carousel__prev--disabled {
-    @apply left-2/4 opacity-100 rounded-full h-12 w-12 bg-[#172554] bg-center bg-[url('/images/homeBanner/bannerIcon/right.png')] bg-no-repeat
+    @apply left-2/4 opacity-100 rounded-full h-12 w-12 bg-[#172554] bg-center bg-[url('/icons/homeBanner/bannerIcon/right.svg')] bg-no-repeat
     mp:bg-transparent mp:top-6 mp:h-3 mp:w-3;
   }
   button.carousel__next, .carousel__next--disabled {
-    @apply right-2/4 opacity-100 rounded-full h-12 w-12 bg-[#172554] bg-center bg-[url('/images/homeBanner/bannerIcon/left.png')] bg-no-repeat
+    @apply right-2/4 opacity-100 rounded-full h-12 w-12 bg-[#172554] bg-center bg-[url('/icons/homeBanner/bannerIcon/left.svg')] bg-no-repeat
     mp:bg-transparent mp:top-6 mp:h-3 mp:w-3;
   }
 }

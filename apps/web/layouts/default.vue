@@ -5,7 +5,7 @@
       <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
     </div>
   </NarrowContainer>
-  <main class="container">
+  <main>
     <slot />
   </main>
   <NuxtLazyHydrate when-visible>
