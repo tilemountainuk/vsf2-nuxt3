@@ -8,10 +8,10 @@
             aria-label="Sf Homepage"
             class="flex items-center"
         >
-          <TMLogo class="w-20 h-9 md:w-auto md:h-auto"/>
+          <TMIconsLogo class="w-20 h-9 md:w-auto md:h-auto"/>
         </NuxtLink>
       </div>
-      <TMSearch class="hidden md:flex flex-[100%] ml-10" />
+      <TMHeaderSearch class="hidden md:flex flex-[100%] ml-10" />
       <TMHeaderTopHeaderNav />
       <div class="flex items-center justify-between w-full flex-[100%] md:hidden">
         <TMUISFButton
@@ -23,7 +23,7 @@
         >
           <SfIconMenu />
         </TMUISFButton>
-        <TMSearch class="flex flex-[100%] my-2" />
+        <TMHeaderSearch class="flex flex-[100%] my-2" />
       </div>
     </div>
     <!-- Desktop dropdown -->
