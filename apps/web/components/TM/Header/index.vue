@@ -2,6 +2,18 @@
   <header ref="referenceRef" class="relative bg-menuBackground">
     <div class="container md:h-20 flex justify-between items-center gap-2 md:gap-10 flex-wrap md:flex-nowrap py-2 px-4 md:py-2 md:px-4 md:z-10">
       <div class="flex gap-4 md:gap-0 items-center">
+
+        <NuxtLink
+            :to="paths.home"
+            aria-label="Sf Homepage"
+            class="flex items-center"
+        >
+          <TMLogo class="w-20 h-9 md:w-auto md:h-auto"/>
+        </NuxtLink>
+      </div>
+      <TMSearch class="hidden md:flex flex-[100%] ml-10" />
+      <TMHeaderTopHeaderNav />
+      <div class="flex items-center justify-between w-full flex-[100%] md:hidden">
         <TMUISFButton
             variant="tertiary"
             square
@@ -11,17 +23,8 @@
         >
           <SfIconMenu />
         </TMUISFButton>
-        <NuxtLink
-            :to="paths.home"
-            aria-label="Sf Homepage"
-            class="flex items-center"
-        >
-          <TMLogo class="w-[56px] h-[25px] md:w-auto md:h-auto"/>
-        </NuxtLink>
+        <TMSearch class="flex flex-[100%] my-2" />
       </div>
-      <TMSearch class="hidden md:flex flex-[100%] ml-10" />
-      <TMHeaderTopHeaderNav />
-      <TMSearch class="flex md:hidden flex-[100%] my-2" />
     </div>
     <!-- Desktop dropdown -->
     <div class="bg-primary w-full" :class="{'md:fixed z-50 md:top-0': scrollPosition > 95,'relative': scrollPosition < 95}">
