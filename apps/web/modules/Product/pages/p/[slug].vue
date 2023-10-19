@@ -4,22 +4,12 @@
       <div class="md:grid gap-x-6 grid-areas-product-page grid-cols-product-page">
         <section class="grid-in-left-top md:h-full xl:max-h-[700px]">
           <NuxtLazyHydrate when-idle>
-            <Gallery :images="product?.gallery ?? []" />
+            <ProductGallery v-if="productGallery" :images="productGallery" />
           </NuxtLazyHydrate>
         </section>
         <section class="mb-10 grid-in-right md:mb-0">
           <NuxtLazyHydrate when-idle>
-            <UiPurchaseCard v-if="product" :product="product" />
-          </NuxtLazyHydrate>
-        </section>
-        <section class="grid-in-left-bottom md:mt-8">
-          <UiDivider class="mb-6" />
-          <NuxtLazyHydrate when-visible>
-            <ProductProperties v-if="product" :product="product" />
-          </NuxtLazyHydrate>
-          <UiDivider class="mt-4 mb-2 md:mt-8" />
-          <NuxtLazyHydrate when-visible>
-            <ProductAccordion v-if="product" :product="product" />
+            <ProductPurchaseCard v-if="MagentoProduct" :product="MagentoProduct" />
           </NuxtLazyHydrate>
         </section>
         <UiDivider class="mt-4 mb-2" />
@@ -31,6 +21,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import type { Breadcrumb } from '~/components/ui/Breadcrumbs/types';
+import type { ProductInterface } from '~/modules/Product/ProductInterface';
 
 definePageMeta({
   layout: false,
@@ -46,11 +37,27 @@ await fetchProduct(slug);
 const breadcrumbs: Breadcrumb[] = [
   { name: t('home'), link: '/' },
   { name: t('category'), link: '/category' },
-  { name: product.value?.name as string, link: `#` },
+  { name: product.value?.products?.items?.[0]?.name as string, link: `#` },
 ];
 
-const title = computed(() => product.value?.name ?? '');
-
+const title = computed(() => product.value?.products?.items?.[0]?.name ?? '');
+const productGallery = computed(
+  () =>
+    product.value?.products?.items?.[0]?.media_gallery?.map((img) => ({
+      url: img?.url || '',
+      position: img?.position || 0,
+      disabled: img?.disabled || false,
+      label: img?.label || '',
+    })),
+);
+const MagentoProduct = computed(() => {
+  const productData = product.value?.products?.items?.[0];
+  if (productData) {
+    const { uid, sku, name, stock_status, only_x_left_in_stock, price_range } = productData;
+    return { uid, sku, name, stock_status, only_x_left_in_stock, price_range };
+  }
+  return null;
+});
 useHead({
   title,
 });

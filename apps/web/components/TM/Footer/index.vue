@@ -48,7 +48,6 @@ type FooterArray = {
   block: BlockObject;
 };
 
-
 type FooterLinks = {
   key?: string;
   link?: string;

@@ -1,5 +1,5 @@
 import { toRefs } from '@vueuse/shared';
-import type { UseProductReturn, UseProductState, FetchProduct } from '~/modules/Product/composables/types';
+import type { UseProductReturn, UseProductState } from '~/modules/Product/composables/types';
 import { productDetailsCustomQuery } from '~/modules/Product/composables/customQueries/productDetailsCustomQuery';
 import { useSdk } from '~/sdk';
 import type { ProductDetailsQuery } from '@vue-storefront/magento-types';
@@ -11,6 +11,7 @@ import type { ProductDetailsQuery } from '@vue-storefront/magento-types';
  * @example
  * const { data, loading, fetchProduct } = useProduct('product-slug');
  */
+
 export const magentoProduct: UseProductReturn = (slug) => {
   const state = useState<UseProductState>(`useProduct-${slug}`, () => ({
     data: null,
@@ -18,10 +19,12 @@ export const magentoProduct: UseProductReturn = (slug) => {
   }));
 
   /** Function for fetching product data
+   * @param {string} slug Product slug
    * @example
    * fetchProduct('product-slug');
    */
-  const fetchProduct: ProductDetailsQuery = async (slug: string) => {
+
+  const fetchProduct = async (slug: string): Promise<ProductDetailsQuery | undefined> => {
     state.value.loading = true;
     const { data, error } = await useAsyncData(() =>
       useSdk().magento.productDetails(
@@ -29,14 +32,19 @@ export const magentoProduct: UseProductReturn = (slug) => {
         { customQuery: productDetailsCustomQuery },
       ),
     );
-    console.log('Data is :', data?.value?.data);
     useHandleError(error.value);
+    state.value.data = data.value?.data;
     state.value.loading = false;
-    return data?.value?.data?.products;
+    return data?.value?.data;
+  };
+
+  const addToCart = async () => {
+    console.log('addToCart');
   };
 
   return {
     fetchProduct,
     ...toRefs(state.value),
+    addToCart
   };
 };

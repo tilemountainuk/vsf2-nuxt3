@@ -16,9 +16,17 @@ export const productDetailsCustomQuery = {
                 currency
                 value
               }
+              final_price {
+                currency
+                value
+              }
             }
             minimum_price {
               regular_price {
+                currency
+                value
+              }
+              final_price {
                 currency
                 value
               }
