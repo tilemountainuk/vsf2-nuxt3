@@ -2,7 +2,7 @@
   <header ref="referenceRef" class="relative bg-menuBackground">
     <div class="container md:h-20 flex justify-between items-center gap-2 md:gap-10 flex-wrap md:flex-nowrap py-2 px-4 md:py-2 md:px-4 md:z-10">
       <div class="flex gap-4 md:gap-0 items-center">
-        <UISFButton
+        <TMUISFButton
             variant="tertiary"
             square
             aria-label="Close menu"
@@ -10,7 +10,7 @@
             @click="openMenu([])"
         >
           <SfIconMenu />
-        </UISFButton>
+        </TMUISFButton>
         <NuxtLink
             :to="paths.home"
             aria-label="Sf Homepage"
@@ -37,7 +37,7 @@
         "
         >
           <li class="py-2.5 hover:!bg-secondary px-1 flex-auto rounded-md text-center" v-for="(menuNode, index) in coontent.children" :key="menuNode.key">
-            <UISFButton
+            <TMUISFButton
                 ref="triggerRefs"
                 variant="tertiary"
                 class="group text-white hover:!bg-secondary active:!bg-secondary"
@@ -45,7 +45,7 @@
                 @click="openMenu([menuNode.key])"
             >
               <span class="text-[10px] 2md:text-xs lg:!text-sm xl:!text-base font-medium" v-html="menuNode.value.label"></span>
-            </UISFButton>
+            </TMUISFButton>
             <div
                 v-if="isOpen && activeNode.length === 1 && activeNode[0] === menuNode.key && activeMenuChildrenLength > 0"
                 :key="activeMenu.key"
@@ -68,9 +68,9 @@
                   </div>
                   <ul class="mt-2">
                     <li v-for="child in node.children" :key="child.key">
-                      <UISFListItem tag="a" size="sm" :href="child.value.link" class="text-xs 2md:text-sm py-1.5 text-left pl-4 pr-1">
+                      <TMUISFListItem tag="a" size="sm" :href="child.value.link" class="text-xs 2md:text-sm py-1.5 text-left pl-4 pr-1">
                         {{ child.value.label }}
-                      </UISFListItem>
+                      </TMUISFListItem>
                     </li>
                   </ul>
                 </div>
@@ -113,22 +113,22 @@
               </NuxtLink>
               <p class="text-lg font-bold text-white" v-else>{{ menuTitle }}</p>
             </div>
-            <UISFButton variant="tertiary" square aria-label="Close menu" class="pr-0" @click="close()">
+            <TMUISFButton variant="tertiary" square aria-label="Close menu" class="pr-0" @click="close()">
               <TMIconsMenuClose />
-            </UISFButton>
+            </TMUISFButton>
           </div>
           <ul class="mt-2 mb-6 px-4">
             <template v-for="node in activeMenu.children" :key="node.value.label">
               <li class="py-4" v-if="node.isLeaf">
-                <UISFListItem size="lg" :tag="resolvedComponents" :to="node.value.link" @click="close()" class="first-of-type:mt-2">
+                <TMUISFListItem size="lg" :tag="resolvedComponents" :to="node.value.link" @click="close()" class="first-of-type:mt-2">
                   <div class="flex items-center">
                     <p class="text-left text-white">{{ node.value.label }}</p>
                     <SfCounter class="ml-2">{{ node.value.counter }}</SfCounter>
                   </div>
-                </UISFListItem>
+                </TMUISFListItem>
               </li>
               <li class="py-4" v-else>
-                <UISFListItem size="lg">
+                <TMUISFListItem size="lg">
                   <div class="flex items-center">
                     <div class="flex items-center flex-auto">
                       <NuxtLink :to="node.value.link" @click="close()">
@@ -138,7 +138,7 @@
                     </div>
                     <TMIconsChevronRight @click="goNext(node.key)" />
                   </div>
-                </UISFListItem>
+                </TMUISFListItem>
               </li>
             </template>
           </ul>

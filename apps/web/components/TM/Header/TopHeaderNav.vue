@@ -1,6 +1,6 @@
 <template>
   <nav class="flex flex-nowrap justify-end items-center gap-x-1">
-    <UISFButton
+    <TMUISFButton
         v-for="actionItem in actionItems"
         :key="actionItem.ariaLabel"
         :aria-label="actionItem.ariaLabel"
@@ -9,6 +9,7 @@
         square
         :tag="actionItem?.role ? actionItem?.role : undefined"
         :to="actionItem?.to !== '' ? actionItem?.to : undefined"
+        @click="actionItem.type === 'login' ? accountDropdownToggle() : null"
     >
       <template #prefix>
         <Component :is="actionItem.icon" />
@@ -18,13 +19,27 @@
           <span class="text-[#0284C7] text-[8px] leading-[100%]">99+</span>
         </div>
       </template>
-    </UISFButton>
+      <template v-if="actionItem.type ==='login'">
+        <TMUISFDropdown v-model="isAccountDropdownOpen" class="absolute z-50 w-44 md:w-full" v-if="isAccountDropdownOpen">
+          <ul class="p-2 rounded bg-gray-100">
+            <li><NuxtLink> <span>My Dashboard</span> </NuxtLink></li>
+            <li><NuxtLink> <span>Account Information</span> </NuxtLink></li>
+            <li><NuxtLink> <span>Address Book</span> </NuxtLink></li>
+            <li><NuxtLink> <span>My Orders</span> </NuxtLink></li>
+            <li><NuxtLink> <span>Quotations</span> </NuxtLink></li>
+            <li><NuxtLink> <span>Recently Viewed Products</span> </NuxtLink></li>
+          </ul>
+        </TMUISFDropdown>
+      </template>
+    </TMUISFButton>
   </nav>
 </template>
 
 <script setup lang="ts">
 import {TMIconsLocation, TMIconsPhoneIcon} from "#components";
-import {SfIconPerson, SfIconShoppingCart} from "@storefront-ui/vue";
+import {SfIconPerson, SfIconShoppingCart, useDisclosure} from "@storefront-ui/vue";
+const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
+const { isMobile } = useBreakpoints();
 
 const actionItems = [
   {
@@ -58,5 +73,6 @@ const actionItems = [
     type:'cart'
   }
 ];
+const NuxtLink = resolveComponent('NuxtLink');
 
 </script>

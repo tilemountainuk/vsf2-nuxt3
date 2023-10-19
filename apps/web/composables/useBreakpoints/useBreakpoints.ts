@@ -12,15 +12,18 @@ export const useBreakpoints = createSharedComposable(() => {
     desktop: '1024px',
   });
 
-  const isTablet = ref(true);
+  const isMobile = ref(true);
+  const isTablet = ref(false);
   const isDesktop = ref(false);
 
   onMounted(() => {
+    syncRefs(breakpoints.smaller('tablet'), isMobile);
     syncRefs(breakpoints.greaterOrEqual('tablet'), isTablet);
     syncRefs(breakpoints.greaterOrEqual('desktop'), isDesktop);
   });
 
   return {
+    isMobile,
     isTablet,
     isDesktop,
   };
