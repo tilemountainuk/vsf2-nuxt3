@@ -21,5 +21,7 @@ export default defineNuxtModule({
     });
     // Import composables
     addImportsDir(resolver.resolve('composables'));
+    // Import stores
+    addImportsDir(resolver.resolve('stores'));
   },
 });

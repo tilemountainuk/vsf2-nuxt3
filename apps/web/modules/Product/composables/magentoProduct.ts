@@ -1,8 +1,10 @@
 import { toRefs } from '@vueuse/shared';
 import type { UseProductReturn, UseProductState } from '~/modules/Product/composables/types';
-import { productDetailsCustomQuery } from '~/modules/Product/composables/customQueries/productDetailsCustomQuery';
+import { productDetailsCustomQuery } from '~/modules/Product/customQueries/productDetailsCustomQuery';
+import { addProductsToCartCustomQuery } from '~/modules/Product/customQueries/addProductsToCartCustomQuery';
 import { useSdk } from '~/sdk';
 import type { ProductDetailsQuery } from '@vue-storefront/magento-types';
+import { useCartStore } from '~/modules/Product/stores/cartStore';
 
 /**
  * @description Composable managing product data
@@ -17,6 +19,10 @@ export const magentoProduct: UseProductReturn = (slug) => {
     data: null,
     loading: false,
   }));
+
+  const cartStore = useCartStore();
+  const { send: sendNotification } = useUiNotification();
+  const { createEmptyCard } = useCart();
 
   /** Function for fetching product data
    * @param {string} slug Product slug
@@ -38,13 +44,49 @@ export const magentoProduct: UseProductReturn = (slug) => {
     return data?.value?.data;
   };
 
-  const addToCart = async () => {
-    console.log('addToCart');
+  const addToCart = async (sku: string, qty: number) => {
+    if (!cartStore.getCartId) {
+      await createEmptyCard();
+    }
+    const cartId = cartStore.getCartId;
+    try {
+      const { data } = await useAsyncData(() =>
+        useSdk().magento.addProductsToCart(
+          {
+            cartId,
+            cartItems: [
+              {
+                sku: sku,
+                quantity: qty,
+              },
+            ],
+          },
+          { customQuery: addProductsToCartCustomQuery },
+        ),
+      );
+      if (data?.value?.data?.addProductsToCart?.user_errors?.length === 0) {
+        sendNotification({
+          icon: 'Check',
+          message: 'Your Basket has been updated',
+          title: 'Cart Updated',
+          type: 'positive',
+        });
+      } else {
+        sendNotification({
+          icon: 'Error',
+          message: data?.value?.data?.addProductsToCart?.user_errors[0]?.message || 'Error while adding product',
+          title: 'Add to cart error',
+          type: 'negative',
+        });
+      }
+    } catch (error) {
+      throw new Error(error as string);
+    }
   };
 
   return {
     fetchProduct,
     ...toRefs(state.value),
-    addToCart
+    addToCart,
   };
 };

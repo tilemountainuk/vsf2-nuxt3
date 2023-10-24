@@ -30,6 +30,7 @@
       <UiSearch :close="searchModalClose" />
     </SfModal>
   </NuxtLazyHydrate>
+  <UINotification />
 </template>
 
 <script setup lang="ts">

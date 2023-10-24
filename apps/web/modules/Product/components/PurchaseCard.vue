@@ -6,16 +6,23 @@
     <h1 class="mb-1 font-bold typography-headline-4" data-testid="product-name">{{ product.name }}</h1>
     <div class="my-1">
       <span class="mr-2 text-secondary-700 font-bold font-headings text-2xl" data-testid="price">
-        {{ product.price_range?.maximum_price?.final_price.currency }}{{ product.price_range?.maximum_price?.regular_price.value }}
+        {{ product.price_range?.maximum_price?.final_price.currency
+        }}{{ product.price_range?.maximum_price?.regular_price.value }}
       </span>
       <span class="text-base font-normal text-neutral-500 line-through">
-        {{ product.price_range?.maximum_price?.final_price.currency }}{{ product.price_range?.maximum_price?.final_price.value }}
+        {{ product.price_range?.maximum_price?.final_price.currency
+        }}{{ product.price_range?.maximum_price?.final_price.value }}
       </span>
     </div>
     <div class="py-4 mb-4 border-gray-200 border-y">
       <div class="flex flex-col md:flex-row flex-wrap gap-4">
         <UiQuantitySelector :value="quantitySelectorValue" class="min-w-[145px] flex-grow flex-shrink-0 basis-0" />
-        <SfButton size="lg" class="flex-grow-[2] flex-shrink bg-primary basis-auto whitespace-nowrap" @click="addToCart">
+        <SfButton
+          size="lg"
+          v-if="product.sku && quantitySelectorValue > 0"
+          class="flex-grow-[2] flex-shrink bg-primary basis-auto whitespace-nowrap"
+          @click="addToCart(product.sku, quantitySelectorValue)"
+        >
           <template #prefix>
             <SfIconShoppingCart size="sm" />
           </template>
@@ -27,10 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  SfButton,
-  SfIconShoppingCart,
-} from '@storefront-ui/vue';
+import { SfButton, SfIconShoppingCart } from '@storefront-ui/vue';
 import type { ProductInterface } from '~/modules/Product/ProductInterface';
 
 const route = useRoute();
@@ -44,5 +48,4 @@ type PurchaseCardProps = {
 defineProps<PurchaseCardProps>();
 
 const quantitySelectorValue = ref(1);
-
 </script>

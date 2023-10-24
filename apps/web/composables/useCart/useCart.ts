@@ -1,6 +1,6 @@
 import type { SfCart } from '@vue-storefront/unified-data-model';
 import { toRefs } from '@vueuse/shared';
-import type { UseCartReturn, UseCartState, FetchCard } from '~/composables/useCart/types';
+import type { UseCartReturn, UseCartState, FetchCard, CreateEmptyCard } from '~/composables/useCart/types';
 import { useSdk } from '~/sdk';
 
 /**
@@ -14,6 +14,7 @@ export const useCart: UseCartReturn = () => {
     data: null,
     loading: false,
   }));
+  const cartStore = useCartStore();
 
   /**
    * @description Function for fetching the cart.
@@ -34,8 +35,23 @@ export const useCart: UseCartReturn = () => {
     }
   };
 
+  const createEmptyCard: CreateEmptyCard = async () => {
+    state.value.loading = true;
+    try {
+      const { data, error } = await useAsyncData(() => useSdk().magento.createEmptyCart());
+      useHandleError(error.value);
+      cartStore.setCartId(data?.value?.data?.createEmptyCart);
+      return data?.value?.data?.createEmptyCart;
+    } catch (error) {
+      throw new Error(error as string);
+    } finally {
+      state.value.loading = false;
+    }
+  };
+
   return {
     fetchCard,
     ...toRefs(state.value),
+    createEmptyCard,
   };
 };

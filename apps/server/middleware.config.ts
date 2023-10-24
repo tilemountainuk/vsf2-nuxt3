@@ -29,6 +29,15 @@ const config = {
             }
           }`
         }),
+        'add-products-to-cart-custom-query': ({ variables, metadata }: {variables:any, metadata: any}) => ({
+          variables,
+          query: `
+            mutation addProductsToCart($cartId: String!, $cartItems: [CartItemInput!]!) {
+              addProductsToCart(cartId: $cartId, cartItems: $cartItems) {
+                ${metadata.fields}
+              }
+            }`
+        }),
       },
       configuration: {
         api: process.env.VSF_MAGENTO_GRAPHQL_URL,

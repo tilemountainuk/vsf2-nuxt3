@@ -13,6 +13,7 @@
           </NuxtLazyHydrate>
         </section>
         <UiDivider class="mt-4 mb-2" />
+        <ProductTitle />
       </div>
     </NarrowContainer>
   </NuxtLayout>
@@ -21,7 +22,6 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import type { Breadcrumb } from '~/components/ui/Breadcrumbs/types';
-import type { ProductInterface } from '~/modules/Product/ProductInterface';
 
 definePageMeta({
   layout: false,

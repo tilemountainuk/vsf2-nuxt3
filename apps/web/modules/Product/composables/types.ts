@@ -14,7 +14,7 @@ export interface UseProduct {
   data: Readonly<Ref<UseProductState['data']>>;
   loading: Readonly<Ref<boolean>>;
   fetchProduct: FetchMagentoProduct;
-  addToCart: () => {};
+  addToCart: (sku: string, quantity: number) => Promise<void>;
 }
 
 export type UseProductReturn = (slug: string) => UseProduct;
